@@ -7,3 +7,4 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('/getData', 'MainController::getData');
+$routes->post('/save', 'MainController::save');
