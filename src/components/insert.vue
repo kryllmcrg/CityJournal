@@ -25,7 +25,7 @@ export default{
             firstname:"",
             lastname:"",
             gender:"",
-            age:"",
+            age:""
         }
     },
     methods:{
