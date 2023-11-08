@@ -13,10 +13,10 @@ class MainController extends ResourceController
     {
         //
     }
-    public function GetData()
+    public function getData()
     {
         $main = new MainModel();
         $data = $main->findAll();
-        return $this->respond($data, 200);
+        return $this->respond($data);
     }
 }
