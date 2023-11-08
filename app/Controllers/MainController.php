@@ -11,13 +11,12 @@ class MainController extends ResourceController
 {
     public function index()
     {
-        // Your index logic here
+        //
     }
-
-    public function getData()
+    public function GetData()
     {
         $main = new MainModel();
         $data = $main->findAll();
-        return $this->respond($data);
+        return $this->respond($data, 200);
     }
 }
