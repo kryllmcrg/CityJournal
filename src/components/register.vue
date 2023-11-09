@@ -28,16 +28,6 @@
               <v-text-field v-model="username" label="Username" required></v-text-field>
               <v-text-field v-model="email" label="Email" required></v-text-field>
               <v-text-field v-model="password" label="Password" type="password" required></v-text-field>
-              <v-menu offset-y>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field v-model="selectedProvider" label="Select Provider" v-bind="attrs" v-on="on"></v-text-field>
-                </template>
-                <v-list>
-                  <v-list-item v-for="(provider, index) in providers" :key="index" @click="registerWith(provider)">
-                    <v-list-item-content>{{ provider }}</v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
               <v-btn type="submit" color="primary" class="mr-4">
                 Register
               </v-btn>
@@ -76,19 +66,13 @@ export default {
       username: '',
       email: '',
       password: '',
-      selectedProvider: '',
-      providers: ['Facebook', 'Google', 'Instagram'],
+      
     };
   },
   methods: {
     register() {
       // Add your registration logic here
-      console.log('Registering with:', this.username, this.email, this.password, this.selectedProvider);
-    },
-    registerWith(provider) {
-      // Handle the registration with the chosen provider (Facebook, Google, Instagram)
-      this.selectedProvider = provider;
-      console.log('Registering with:', provider);
+      console.log('Registering with:', this.username, this.email, this.password);
     },
   },
 };
