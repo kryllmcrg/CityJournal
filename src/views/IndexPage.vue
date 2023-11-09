@@ -8,7 +8,7 @@
                 <th>Gender</th>
                 <th>Age</th>
             </tr>
-            <tr v-for="info in info">
+            <tr v-for="(info, index) in info" :key="index">
                 <td>{{ info.firstname }}</td>
                 <td>{{ info.lastname }}</td>
                 <td>{{ info.gender }}</td>
