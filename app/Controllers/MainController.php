@@ -17,10 +17,8 @@ class MainController extends ResourceController
     {
         $json = $this->request->getJSON();
         $data =[
-            'firstname' => $json->firstname,
-            'lastname' => $json->lastname,
-            'gender' => $json->gender,
-            'age' => $json->age,
+            'username' => $json->username,
+            'password' => $json->password,
         ];
         $main = new MainModel();
         $r =$main->save($data);

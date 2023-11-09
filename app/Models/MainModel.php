@@ -6,13 +6,13 @@ use CodeIgniter\Model;
 
 class MainModel extends Model
 {
-    protected $table            = 'info';
+    protected $table            = 'login';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['firstname', 'lastname', 'gender','age'];
+    protected $allowedFields    = ['username', 'password'];
 
     // Dates
     protected $useTimestamps = false;
