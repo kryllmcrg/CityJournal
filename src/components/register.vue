@@ -1,0 +1,113 @@
+<template>
+  <v-container>
+    <!-- Navbar with Logo -->
+    <v-row align="center">
+      <v-col cols="12">
+        <v-app-bar app color="primary" dark>
+          <v-toolbar-title>
+            <v-img src="your-logo-url" alt="Logo" max-height="40"></v-img>
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text to="/login">
+            Login
+          </v-btn>
+        </v-app-bar>
+      </v-col>
+    </v-row>
+
+    <!-- Registration Form -->
+    <v-row justify="center" align="center">
+      <v-col cols="12" sm="10" md="10" lg="5">
+        <v-card>
+          <v-card-title class="headline">
+            Register
+          </v-card-title>
+
+          <v-card-text>
+            <v-form ref="registerForm" @submit.prevent="register">
+              <v-text-field v-model="username" label="Username" required></v-text-field>
+              <v-text-field v-model="email" label="Email" required></v-text-field>
+              <v-text-field v-model="password" label="Password" type="password" required></v-text-field>
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field v-model="selectedProvider" label="Select Provider" v-bind="attrs" v-on="on"></v-text-field>
+                </template>
+                <v-list>
+                  <v-list-item v-for="(provider, index) in providers" :key="index" @click="registerWith(provider)">
+                    <v-list-item-content>{{ provider }}</v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+              <v-btn type="submit" color="primary" class="mr-4">
+                Register
+              </v-btn>
+            </v-form>
+
+            <v-row justify="center" class="mt-4">
+              <router-link to="/login" class="link">
+                Login
+              </router-link>
+            </v-row>
+
+            <v-divider class="mt-4"></v-divider>
+
+            <v-row justify="center" class="mt-4">
+              <v-btn icon @click="registerWith('facebook')">
+                <v-icon color="blue darken-4">mdi-facebook</v-icon>
+              </v-btn>
+              <v-btn icon @click="registerWith('google')">
+                <v-icon color="red">mdi-google</v-icon>
+              </v-btn>
+              <v-btn icon @click="registerWith('instagram')">
+                <v-icon color="purple">mdi-instagram</v-icon>
+              </v-btn>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      username: '',
+      email: '',
+      password: '',
+      selectedProvider: '',
+      providers: ['Facebook', 'Google', 'Instagram'],
+    };
+  },
+  methods: {
+    register() {
+      // Add your registration logic here
+      console.log('Registering with:', this.username, this.email, this.password, this.selectedProvider);
+    },
+    registerWith(provider) {
+      // Handle the registration with the chosen provider (Facebook, Google, Instagram)
+      this.selectedProvider = provider;
+      console.log('Registering with:', provider);
+    },
+  },
+};
+</script>
+
+<style scoped>
+.headline {
+  text-align: center;
+  color: #2196F3; /* Vuetify primary color */
+}
+
+.link {
+  color: #2196F3; /* Vuetify primary color */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Add space below the buttons */
+.mt-4 {
+  margin-top: 1rem;
+}
+</style>
