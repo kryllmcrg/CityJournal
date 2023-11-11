@@ -70,12 +70,6 @@ export default {
 
         console.log(response.data);
 
-        // Assuming you have a successful response status code, e.g., 200 for OK
-        if (response.status === 200) {
-          // Redirect to HomeView
-          this.$router.push({ name: 'HomeView' });
-        }
-
       } catch (error) {
         console.error('Error:', error);
       }

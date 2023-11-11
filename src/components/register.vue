@@ -67,12 +67,12 @@ export default {
   data() {
     return {
       username: '',
-      email:'',
+      email: '',
       password: '',
-
     };
   },
-    async registerUser() {
+  methods: {
+    async register() {
       try {
         const response = await axios.post(
           'http://localhost:8080/register',
@@ -87,8 +87,10 @@ export default {
         console.error('Error:', error);
       }
     },
-  }
+  },
+};
 </script>
+
 
 <style scoped>
 .headline {
