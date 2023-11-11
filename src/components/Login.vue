@@ -49,25 +49,49 @@
  </template>
  
  <script>
- export default {
-   data() {
-     return {
-       username: '',
-       password: '',
-     };
-   },
-   methods: {
-     login() {
-       // Add your login logic here
-       console.log('Logging in with:', this.username, this.password);
-     },
-     forgotPassword() {
-       // Handle the logic for forgot password
-       console.log('Forgot Password clicked');
-     },
-   },
- };
- </script>
+import axios from 'axios';
+
+
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+    };
+  },
+  methods: {
+    login() {
+      // API endpoint URL
+      const apiUrl = 'http://localhost:8080/login';
+
+      // Data to be sent in the request
+      const requestData = {
+        username: this.username,
+        password: this.password,
+      };
+
+      // Making a POST request to the CodeIgniter API
+      axios.post(apiUrl, requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          // Handle the API response here
+          console.log('API Response:', response.data);
+        })
+        .catch(error => {
+          // Handle errors here
+          console.error('API Error:', error);
+        });
+    },
+    forgotPassword() {
+      // Handle the logic for forgot password
+      console.log('Forgot Password clicked');
+    },
+  },
+};
+</script>
  
  <style scoped>
  .headline {
