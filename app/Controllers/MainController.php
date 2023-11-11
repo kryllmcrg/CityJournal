@@ -13,7 +13,7 @@ class MainController extends ResourceController
     {
         //
     }
-    public function save()
+    public function login()
     {
         $json = $this->request->getJSON();
         $data =[
@@ -21,7 +21,7 @@ class MainController extends ResourceController
             'password' => $json->password,
         ];
         $main = new MainModel();
-        $r =$main->save($data);
+        $r =$main->login($data);
         return $this->respond($r, 200);
     }
     public function getData()
