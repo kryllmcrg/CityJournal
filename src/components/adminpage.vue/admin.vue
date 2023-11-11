@@ -1,81 +1,109 @@
 <template>
-  <v-app>
-    <!-- Navbar with Hamburger Menu -->
-    <v-app-bar app color="primary" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Admin Dashboard</v-toolbar-title>
-    </v-app-bar>
-
-    <!-- Sidebar (Hamburger Menu) -->
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list>
-        <v-list-item v-for="(item, index) in items" :key="index" link>
-          <v-list-item-icon>{{ item.icon }}</v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
-
-          <!-- Add a dropdown menu for the 'Settings' item -->
-          <v-menu offset-y>
-            <template v-slot:activator="{ on }">
-              <v-btn icon v-on="on">
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
+  <v-card>
+    <v-layout>
+      <v-navigation-drawer
+        v-model="drawer"
+        :rail="rail"
+        permanent
+        @click="rail = false"
+      >
+        <!-- User Profile Section -->
+        <v-list-item-group>
+          <v-list-item
+            prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+            title="Karylle Macaraig"
+            nav
+          >
+            <template v-slot:append>
+              <v-btn
+                variant="text"
+                icon="mdi-chevron-left"
+                @click.stop="rail = !rail"
+              ></v-btn>
             </template>
-            <v-list>
-              <v-list-item-group v-if="item.text === 'Settings'">
-                <v-list-item v-for="(subItem, subIndex) in item.subItems" :key="subIndex" link>
-                  <v-list-item-icon>{{ subItem.icon }}</v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title>{{ subItem.text }}</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
-          </v-menu>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+          </v-list-item>
+        </v-list-item-group>
 
-    <!-- Main Content -->
-    <v-main>
-      <v-container>
-        <!-- Your Dashboard Content Goes Here -->
-        <v-row>
-          <v-col cols="12">
-            <v-card>
-              <v-card-title>Dashboard Overview</v-card-title>
-              <v-card-text>
-                Welcome to the admin dashboard!
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
+        <!-- Navigation Section -->
+        <v-list dense nav>
+          <v-list-item prepend-icon="mdi-home-city" title="Home" value="home"></v-list-item>
+          <v-list-item prepend-icon="mdi-account" title="My Account" value="account"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
+
+          <!-- News Section -->
+          <v-divider></v-divider>
+          <v-list-item-group>
+            <v-list-item
+              prepend-icon="mdi-newspaper-variant-outline"
+              title="News"
+              value="news"
+            >
+              <v-list-item-icon>
+                <v-icon>mdi-newspaper-variant-outline</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>Manage News Articles</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item prepend-icon="mdi-plus-circle" title="Add News" value="addNews"></v-list-item>
+            <v-list-item prepend-icon="mdi-pencil" title="Edit News" value="editNews"></v-list-item>
+          </v-list-item-group>
+
+          <!-- Other Admin-related Sections -->
+          <v-divider></v-divider>
+          <v-list-item-group>
+            <v-list-item
+              prepend-icon="mdi-comment-multiple-outline"
+              title="Comments"
+              value="comments"
+            >
+              <v-list-item-icon>
+                <v-icon>mdi-comment-multiple-outline</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+
+            <v-list-item
+              prepend-icon="mdi-chart-line"
+              title="Analytics"
+              value="analytics"
+            >
+              <v-list-item-icon>
+                <v-icon>mdi-chart-line</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+
+            <!-- Add more sections/items as needed -->
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+
+      <!-- Navigation Bar -->
+      <v-app-bar app color="primary" dark>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-toolbar-title>CiO</v-toolbar-title>
+
+        <!-- Add more buttons/icons as needed -->
+        <v-spacer></v-spacer>
+        <v-btn icon>
+          <v-icon>mdi-bell</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>mdi-email</v-icon>
+        </v-btn>
+      </v-app-bar>
+
+      <v-main style="height: 250px"></v-main>
+    </v-layout>
+  </v-card>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      drawer: false,
-      items: [
-        { text: 'Dashboard', icon: 'mdi-view-dashboard' },
-        { text: 'Users', icon: 'mdi-account-group' },
-        {
-          text: 'Settings',
-          icon: 'mdi-settings',
-          subItems: [
-            { text: 'General', icon: 'mdi-settings-outline' },
-            { text: 'Security', icon: 'mdi-shield-check-outline' },
-            { text: 'Appearance', icon: 'mdi-palette-outline' },
-            // Add more sub-items as needed
-          ],
-        },
-        // Add more items as needed
-      ],
+      drawer: true,
+      rail: true,
     };
   },
 };
