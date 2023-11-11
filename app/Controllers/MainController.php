@@ -4,7 +4,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\Restful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
-use App\Models\MainModel;
+use App\Models\LogModel;
+use App\Models\RegModel;
 
 
 class MainController extends ResourceController
@@ -23,7 +24,7 @@ class MainController extends ResourceController
             return $this->fail($this->validator->getErrors(), 400);
         }
 
-        $mainModel = new MainModel();
+        $mainModel = new LogModel();
         $user = $mainModel->where('username', $request->getPost('username'))->first();
 
         if (!$user || !password_verify($request->getPost('password'), $user['password'])) {
@@ -47,7 +48,7 @@ class MainController extends ResourceController
             return $this->fail($this->validator->getErrors(), 400);
         }
 
-        $mainModel = new MainModel();
+        $mainModel = new RegModel();
         $mainModel->save([
             'username' => $request->getVar('username'),
             'email' => $request->getVar('email'),
