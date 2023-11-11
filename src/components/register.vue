@@ -67,30 +67,40 @@ export default {
   data() {
     return {
       username: '',
-      email: '',
+      email:'',
       password: '',
     };
   },
   methods: {
     async register() {
       try {
-        const response = await axios.post(
-          'http://localhost:8080/register',
-          {
-            username: this.username,
-            email: this.email,
-            password: this.password,
-          }
-        );
-        console.log(response.data);
+        console.log('Username:', this.username);
+        console.log('Email:', this.email);
+        console.log('Password:', this.password);
+
+        const response = await axios.post('/register', {
+          username: this.username,
+          email: this.email,
+          password: this.password,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        console.log('Response:', response.data);
       } catch (error) {
         console.error('Error:', error);
       }
     },
+
+    forgotPassword() {
+      // Handle the logic for forgot password
+      console.log('Forgot Password clicked');
+    },
   },
 };
 </script>
-
 
 <style scoped>
 .headline {
