@@ -13,14 +13,7 @@ class MainController extends ResourceController
     {
         //
     }
-
-    public function getData()
-    {
-        $Log = new LogModel();
-        $data = $Log->findAll();
-        return $this->respond($data, 200);
-    }
-
+    
     public function register()
     {
         $request = $this->request;
@@ -49,24 +42,31 @@ class MainController extends ResourceController
     public function login()
     {
         $request = $this->request;
-
+    
         // Validate input
         $validationRules = [
             'username' => 'required|valid_username',
             'password' => 'required|min_length[6]',
-        ];
-
+        ];        
+    
         if (!$this->validate($validationRules)) {
+            // Log validation errors for debugging
+            log_message('error', 'Validation Errors: ' . print_r($this->validator->getErrors(), true));
+    
             return $this->fail($this->validator->getErrors(), 400);
         }
 
         $LogModel = new LogModel();
-        $user = $LogModel->where('username', $request->getPost('username'))->first();
-
+        $user = $LogModel->getUserByUsername($request->getPost('username'));
+        
         if (!$user || !password_verify($request->getPost('password'), $user['password'])) {
             return $this->fail('Invalid password', 401);
         }
-
+    
+        // Log the user data for debugging
+        log_message('debug', 'User Data: ' . print_r($user, true));
+    
         return $this->respond(['message' => 'Login successful'], 200);
     }
+    
 }
