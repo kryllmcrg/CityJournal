@@ -60,20 +60,24 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await axios.post(
-          'http://localhost:8080/login',
-          {
-            username: this.username,
-            password: this.password,
-          }
-        );
+        console.log('Username:', this.username);
+        console.log('Password:', this.password);
 
-        console.log(response.data);
+        const response = await axios.post('/login', {
+          username: this.username,
+          password: this.password,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
+        console.log('Response:', response.data);
       } catch (error) {
         console.error('Error:', error);
       }
     },
+
     forgotPassword() {
       // Handle the logic for forgot password
       console.log('Forgot Password clicked');
@@ -98,4 +102,3 @@ export default {
   margin: 0 10px;
 }
 </style>
-
