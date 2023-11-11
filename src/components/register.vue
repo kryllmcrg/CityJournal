@@ -60,22 +60,34 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+  name: 'register',
   data() {
     return {
       username: '',
-      email: '',
+      email:'',
       password: '',
-      
+
     };
   },
-  methods: {
-    register() {
-      // Add your registration logic here
-      console.log('Registering with:', this.username, this.email, this.password);
+    async registerUser() {
+      try {
+        const response = await axios.post(
+          'http://localhost:8080/register',
+          {
+            username: this.username,
+            email: this.email,
+            password: this.password,
+          }
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
     },
-  },
-};
+  }
 </script>
 
 <style scoped>
