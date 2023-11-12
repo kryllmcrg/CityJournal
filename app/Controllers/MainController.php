@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\Restful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\LogModel;
+use App\Models\RegModel;
 
 class MainController extends ResourceController
 {
@@ -29,8 +30,8 @@ class MainController extends ResourceController
             return $this->fail($this->validator->getErrors(), 400);
         }
 
-        $LogModel = new LogModel();
-        $LogModel->save([
+        $RegModel = new RegModel();
+        $RegModel->save([
             'username' => $request->getVar('username'),
             'email' => $request->getVar('email'),
             'password' => password_hash($request->getVar('password'), PASSWORD_BCRYPT),            
@@ -62,9 +63,6 @@ class MainController extends ResourceController
         if (!$user || !password_verify($request->getPost('password'), $user['password'])) {
             return $this->fail('Invalid password', 401);
         }
-    
-        // Log the user data for debugging
-        log_message('debug', 'User Data: ' . print_r($user, true));
     
         return $this->respond(['message' => 'Login successful'], 200);
     }
