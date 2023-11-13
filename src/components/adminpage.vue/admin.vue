@@ -104,31 +104,22 @@
 
           <!-- News Section -->
           <v-divider></v-divider>
-          <v-list-item-group>
-            <v-list-item @click="selectItem('news')" :value="selectedItem === 'news' ? 'news' : null">
-              <v-list-item-content>
-                <v-list-item-title>News</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+            <v-list-item-group v-model="selectedItem">
+              <v-list-item @click="selectItem('news')" prepend-icon="mdi-newspaper-variant-outline" title="News" value="news">
+                News
+              </v-list-item>
 
-            <v-menu v-if="selectedItem === 'news'" offset-y>
-              <template v-slot:activator="{ on, attrs }">
-                <v-list-item v-on="on" v-bind="attrs" @click.stop="selectItem('addNews')" :value="selectedItem === 'addNews' ? 'addNews' : null">
-                  <v-list-item-content>
-                    <v-list-item-title>Add News</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </template>
-
-              <v-list>
-                <v-list-item @click="selectItem('editNews')" :value="selectedItem === 'editNews' ? 'editNews' : null">
-                  <v-list-item-content>
-                    <v-list-item-title>Edit News</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-list-item-group>
+              <v-list-item v-if="selectedItem === 'news'">
+                <v-list-item-content>
+                  <v-list-item @click="selectItem('addNews')" prepend-icon="mdi-plus-circle" title="Add News" value="addNews">
+                    Add News
+                  </v-list-item>
+                  <v-list-item @click="selectItem('editNews')" prepend-icon="mdi-pencil" title="Edit News" value="editNews">
+                    Edit News
+                  </v-list-item>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
 
           <!-- Other Admin-related Sections -->
           <v-divider></v-divider>
@@ -211,8 +202,9 @@ export default {
   },
   methods: {
     selectItem(item) {
-      this.selectedItem = item === this.selectedItem ? null : item;
+      this.selectedItem = item;
     },
   },
 };
 </script>
+
