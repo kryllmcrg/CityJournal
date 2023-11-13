@@ -104,11 +104,18 @@
 
           <!-- News Section -->
           <v-divider></v-divider>
-          <v-list-item-group>
-            <v-list-item prepend-icon="mdi-newspaper-variant-outline" title="News" value="news"></v-list-item>
-            <v-list-item prepend-icon="mdi-plus-circle" title="Add News" value="addNews"></v-list-item>
-            <v-list-item prepend-icon="mdi-pencil" title="Edit News" value="editNews"></v-list-item>
-          </v-list-item-group>
+            <v-list-item-group v-model="selectedItem">
+              <v-list-item @click="selectItem('news')" prepend-icon="mdi-newspaper-variant-outline" title="News" value="news">
+              </v-list-item>
+              <v-list-item v-if="selectedItem === 'news'">
+                <v-list-item-content>
+                  <v-list-item @click="selectItem('addNews')" prepend-icon="mdi-plus-circle" title="Add News" value="addNews">
+                  </v-list-item>
+                  <v-list-item @click="selectItem('editNews')" prepend-icon="mdi-pencil" title="Edit News" value="editNews">
+                  </v-list-item>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
 
           <!-- Other Admin-related Sections -->
           <v-divider></v-divider>
@@ -134,7 +141,7 @@
       </v-navigation-drawer>
 
       <!-- Navigation Bar -->
-      <v-app-bar app color="primary" dark>
+      <v-app-bar app color="transparent" dark>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>CiO</v-toolbar-title>
 
@@ -146,18 +153,39 @@
         <v-btn icon>
           <v-icon>mdi-email</v-icon>
         </v-btn>
+        <div class="background-container"></div>
       </v-app-bar>
 
       <v-main style="height: 600px"></v-main>
     </v-layout>
 
     <!-- Main Content -->
+    
     <v-main>
-        
+      <v-main>
+      <quill-editor
+        v-model="editorContent"
+        :options="editorOptions"
+        style="min-height: 400px;"
+      ></quill-editor>
+    </v-main>
       </v-main>
 
   </v-card>
 </template>
+
+<style>
+.background-container {
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('@/assets/background.jpg');
+  background-size: cover;
+  z-index: -1;
+}
+</style>
 
 <script>
 export default {
@@ -165,7 +193,22 @@ export default {
     return {
       drawer: true,
       rail: true,
+      selectedItem: null,
     };
+  },
+  methods: {
+    toggleItem(item) {
+      if (this.selectedItem === item) {
+        // If News is clicked again, toggle visibility
+        this.selectedItem = null;
+      } else {
+        this.selectedItem = item;
+      }
+    },
+    selectItem(item) {
+      this.selectedItem = item;
+    },
   },
 };
 </script>
+
