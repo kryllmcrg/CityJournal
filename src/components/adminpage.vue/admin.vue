@@ -134,7 +134,7 @@
       </v-navigation-drawer>
 
       <!-- Navigation Bar -->
-      <v-app-bar app color="primary" dark>
+      <v-app-bar app color="primary" dark :style="{ 'background-image': 'url(\'@/assets/background.jpg\')' }">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>CiO</v-toolbar-title>
 
