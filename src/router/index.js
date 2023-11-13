@@ -1,7 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../components/Login.vue'
-import register from '../components/Register.vue'
-import admin from '../components/adminpage.vue/admin.vue'
+import Register from '../components/Register.vue'
+import Admin from '../components/AdminPage.vue/Admin.vue'
+import User from '../components/UserPage.vue/User.vue'
+import AboutSection from '../components/UserPage.vue/AboutSection.vue'
+import ContactSection from '../components/UserPage.vue/ContactSection.vue'
+import HomeSection from '../components/UserPage.vue/HomeSection.vue'
+import DownloadSection from '../components/UserPage.vue/DownloadSection.vue'
+
 const routes = [
   {
     path: '/login',
@@ -9,11 +15,31 @@ const routes = [
   },
   {
     path: '/register',
-    component: register
+    component: Register
   },
   {
     path: '/admin',
-    component: admin
+    component: Admin
+  },
+  {
+    path: '/user',
+    component: User
+  },
+  {
+    path: '/about',
+    component: AboutSection
+  },
+  {
+    path: '/contact',
+    component: ContactSection
+  },
+  {
+    path: '/home',
+    component: HomeSection
+  },
+  {
+    path: '/download',
+    component: DownloadSection
   },
 ]
 
