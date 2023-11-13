@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class RegModel extends Model
 {
-    protected $table            = 'register';
+    protected $table            = '';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';

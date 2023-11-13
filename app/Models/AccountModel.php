@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class LogModel extends Model
+class AccountModel extends Model
 {
-    protected $table            = 'login';
+    protected $table            = 'log_reg';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username', 'password'];
+    protected $allowedFields    = ['username', 'email','password',];
 
     // Dates
     protected $useTimestamps = false;
