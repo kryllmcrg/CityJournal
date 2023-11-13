@@ -96,5 +96,13 @@ class LogRegController extends BaseController
             return $this->respond(["error" => "Error".$th->getMessage()]  );
         }
     }
+
+    public function getUserAccounts(){
+        $model = new AccountModel();
+
+        $userAccounts = $model->findAll();
+
+        return $this->respond($userAccounts);
+    }
   
 }
