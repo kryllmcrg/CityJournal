@@ -107,7 +107,6 @@
             <v-list-item-group v-model="selectedItem">
               <v-list-item @click="selectItem('news')" prepend-icon="mdi-newspaper-variant-outline" title="News" value="news">
               </v-list-item>
-
               <v-list-item v-if="selectedItem === 'news'">
                 <v-list-item-content>
                   <v-list-item @click="selectItem('addNews')" prepend-icon="mdi-plus-circle" title="Add News" value="addNews">
