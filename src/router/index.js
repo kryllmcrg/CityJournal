@@ -6,7 +6,7 @@ import User from '../components/Userpage.vue/User.vue'
 import AboutSection from '../components/Userpage.vue/AboutSection.vue'
 import ContactSection from '../components/Userpage.vue/ContactSection.vue'
 import HomeSection from '../components/Userpage.vue/HomeSection.vue'
-import AddNews from '../components/adminpage.vue/AddNews.vue'
+import AddNews from '../components/Adminpage.vue/AddNews.vue'
 
 const routes = [
   {

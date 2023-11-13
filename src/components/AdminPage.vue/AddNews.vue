@@ -37,3 +37,6 @@ export default {
 <style scoped>
 /* Add any custom styling here */
 </style>
+<template>
+  
+</template>
