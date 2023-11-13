@@ -28,6 +28,7 @@
               <v-text-field v-model="username" label="Username" required></v-text-field>
               <v-text-field v-model="email" label="Email" required></v-text-field>
               <v-text-field v-model="password" label="Password" type="password" required></v-text-field>
+              <v-text-field v-model="confirm_password" label="Confirm Password" type="password" required></v-text-field>
               <v-btn type="submit" color="primary" class="mr-4">
                 Register
               </v-btn>
@@ -63,12 +64,13 @@
 import axios from 'axios';
 
 export default {
-  name: 'register',
+  name: 'Register',
   data() {
     return {
       username: '',
       email:'',
       password: '',
+      confirm_password: '',
     };
   },
   methods: {
@@ -82,6 +84,7 @@ export default {
           username: this.username,
           email: this.email,
           password: this.password,
+          confirm_password: this.confirm_password,
         }, {
           headers: {
             'Content-Type': 'application/json',
