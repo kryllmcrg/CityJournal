@@ -26,9 +26,9 @@ class MainController extends ResourceController
             'password' => 'required|min_length[6]',
         ];
 
-        if (!$this->validate($validationRules)) {
-            return $this->fail($this->validator->getErrors(), 400);
-        }
+        // if (!$this->validate($validationRules)) {
+        //     return $this->fail($this->validator->getErrors(), 400);
+        // }
 
         $RegModel = new RegModel();
         $RegModel->save([
@@ -37,7 +37,7 @@ class MainController extends ResourceController
             'password' => password_hash($request->getVar('password'), PASSWORD_BCRYPT),            
         ]);
 
-        return $this->respond(['message' => 'Registration successful'], 201);
+        return $this->respond(['message' => 'Registration successful'], 200);
     }
 
     public function login()
@@ -50,20 +50,12 @@ class MainController extends ResourceController
             'password' => 'required|min_length[6]',
         ];        
     
-        if (!$this->validate($validationRules)) {
-            // Log validation errors for debugging
-            log_message('error', 'Validation Errors: ' . print_r($this->validator->getErrors(), true));
-    
-            return $this->fail($this->validator->getErrors(), 400);
-        }
+        $RegModel = new LogModel();
+        $RegModel->save([
+            'username' => $request->getVar('username'),
+            'password' => password_hash($request->getVar('password'), PASSWORD_BCRYPT),            
+        ]);
 
-        $LogModel = new LogModel();
-        $user = $LogModel->getUserByUsername($request->getPost('username'));
-        
-        if (!$user || !password_verify($request->getPost('password'), $user['password'])) {
-            return $this->fail('Invalid password', 401);
-        }
-    
         return $this->respond(['message' => 'Login successful'], 200);
     }
     
