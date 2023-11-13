@@ -134,7 +134,7 @@
       </v-navigation-drawer>
 
       <!-- Navigation Bar -->
-      <v-app-bar app color="primary" dark :style="{ 'background-image': 'url(\'@/assets/background.jpg\')' }">
+      <v-app-bar app color="transparent" dark>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>CiO</v-toolbar-title>
 
@@ -146,6 +146,7 @@
         <v-btn icon>
           <v-icon>mdi-email</v-icon>
         </v-btn>
+        <div class="background-container"></div>
       </v-app-bar>
 
       <v-main style="height: 600px"></v-main>
@@ -165,6 +166,19 @@
 
   </v-card>
 </template>
+
+<style>
+.background-container {
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('@/assets/background.jpg');
+  background-size: cover;
+  z-index: -1;
+}
+</style>
 
 <script>
 export default {
