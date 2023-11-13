@@ -184,8 +184,10 @@
   background-image: url('@/assets/background.jpg');
   background-size: cover;
   z-index: -1;
-}
-</style>
+  margin-bottom: 50%;
+}</style>
+
+
 
 <script>
 export default {
