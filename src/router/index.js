@@ -6,6 +6,7 @@ import user from '../components/userpage.vue/user.vue'
 import AboutSection from '../components/userpage.vue/AboutSection.vue'
 import ContactSection from '../components/userpage.vue/ContactSection.vue'
 import HomeSection from '../components/userpage.vue/HomeSection.vue'
+import AddNews from '../components/adminpage.vue/AddNews.vue'
 
 const routes = [
   {
@@ -35,6 +36,10 @@ const routes = [
   {
     path: '/home',
     component: HomeSection
+  },
+  {
+    path: '/addnews',
+    component: AddNews
   },
 ]
 
