@@ -197,10 +197,19 @@ export default {
     };
   },
   methods: {
+    toggleItem(item) {
+      if (this.selectedItem === item) {
+        // If News is clicked again, toggle visibility
+        this.selectedItem = null;
+      } else {
+        this.selectedItem = item;
+      }
+    },
     selectItem(item) {
       this.selectedItem = item;
     },
   },
 };
 </script>
+
 
