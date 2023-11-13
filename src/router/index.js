@@ -6,7 +6,6 @@ import User from '../components/UserPage.vue/User.vue'
 import AboutSection from '../components/UserPage.vue/AboutSection.vue'
 import ContactSection from '../components/UserPage.vue/ContactSection.vue'
 import HomeSection from '../components/UserPage.vue/HomeSection.vue'
-import DownloadSection from '../components/UserPage.vue/DownloadSection.vue'
 
 const routes = [
   {
@@ -36,11 +35,7 @@ const routes = [
   {
     path: '/home',
     component: HomeSection
-  },
-  {
-    path: '/download',
-    component: DownloadSection
-  },
+  }
 ]
 
 const router = createRouter({
