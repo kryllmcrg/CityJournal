@@ -14,6 +14,10 @@ class MainController extends ResourceController
     {
         //
     }
+    public function LogReg()
+    {
+        return view('LogReg');
+    }
     
     public function register()
     {
