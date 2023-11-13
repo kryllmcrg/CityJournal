@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../components/Login.vue'
-import register from '../components/register.vue'
-import admin from '../components/adminpage.vue/admin.vue'
-import user from '../components/userpage.vue/user.vue'
-import AboutSection from '../components/userpage.vue/AboutSection.vue'
-import ContactSection from '../components/userpage.vue/ContactSection.vue'
-import HomeSection from '../components/userpage.vue/HomeSection.vue'
+import Register from '../components/Register.vue'
+import Admin from '../components/Adminpage.vue/Admin.vue'
+import User from '../components/Userpage.vue/User.vue'
+import AboutSection from '../components/Userpage.vue/AboutSection.vue'
+import ContactSection from '../components/Userpage.vue/ContactSection.vue'
+import HomeSection from '../components/Userpage.vue/HomeSection.vue'
 import AddNews from '../components/adminpage.vue/AddNews.vue'
 
 const routes = [
@@ -15,15 +15,15 @@ const routes = [
   },
   {
     path: '/register',
-    component: register
+    component: Register
   },
   {
     path: '/admin',
-    component: admin
+    component: Admin
   },
   {
     path: '/user',
-    component: user
+    component: User
   },
   {
     path: '/about',
