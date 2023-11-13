@@ -152,8 +152,15 @@
     </v-layout>
 
     <!-- Main Content -->
+    
     <v-main>
-        
+      <v-main>
+      <quill-editor
+        v-model="editorContent"
+        :options="editorOptions"
+        style="min-height: 400px;"
+      ></quill-editor>
+    </v-main>
       </v-main>
 
   </v-card>

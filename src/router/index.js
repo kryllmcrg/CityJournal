@@ -35,7 +35,7 @@ const routes = [
   {
     path: '/home',
     component: HomeSection
-  }
+  },
 ]
 
 const router = createRouter({
