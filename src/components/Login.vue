@@ -112,7 +112,13 @@ export default {
 .separator {
   margin: 0 10px;
 }
-.container{
+.container {
   background-image: url('@/assets/bglogin.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* Set the height based on your design */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
