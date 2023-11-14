@@ -7,7 +7,7 @@
             <v-card-title class="headline text-center">Login</v-card-title>
             <v-card-text>
               <v-form @submit.prevent="login">
-                <v-text-field v-model="Email" label="Email" outlined></v-text-field>
+                <v-text-field v-model="email" label="Email" outlined></v-text-field>
 
                 <v-text-field
                   v-model="password"
@@ -45,7 +45,7 @@ export default {
   name: 'Login',
   data() {
     return {
-      Email: '',
+      email: '',
       password: '',
       passwordVisible: false,
     };
@@ -53,11 +53,11 @@ export default {
   methods: {
     async login() {
       try {
-        console.log('Email:', this.Email);
+        console.log('Email:', this.email);
         console.log('Password:', this.password);
 
         const response = await axios.post('/login', {
-          Email: this.Email,
+          email: this.email,
           password: this.password,
         }, {
           headers: {
