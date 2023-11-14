@@ -151,7 +151,7 @@
 
       <v-app-bar app color="transparent" dark>
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-          <v-toolbar-title>CiO</v-toolbar-title>
+          <v-toolbar-title>City Information Office</v-toolbar-title>
 
           <!-- Add more buttons/icons as needed -->
           <v-spacer></v-spacer>
