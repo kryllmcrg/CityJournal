@@ -53,11 +53,6 @@
                 Login
               </router-link>
             </v-row>
-            <v-row justify="center" class="mt-4">
-              <router-link to="/login" class="link">
-               Are you already have account?
-              </router-link>
-            </v-row>
 
             <v-divider class="mt-4"></v-divider>
 
