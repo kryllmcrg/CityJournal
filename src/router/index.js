@@ -36,10 +36,6 @@ const routes = [
   {
     path: '/home',
     component: HomeSection
-  },
-  {
-    path: '/message',
-    component: Message
   }
 ]
 
