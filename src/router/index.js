@@ -35,11 +35,7 @@ const routes = [
   {
     path: '/home',
     component: HomeSection
-  },
-  {
-    path: '/addnews',
-    component: AddNews
-  },
+  }
 ]
 
 const router = createRouter({
