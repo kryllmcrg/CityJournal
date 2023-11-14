@@ -221,3 +221,20 @@ export default {
 };
 </script>
 
+<style>
+/* ... (other styles) */
+
+/* Hover effect for navigation drawer items */
+.v-list-item:hover {
+  background-color: #9575cd; /* Change the background color on hover */
+  color: #ffffff; /* Change the text color on hover */
+}
+
+/* Hover effect for navigation drawer sub-items */
+.v-list-item-group:hover .v-list-item {
+  background-color: #9575cd; /* Change the background color on hover */
+  color: #ffffff; /* Change the text color on hover */
+}
+
+</style>
+
