@@ -150,7 +150,7 @@
       </v-navigation-drawer>
 
       <v-app-bar app color="transparent" dark >
-          <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon style="color: white" @click.stop="drawer = !drawer" ></v-app-bar-nav-icon>
           <v-toolbar-title style="color: white;">City Information Office</v-toolbar-title>
 
           <!-- Add more buttons/icons as needed -->
