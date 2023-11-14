@@ -22,19 +22,19 @@ class LogRegController extends BaseController
         try {
             $accountModel = new AccountModel();
     
-            $username = $this->request->getVar('username');
+            $email = $this->request->getVar('email');
             $password = $this->request->getVar('password');
             
-            $user = $accountModel->where('username', $username)->first();
+            $user = $accountModel->where('email', $email)->first();
     
             if(is_null($user)) {
-                return $this->respond(['error' => 'Invalid username or password.'], 401);
+                return $this->respond(['error' => 'Invalid email or password.'], 401);
             }
     
             $pwd_verify = password_verify($password, $user['password']);
     
             if(!$pwd_verify) {
-                return $this->respond(['error' => 'Invalid username or password.'], 401);
+                return $this->respond(['error' => 'Invalid email or password.'], 401);
             }
     
             $key = getenv('JWT_SECRET');
@@ -47,7 +47,7 @@ class LogRegController extends BaseController
                 "sub" => "Subject of the JWT",
                 "iat" => $iat, //Time the JWT issued at
                 "exp" => $exp, // Expiration time of token
-                "username" => $user['username'],
+                "email" => $user['email'],
             );
             
             $token = JWT::encode($payload, $key, 'HS256');
