@@ -2,7 +2,7 @@
   <v-container class="container">
     <v-row>
       <v-col cols="12">
-        <v-app-bar app color="primary" dark>
+        <v-app-bar app color="#673ab7" dark>
           <v-toolbar-title>
             <v-img src="your-logo-url" alt="Logo" max-height="40"></v-img>
           </v-toolbar-title>
@@ -29,7 +29,7 @@
                 @click:append="togglePasswordVisibility"
                 required
               ></v-text-field>
-              <v-btn type="submit" color="primary" class="mr-4">
+              <v-btn type="submit" color="#673ab7" class="mr-4">
                 Login
               </v-btn>
             </v-form>
@@ -100,11 +100,11 @@ export default {
 <style scoped>
 .headline {
   text-align: center;
-  color: #2196F3; /* Vuetify primary color */
+  color: #673ab7; /* Vuetify primary color */
 }
 
 .link {
-  color: #2196F3; /* Vuetify primary color */
+  color: #673ab7; /* Vuetify primary color */
   text-decoration: none;
   cursor: pointer;
 }
