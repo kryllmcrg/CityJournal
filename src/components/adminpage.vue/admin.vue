@@ -150,20 +150,29 @@
       </v-navigation-drawer>
 
       <!-- Navigation Bar -->
+      <!-- Navigation Bar -->
       <v-app-bar app color="transparent" dark>
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>CiO</v-toolbar-title>
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+          <v-toolbar-title>CiO</v-toolbar-title>
 
-        <!-- Add more buttons/icons as needed -->
-        <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-bell</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>mdi-email</v-icon>
-        </v-btn>
-        <div class="background-container"></div>
+          <!-- Add more buttons/icons as needed -->
+          <v-spacer></v-spacer>
+          <v-btn icon>
+                <v-icon>mdi-bell</v-icon>
+            </v-btn>
+          <v-btn icon @click="showMessage = !showMessage">
+              <v-icon>mdi-email</v-icon>
+          </v-btn>
+          <div class="background-container"></div>
       </v-app-bar>
+
+      <!-- Message Box -->
+      <v-snackbar v-model="showMessage" right>
+          <v-btn text @click="showMessage = false">Close</v-btn>
+          <!-- Add your message content here -->
+          <span>Message content goes here...</span>
+      </v-snackbar>
+
 
       <v-main style="height: 750px; background-color: #f9f6f2">
     <!-- Your content goes here -->
@@ -207,6 +216,11 @@
   bottom: 0;
   width: 100%;
 }
+.v-snackbar {
+  right: 16px; /* Adjust the distance from the right side */
+  top: 16px; /* Adjust the distance from the top */
+  max-width: 300px; /* Adjust the maximum width of the message box */
+}
 </style>
 
 
@@ -218,6 +232,7 @@ export default {
       drawer: true,
       rail: true,
       selectedItem: null,
+      showMessage: false,
     };
   },
   methods: {
