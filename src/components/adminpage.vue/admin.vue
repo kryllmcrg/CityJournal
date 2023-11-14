@@ -39,6 +39,21 @@
           <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
 
 
+          <!-- News Section -->
+          <v-divider></v-divider>
+            <v-list-item-group v-model="selectedItem">
+              <v-list-item @click="selectItem('news')" prepend-icon="mdi-newspaper-variant-outline" title="News" value="news">
+              </v-list-item>
+              <v-list-item v-if="selectedItem === 'news'">
+                <v-list-item-content>
+                  <v-list-item @click="selectItem('addNews')" prepend-icon="mdi-plus-circle" title="Add News" value="addNews">
+                  </v-list-item>
+                  <v-list-item @click="selectItem('editNews')" prepend-icon="mdi-pencil" title="Edit News" value="editNews">
+                  </v-list-item>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+            
           <!-- Categories Section -->
             <v-divider></v-divider>
             <v-list-item-group v-model="selectedItem">
@@ -111,21 +126,6 @@
               </v-list-item>
             </v-list-item-group>
 
-          <!-- News Section -->
-          <v-divider></v-divider>
-            <v-list-item-group v-model="selectedItem">
-              <v-list-item @click="selectItem('news')" prepend-icon="mdi-newspaper-variant-outline" title="News" value="news">
-              </v-list-item>
-              <v-list-item v-if="selectedItem === 'news'">
-                <v-list-item-content>
-                  <v-list-item @click="selectItem('addNews')" prepend-icon="mdi-plus-circle" title="Add News" value="addNews">
-                  </v-list-item>
-                  <v-list-item @click="selectItem('editNews')" prepend-icon="mdi-pencil" title="Edit News" value="editNews">
-                  </v-list-item>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-
           <!-- Other Admin-related Sections -->
           <v-divider></v-divider>
           <v-list-item-group>
@@ -165,7 +165,7 @@
         <div class="background-container"></div>
       </v-app-bar>
 
-      <v-main style="height: 750px; background-color: #e1cce8">
+      <v-main style="height: 750px; background-color: #f9f6f2">
     <!-- Your content goes here -->
       </v-main>
     </v-layout>
@@ -213,9 +213,6 @@ export default {
     },
     selectItem(item) {
       this.selectedItem = item;
-    },
-    selectSubItem(subItem) {
-      this.selectedSubItem = subItem;
     },
   },
 };
