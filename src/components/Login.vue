@@ -1,30 +1,51 @@
 <template>
-  <div class="d-flex align-center justify-center" style="height: 100vh">
-      <v-sheet width="400" class="mx-auto">
-          <v-form fast-fail @submit.prevent="login">
-              <v-text-field variant="outlined" v-model="username" label="Username"></v-text-field>
+  <v-app>
+    <v-container fluid fill-height>
+      <v-row align="center" justify="center">
+        <v-col cols="12" sm="8" md="6">
+          <v-card elevation="2">
+            <v-card-title class="headline text-center">Login</v-card-title>
+            <v-card-text>
+              <v-form @submit.prevent="login">
+                <v-text-field v-model="Email" label="Email" outlined></v-text-field>
 
-              <v-text-field variant="outlined" v-model="password" label="Password"></v-text-field>
-              <a href="#" class="text-body-2 font-weight-regular">Forgot Password?</a>
+                <v-text-field
+                  v-model="password"
+                  :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="passwordVisible ? 'text' : 'password'"
+                  label="Password"
+                  outlined
+                  @click:append="togglePasswordVisibility"
+                ></v-text-field>
 
-              <v-btn type="submit" color="primary" block class="mt-2">Sign in</v-btn>
+                <v-btn type="submit" color="primary" block class="mt-4">Sign in</v-btn>
+              </v-form>
 
-          </v-form>
-          <div class="mt-2">
-              <p class="text-body-2">Don't have an account? <a href="/register">Sign Up</a></p>
-          </div>
-      </v-sheet>
-  </div>
+              <v-row class="mt-3">
+                <v-col>
+                  <a href="#" class="link" @click.prevent="forgotPassword">Forgot Password?</a>
+                </v-col>
+                <v-col class="text-right">
+                  <p class="text-body-2">Don't have an account? <a href="/register">Sign Up</a></p>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import axios from 'axios';
 
 export default {
   name: 'Login',
   data() {
     return {
-      username: '',
+      Email: '',
       password: '',
       passwordVisible: false,
     };
@@ -32,11 +53,11 @@ export default {
   methods: {
     async login() {
       try {
-        console.log('Username:', this.username);
+        console.log('Email:', this.Email);
         console.log('Password:', this.password);
 
         const response = await axios.post('/login', {
-          username: this.username,
+          Email: this.Email,
           password: this.password,
         }, {
           headers: {
@@ -64,8 +85,8 @@ export default {
 
 <style scoped>
 .headline {
-  text-align: center;
   color: #2196F3; /* Vuetify primary color */
+  font-size: 24px;
 }
 
 .link {
@@ -74,7 +95,13 @@ export default {
   cursor: pointer;
 }
 
-.separator {
-  margin: 0 10px;
+.text-body-2 {
+  font-size: 14px;
 }
+
+.card {
+  max-width: 400px;
+  margin: auto;
+}
+
 </style>

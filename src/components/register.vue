@@ -1,77 +1,28 @@
 <template>
-  <v-container>
-    <!-- Navbar with Logo -->
-    <v-row align="center">
-      <v-col cols="12">
-        <v-app-bar app color="primary" dark>
-          <v-toolbar-title>
-            <v-img src="your-logo-url" alt="Logo" max-height="40"></v-img>
-          </v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text to="/login">
-            Login
-          </v-btn>
-        </v-app-bar>
-      </v-col>
-    </v-row>
+  <div class="d-flex align-center justify-center" style="height: 100vh">
+    <v-sheet width="400" class="mx-auto">
+      <v-form @submit.prevent="register">
+        <v-text-field variant="outlined" v-model="username" label="Username"></v-text-field>
 
-    <!-- Registration Form -->
-    <v-row justify="center" align="center">
-      <v-col cols="12" sm="10" md="10" lg="5">
-        <v-card>
-          <v-card-title class="headline">
-            Register
-          </v-card-title>
+        <v-text-field variant="outlined" v-model="email" label="Email"></v-text-field>
 
-          <v-card-text>
-            <v-form ref="registerForm" @submit.prevent="register">
-              <v-text-field v-model="username" label="Username" required></v-text-field>
-              <v-text-field v-model="email" label="Email" required></v-text-field>
-              <v-text-field
-                v-model="password"
-                label="Password"
-                :type="passwordVisible ? 'text' : 'password'"
-                :append-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
-                @click:append="togglePasswordVisibility"
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="confirm_password"
-                label="Confirm Password"
-                :type="confirmPasswordVisible ? 'text' : 'password'"
-                :append-icon="confirmPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
-                @click:append="toggleConfirmPasswordVisibility"
-                required
-              ></v-text-field>
-              <v-btn type="submit" color="primary" class="mr-4">
-                Register
-              </v-btn>
-            </v-form>
+        <v-text-field variant="outlined" v-model="password" label="Password"></v-text-field>
 
-            <v-row justify="center" class="mt-4">
-              <router-link to="/login" class="link">
-                Login
-              </router-link>
-            </v-row>
+        <v-text-field
+          variant="outlined"
+          v-model="confirm_password" 
+          label="Confirm Password"
+          type="password"
+        ></v-text-field>
 
-            <v-divider class="mt-4"></v-divider>
+        <v-btn type="submit" color="primary" block class="mt-2">Register</v-btn>
+      </v-form>
 
-            <v-row justify="center" class="mt-4">
-              <v-btn icon @click="registerWith('facebook')">
-                <v-icon color="blue darken-4">mdi-facebook</v-icon>
-              </v-btn>
-              <v-btn icon @click="registerWith('google')">
-                <v-icon color="red">mdi-google</v-icon>
-              </v-btn>
-              <v-btn icon @click="registerWith('instagram')">
-                <v-icon color="purple">mdi-instagram</v-icon>
-              </v-btn>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+      <div class="mt-2">
+        <p class="text-body-2">Already have an account? <a href="/login">Sign In</a></p>
+      </div>
+    </v-sheet>
+  </div>
 </template>
 
 <script>
@@ -84,7 +35,7 @@ export default {
       username: '',
       email:'',
       password: '',
-      confirm_password: '',
+      confirm_password: '', // Correctly named data property
       passwordVisible: false,
       confirmPasswordVisible: false,
     };
@@ -95,6 +46,7 @@ export default {
         console.log('Username:', this.username);
         console.log('Email:', this.email);
         console.log('Password:', this.password);
+        console.log('Confirm Password:', this.confirm_password); // Use the correct data property
 
         const response = await axios.post('/register', {
           username: this.username,
