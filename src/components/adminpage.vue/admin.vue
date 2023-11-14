@@ -223,9 +223,10 @@ export default {
   methods: {
     toggleItem(item) {
       if (this.selectedItem === item) {
-        // If News is clicked again, toggle visibility
+        // If News is clicked again, hide the items
         this.selectedItem = null;
       } else {
+        // If a different item is clicked, switch to that item
         this.selectedItem = item;
       }
     },
@@ -237,18 +238,14 @@ export default {
 </script>
 
 <style>
-/* ... (other styles) */
-
-/* Hover effect for navigation drawer items */
 .v-list-item:hover {
-  background-color: #9575cd; /* Change the background color on hover */
-  color: #ffffff; /* Change the text color on hover */
+  background-color: #9575cd;
+  color: #ffffff; 
 }
 
-/* Hover effect for navigation drawer sub-items */
 .v-list-item-group:hover .v-list-item {
-  background-color: #9575cd; /* Change the background color on hover */
-  color: #ffffff; /* Change the text color on hover */
+  background-color: #9575cd; 
+  color: #ffffff; 
 }
 
 </style>
