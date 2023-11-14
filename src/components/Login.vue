@@ -116,8 +116,7 @@ export default {
   background-image: url('@/assets/bglogin.jpg');
   background-size: cover;
   background-position: center;
-  height: 100vh; /* Set the height based on your design */
-  display: flex;
+  height: 100vh; 
   align-items: center;
   justify-content: center;
 }
