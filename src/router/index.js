@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
-import Admin from '../components/Adminpage.vue/Admin.vue'
+import Admin from '../components/AdminPage.vue/Admin.vue'
 import User from '../components/Userpage.vue/User.vue'
-import AboutSection from '../components/Userpage.vue/AboutSection.vue'
-import ContactSection from '../components/Userpage.vue/ContactSection.vue'
-import HomeSection from '../components/Userpage.vue/HomeSection.vue'
-import AddNews from '../components/Adminpage.vue/AddNews.vue'
+import AboutSection from '../components/UserPage.vue/AboutSection.vue'
+import ContactSection from '../components/UserPage.vue/ContactSection.vue'
+import HomeSection from '../components/UserPage.vue/HomeSection.vue'
+import AddNews from '../components/AdminPage.vue/AddNews.vue'
 
 const routes = [
   {
