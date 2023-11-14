@@ -193,7 +193,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #a666b9;
+  background-color: #673ab7;
   background-size: cover;
   z-index: -1;
   margin-bottom: 50%;
