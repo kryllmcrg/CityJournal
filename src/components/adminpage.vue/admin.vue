@@ -53,7 +53,7 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
-            
+
           <!-- Categories Section -->
             <v-divider></v-divider>
             <v-list-item-group v-model="selectedItem">
