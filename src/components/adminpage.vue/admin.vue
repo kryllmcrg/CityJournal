@@ -173,7 +173,15 @@
     <!-- Main Content -->
     
     <v-main>
+
       </v-main>
+
+      <v-footer app class="footer">
+        <v-spacer></v-spacer>
+        <div class="text-center">
+          <span>&copy; 2023 Your Company</span>
+        </div>
+      </v-footer>
 
   </v-card>
 </template>
@@ -189,7 +197,17 @@
   background-size: cover;
   z-index: -1;
   margin-bottom: 50%;
-}</style>
+}
+
+.footer {
+  background-color: #673ab7; /* Background color of the footer */
+  color: #ffffff; /* Text color in the footer */
+  padding: 10px; /* Adjust padding as needed */
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+</style>
 
 
 
