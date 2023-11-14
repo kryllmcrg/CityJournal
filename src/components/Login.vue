@@ -26,7 +26,7 @@
                 v-model="password"
                 label="Password"
                 :type="passwordVisible ? 'text' : 'password'"
-                :append-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+                :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                 @click:append="togglePasswordVisibility"
                 required
               ></v-text-field>
