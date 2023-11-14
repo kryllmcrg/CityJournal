@@ -38,74 +38,66 @@
           <!-- Users -->
           <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
 
+
           <!-- Categories Section -->
-          <v-divider></v-divider>
+            <v-divider></v-divider>
             <v-list-item-group v-model="selectedItem">
-              <v-list-item @click="selectItem('categories')" prepend-icon="mdi-newspaper-variant-outline" title="Categories" value="categories">
-              </v-list-item>
+              <v-list-item @click="selectItem('categories')" prepend-icon="mdi-format-list-bulleted" title="Categories" value="categories"></v-list-item>
+              
+              <!-- Add Category -->
               <v-list-item v-if="selectedItem === 'categories'">
                 <v-list-item-content>
-                  <v-list-item @click="selectItem('waitingApproval')" prepend-icon="mdi-plus-circle" title="Waiting for Approval" value="waitingApproval">
+                  <v-list-item @click="selectItem('addCategory')" prepend-icon="mdi-plus-circle" title="Add Category" value="addCategory"></v-list-item>
+                  <v-list-item @click="selectItem('manageCategory')" prepend-icon="mdi-pencil" title="Manage Category" value="manageCategory"></v-list-item>
+                </v-list-item-content>
+              </v-list-item>
+
+              <!-- Sub Categories Section -->
+              <v-divider></v-divider>
+              <v-list-item v-if="selectedItem === 'categories'">
+                <v-list-item-group v-model="selectedSubItem">
+                  <v-list-item @click="selectSubItem('subCategories')" prepend-icon="mdi-subdirectory-arrow-right" title="Sub Categories" value="subCategories"></v-list-item>
+                  
+                  <!-- Add Subcategory -->
+                  <v-list-item v-if="selectedSubItem === 'subCategories'">
+                    <v-list-item @click="selectSubItem('addSubcategory')" prepend-icon="mdi-plus-circle" title="Add Subcategory" value="addSubcategory"></v-list-item>
+                    <v-list-item @click="selectSubItem('manageSubcategory')" prepend-icon="mdi-pencil" title="Manage Subcategory" value="manageSubcategory"></v-list-item>
                   </v-list-item>
-                  <v-list-item @click="selectItem('approvedComments')" prepend-icon="mdi-pencil" title="Approved Comments" value="approvedComments">
-                  </v-list-item>
+                </v-list-item-group>
+              </v-list-item>
+            </v-list-item-group>
+            
+            <!-- Post Section -->
+            <v-divider></v-divider>
+            <v-list-item-group v-model="selectedItem">
+              <v-list-item @click="selectItem('post')" prepend-icon="mdi-file-document-outline" title="Post" value="post"></v-list-item>
+
+              <!-- Manage Posts -->
+              <v-list-item v-if="selectedItem === 'post'">
+                <v-list-item-content>
+                  <v-list-item @click="selectItem('addPosts')" prepend-icon="mdi-plus-circle" title="Add Posts" value="addPosts"></v-list-item>
+                  <v-list-item @click="selectItem('managePosts')" prepend-icon="mdi-pencil" title="Manage Posts" value="managePosts"></v-list-item>
+                  <v-list-item @click="selectItem('trashPosts')" prepend-icon="mdi-delete" title="Trash Posts" value="trashPosts"></v-list-item>
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
 
+          <!-- Pages Section -->
           <v-divider></v-divider>
-          <v-list-item-group>
-            <v-list-item prepend-icon="mdi-format-list-bulleted" title="Categories" value="categories"></v-list-item>
-
-            <!-- Add Category -->
-            <v-list-item prepend-icon="mdi-plus-circle" title="Add Category" value="addCategory"></v-list-item>
-
-            <!-- Manage Category -->
-            <v-list-item prepend-icon="mdi-pencil" title="Manage Category" value="manageCategory"></v-list-item>
-
-            <!-- Sub Categories Section -->
-            <v-divider></v-divider>
-            <v-list-item-group>
-              <v-list-item prepend-icon="mdi-subdirectory-arrow-right" title="Sub Categories" value="subCategories"></v-list-item>
-
-              <!-- Add Subcategory -->
-              <v-list-item prepend-icon="mdi-plus-circle" title="Add Subcategory" value="addSubcategory"></v-list-item>
-
-              <!-- Manage Subcategory -->
-              <v-list-item prepend-icon="mdi-pencil" title="Manage Subcategory" value="manageSubcategory"></v-list-item>
-            </v-list-item-group>
-          </v-list-item-group>
-
-            <!-- Post -->
-            <v-divider></v-divider>
-          <v-list-item-group>
-            <v-list-item prepend-icon="mdi-file-document-outline" title="Post" value="post"></v-list-item>
-
-            <!-- Add Posts -->
-            <v-list-item prepend-icon="mdi-plus-circle" title="Add Posts" value="addPosts"></v-list-item>
-
-            <!-- Manage Posts -->
-            <v-list-item prepend-icon="mdi-pencil" title="Manage Posts" value="managePosts"></v-list-item>
-
-            <!-- Trash Posts -->
-            <v-list-item prepend-icon="mdi-delete" title="Trash Posts" value="trashPosts"></v-list-item>
-          </v-list-item-group>
-
-          <!-- Pages -->
-          <v-divider></v-divider>
-          <v-list-item-group>
-            <v-list-item prepend-icon="mdi-file-multiple-outline" title="Pages" value="pages"></v-list-item>
-
+          <v-list-item-group v-model="selectedItem">
+            <v-list-item @click="selectItem('pages')" prepend-icon="mdi-file-multiple-outline" title="Pages" value="pages"></v-list-item>
+            
             <!-- About Us -->
-            <v-list-item prepend-icon="mdi-information" title="About Us" value="aboutUs"></v-list-item>
-
-            <!-- Contact Us -->
-            <v-list-item prepend-icon="mdi-email" title="Contact Us" value="contactUs"></v-list-item>
+            <v-list-item v-if="selectedItem === 'pages'">
+              <v-list-item-content>
+                <v-list-item @click="selectItem('aboutUs')" prepend-icon="mdi-information" title="About Us" value="aboutUs"></v-list-item>
+                <v-list-item @click="selectItem('contactUs')" prepend-icon="mdi-email" title="Contact Us" value="contactUs"></v-list-item>
+              </v-list-item-content>
+            </v-list-item>
           </v-list-item-group>
-
 
           <!-- Comments Section -->
-          <v-divider></v-divider>
+           <v-divider></v-divider>
             <v-list-item-group v-model="selectedItem">
               <v-list-item @click="selectItem('comments')" prepend-icon="mdi-newspaper-variant-outline" title="Comments" value="comments">
               </v-list-item>
@@ -219,6 +211,9 @@ export default {
     },
     selectItem(item) {
       this.selectedItem = item;
+    },
+    selectSubItem(subItem) {
+      this.selectedSubItem = subItem;
     },
   },
 };
