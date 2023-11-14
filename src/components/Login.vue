@@ -1,6 +1,5 @@
 <template>
-  <v-container>
-    <!-- Navbar with Logo -->
+  <v-container class="container">
     <v-row>
       <v-col cols="12">
         <v-app-bar app color="primary" dark>
@@ -112,5 +111,8 @@ export default {
 
 .separator {
   margin: 0 10px;
+}
+.container{
+  background-image: url('@/assets/bglogin.jpg');
 }
 </style>
