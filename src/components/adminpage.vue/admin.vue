@@ -149,8 +149,6 @@
         </v-list>
       </v-navigation-drawer>
 
-      <!-- Navigation Bar -->
-      <!-- Navigation Bar -->
       <v-app-bar app color="transparent" dark>
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
           <v-toolbar-title>CiO</v-toolbar-title>
