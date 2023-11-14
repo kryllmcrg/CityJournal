@@ -39,6 +39,21 @@
           <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
 
 
+          <!-- News Section -->
+          <v-divider></v-divider>
+            <v-list-item-group v-model="selectedItem">
+              <v-list-item @click="selectItem('news')" prepend-icon="mdi-newspaper-variant-outline" title="News" value="news">
+              </v-list-item>
+              <v-list-item v-if="selectedItem === 'news'">
+                <v-list-item-content>
+                  <v-list-item @click="selectItem('addNews')" prepend-icon="mdi-plus-circle" title="Add News" value="addNews">
+                  </v-list-item>
+                  <v-list-item @click="selectItem('editNews')" prepend-icon="mdi-pencil" title="Edit News" value="editNews">
+                  </v-list-item>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+
           <!-- Categories Section -->
             <v-divider></v-divider>
             <v-list-item-group v-model="selectedItem">
@@ -111,21 +126,6 @@
               </v-list-item>
             </v-list-item-group>
 
-          <!-- News Section -->
-          <v-divider></v-divider>
-            <v-list-item-group v-model="selectedItem">
-              <v-list-item @click="selectItem('news')" prepend-icon="mdi-newspaper-variant-outline" title="News" value="news">
-              </v-list-item>
-              <v-list-item v-if="selectedItem === 'news'">
-                <v-list-item-content>
-                  <v-list-item @click="selectItem('addNews')" prepend-icon="mdi-plus-circle" title="Add News" value="addNews">
-                  </v-list-item>
-                  <v-list-item @click="selectItem('editNews')" prepend-icon="mdi-pencil" title="Edit News" value="editNews">
-                  </v-list-item>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-
           <!-- Other Admin-related Sections -->
           <v-divider></v-divider>
           <v-list-item-group>
@@ -149,23 +149,30 @@
         </v-list>
       </v-navigation-drawer>
 
-      <!-- Navigation Bar -->
       <v-app-bar app color="transparent" dark>
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>CiO</v-toolbar-title>
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+          <v-toolbar-title>CiO</v-toolbar-title>
 
-        <!-- Add more buttons/icons as needed -->
-        <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-bell</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>mdi-email</v-icon>
-        </v-btn>
-        <div class="background-container"></div>
+          <!-- Add more buttons/icons as needed -->
+          <v-spacer></v-spacer>
+          <v-btn icon>
+                <v-icon>mdi-bell</v-icon>
+            </v-btn>
+          <v-btn icon @click="showMessage = !showMessage">
+              <v-icon>mdi-email</v-icon>
+          </v-btn>
+          <div class="background-container"></div>
       </v-app-bar>
 
-      <v-main style="height: 750px; background-color: #e1cce8">
+      <!-- Message Box -->
+      <v-snackbar v-model="showMessage" right>
+          <v-btn text @click="showMessage = false">Close</v-btn>
+          <!-- Add your message content here -->
+          <span>Message content goes here...</span>
+      </v-snackbar>
+
+
+      <v-main style="height: 750px; background-color: #f9f6f2">
     <!-- Your content goes here -->
       </v-main>
     </v-layout>
@@ -193,7 +200,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #a666b9;
+  background-color: #673ab7;
   background-size: cover;
   z-index: -1;
   margin-bottom: 50%;
@@ -207,6 +214,11 @@
   bottom: 0;
   width: 100%;
 }
+.v-snackbar {
+  right: 16px; /* Adjust the distance from the right side */
+  top: 16px; /* Adjust the distance from the top */
+  max-width: 300px; /* Adjust the maximum width of the message box */
+}
 </style>
 
 
@@ -218,40 +230,35 @@ export default {
       drawer: true,
       rail: true,
       selectedItem: null,
+      showMessage: false,
     };
   },
   methods: {
     toggleItem(item) {
       if (this.selectedItem === item) {
-        // If News is clicked again, toggle visibility
+        // If News is clicked again, hide the items
         this.selectedItem = null;
       } else {
+        // If a different item is clicked, switch to that item
         this.selectedItem = item;
       }
     },
     selectItem(item) {
       this.selectedItem = item;
     },
-    selectSubItem(subItem) {
-      this.selectedSubItem = subItem;
-    },
   },
 };
 </script>
 
 <style>
-/* ... (other styles) */
-
-/* Hover effect for navigation drawer items */
 .v-list-item:hover {
-  background-color: #9575cd; /* Change the background color on hover */
-  color: #ffffff; /* Change the text color on hover */
+  background-color: #9575cd;
+  color: #ffffff; 
 }
 
-/* Hover effect for navigation drawer sub-items */
 .v-list-item-group:hover .v-list-item {
-  background-color: #9575cd; /* Change the background color on hover */
-  color: #ffffff; /* Change the text color on hover */
+  background-color: #9575cd; 
+  color: #ffffff; 
 }
 
 </style>
