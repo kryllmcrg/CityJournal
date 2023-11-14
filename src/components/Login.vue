@@ -117,7 +117,6 @@ export default {
   background-size: cover;
   background-position: center;
   height: 100vh; /* Set the height based on your design */
-  display: flex;
   align-items: center;
   justify-content: center;
 }
