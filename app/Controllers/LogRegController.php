@@ -88,7 +88,7 @@ class LogRegController extends BaseController
                 $response = [
                     'errors' => $this->validator->getErrors(),
                     'message' => 'Invalid Inputs'
-                ];
+                ]; 
                 return $this->fail($response , 409);
                  
             }
