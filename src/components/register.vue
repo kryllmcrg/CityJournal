@@ -27,8 +27,22 @@
             <v-form ref="registerForm" @submit.prevent="register">
               <v-text-field v-model="username" label="Username" required></v-text-field>
               <v-text-field v-model="email" label="Email" required></v-text-field>
-              <v-text-field v-model="password" label="Password" type="password" required></v-text-field>
-              <v-text-field v-model="confirm_password" label="Confirm Password" type="password" required></v-text-field>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                :type="passwordVisible ? 'text' : 'password'"
+                :append-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+                @click:append="togglePasswordVisibility"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="confirm_password"
+                label="Confirm Password"
+                :type="confirmPasswordVisible ? 'text' : 'password'"
+                :append-icon="confirmPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+                @click:append="toggleConfirmPasswordVisibility"
+                required
+              ></v-text-field>
               <v-btn type="submit" color="primary" class="mr-4">
                 Register
               </v-btn>
@@ -37,6 +51,11 @@
             <v-row justify="center" class="mt-4">
               <router-link to="/login" class="link">
                 Login
+              </router-link>
+            </v-row>
+            <v-row justify="center" class="mt-4">
+              <router-link to="/login" class="link">
+               Are you already have account?
               </router-link>
             </v-row>
 
@@ -71,6 +90,8 @@ export default {
       email:'',
       password: '',
       confirm_password: '',
+      passwordVisible: false,
+      confirmPasswordVisible: false,
     };
   },
   methods: {
@@ -95,6 +116,14 @@ export default {
       } catch (error) {
         console.error('Error:', error);
       }
+    },
+
+    togglePasswordVisibility() {
+      this.passwordVisible = !this.passwordVisible;
+    },
+
+    toggleConfirmPasswordVisibility() {
+      this.confirmPasswordVisible = !this.confirmPasswordVisible;
     },
 
     forgotPassword() {
