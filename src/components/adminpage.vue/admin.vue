@@ -40,6 +40,20 @@
 
           <!-- Categories Section -->
           <v-divider></v-divider>
+            <v-list-item-group v-model="selectedItem">
+              <v-list-item @click="selectItem('categories')" prepend-icon="mdi-newspaper-variant-outline" title="Categories" value="categories">
+              </v-list-item>
+              <v-list-item v-if="selectedItem === 'categories'">
+                <v-list-item-content>
+                  <v-list-item @click="selectItem('waitingApproval')" prepend-icon="mdi-plus-circle" title="Waiting for Approval" value="waitingApproval">
+                  </v-list-item>
+                  <v-list-item @click="selectItem('approvedComments')" prepend-icon="mdi-pencil" title="Approved Comments" value="approvedComments">
+                  </v-list-item>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+
+          <v-divider></v-divider>
           <v-list-item-group>
             <v-list-item prepend-icon="mdi-format-list-bulleted" title="Categories" value="categories"></v-list-item>
 
@@ -92,15 +106,18 @@
 
           <!-- Comments Section -->
           <v-divider></v-divider>
-          <v-list-item-group>
-            <v-list-item prepend-icon="mdi-comment-multiple-outline" title="Comments" value="comments"></v-list-item>
-
-            <!-- Waiting for Approval -->
-            <v-list-item prepend-icon="mdi-clock-outline" title="Waiting for Approval" value="waitingApproval"></v-list-item>
-
-            <!-- Approved Comments -->
-            <v-list-item prepend-icon="mdi-check-circle-outline" title="Approved Comments" value="approvedComments"></v-list-item>
-          </v-list-item-group>
+            <v-list-item-group v-model="selectedItem">
+              <v-list-item @click="selectItem('comments')" prepend-icon="mdi-newspaper-variant-outline" title="Comments" value="comments">
+              </v-list-item>
+              <v-list-item v-if="selectedItem === 'comments'">
+                <v-list-item-content>
+                  <v-list-item @click="selectItem('waitingApproval')" prepend-icon="mdi-plus-circle" title="Waiting for Approval" value="waitingApproval">
+                  </v-list-item>
+                  <v-list-item @click="selectItem('approvedComments')" prepend-icon="mdi-pencil" title="Approved Comments" value="approvedComments">
+                  </v-list-item>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
 
           <!-- News Section -->
           <v-divider></v-divider>
