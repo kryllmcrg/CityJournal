@@ -149,17 +149,17 @@
         </v-list>
       </v-navigation-drawer>
 
-      <v-app-bar app color="transparent" dark>
+      <v-app-bar app color="transparent" dark >
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-          <v-toolbar-title>City Information Office</v-toolbar-title>
+          <v-toolbar-title style="color: white;">City Information Office</v-toolbar-title>
 
           <!-- Add more buttons/icons as needed -->
           <v-spacer></v-spacer>
           <v-btn icon>
-                <v-icon>mdi-bell</v-icon>
+                <v-icon style="color: white;">mdi-bell</v-icon>
             </v-btn>
           <v-btn icon @click="showMessage = !showMessage">
-              <v-icon>mdi-email</v-icon>
+              <v-icon style="color: white;">mdi-email</v-icon>
           </v-btn>
           <div class="background-container"></div>
       </v-app-bar>
@@ -201,6 +201,7 @@
   width: 100%;
   height: 100%;
   background-color: #673ab7;
+  color: #ffffff;
   background-size: cover;
   z-index: -1;
   margin-bottom: 50%;
