@@ -1,6 +1,6 @@
 <template>
-  <v-container class="login-container">
-    <v-row align="center">
+  <v-container class="container">
+    <v-row>
       <v-col cols="12">
         <v-app-bar app color="primary" dark>
           <v-toolbar-title>
@@ -12,7 +12,7 @@
 
     <!-- Main Content -->
     <v-row justify="center">
-      <v-col cols="12" sm="10" md="8" lg="6">
+      <v-col cols="12" sm="10" md="10" lg="5">
         <v-card>
           <v-card-title class="headline">
             Login
@@ -98,17 +98,6 @@ export default {
 </script>
 
 <style scoped>
-.login-container {
-  background-image: url('@/assets/bglogin.jpg');
-  background-color: #e1cce8; /* Fallback color */
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .headline {
   text-align: center;
   color: #2196F3; /* Vuetify primary color */
@@ -123,16 +112,7 @@ export default {
 .separator {
   margin: 0 10px;
 }
-<<<<<<< Updated upstream
-.container {
+.container{
   background-image: url('@/assets/bglogin.jpg');
-  background-size: cover;
-  background-position: center;
-  height: 100vh; /* Set the height based on your design */
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-=======
->>>>>>> Stashed changes
 </style>
