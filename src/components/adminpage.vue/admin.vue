@@ -156,7 +156,7 @@
         <div class="background-container"></div>
       </v-app-bar>
 
-      <v-main style="height: 600px"></v-main>
+      <v-main style="height: 750px"></v-main>
     </v-layout>
 
     <!-- Main Content -->

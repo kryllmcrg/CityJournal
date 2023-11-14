@@ -31,7 +31,7 @@
                 v-model="password"
                 label="Password"
                 :type="passwordVisible ? 'text' : 'password'"
-                :append-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+                :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off' "
                 @click:append="togglePasswordVisibility"
                 required
               ></v-text-field>
@@ -39,7 +39,7 @@
                 v-model="confirm_password"
                 label="Confirm Password"
                 :type="confirmPasswordVisible ? 'text' : 'password'"
-                :append-icon="confirmPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+                :append-icon="confirmPasswordVisible ? 'mdi-eye' : 'mdi-eye-off' "
                 @click:append="toggleConfirmPasswordVisibility"
                 required
               ></v-text-field>

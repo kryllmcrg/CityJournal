@@ -22,7 +22,14 @@
           <v-card-text>
             <v-form ref="loginForm" @submit.prevent="login">
               <v-text-field v-model="username" label="Username" required></v-text-field>
-              <v-text-field v-model="password" label="Password" type="password" required></v-text-field>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                :type="passwordVisible ? 'text' : 'password'"
+                :append-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+                @click:append="togglePasswordVisibility"
+                required
+              ></v-text-field>
               <v-btn type="submit" color="primary" class="mr-4">
                 Login
               </v-btn>
@@ -55,6 +62,7 @@ export default {
     return {
       username: '',
       password: '',
+      passwordVisible: false,
     };
   },
   methods: {
@@ -76,6 +84,10 @@ export default {
       } catch (error) {
         console.error('Error:', error);
       }
+    },
+
+    togglePasswordVisibility() {
+      this.passwordVisible = !this.passwordVisible;
     },
 
     forgotPassword() {
