@@ -173,7 +173,9 @@
         <div class="background-container"></div>
       </v-app-bar>
 
-      <v-main style="height: 750px"></v-main>
+      <v-main style="height: 750px; background-color: #e1cce8">
+    <!-- Your content goes here -->
+      </v-main>
     </v-layout>
 
     <!-- Main Content -->
@@ -191,7 +193,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('@/assets/background.jpg');
+  background-color: #a666b9;
   background-size: cover;
   z-index: -1;
   margin-bottom: 50%;
