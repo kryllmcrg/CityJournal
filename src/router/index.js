@@ -7,6 +7,7 @@ import AboutSection from '../components/UserPage.vue/AboutSection.vue'
 import ContactSection from '../components/UserPage.vue/ContactSection.vue'
 import HomeSection from '../components/UserPage.vue/HomeSection.vue'
 import AddNews from '../components/AdminPage.vue/AddNews.vue'
+import RichTextEditor from '../components/RichTextEditor.vue'
 
 const routes = [
   {
@@ -40,6 +41,10 @@ const routes = [
   {
     path: '/addnews',
     component:AddNews
+  },
+  {
+    path: '/rich',
+    component:RichTextEditor
   }
 ]
 
