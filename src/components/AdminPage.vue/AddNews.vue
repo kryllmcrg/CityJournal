@@ -210,7 +210,7 @@
                   </v-row>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn type="submit" color="primary">Save News</v-btn>
+                  <v-btn @click="submitNewsForm" color="primary">Save News</v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -290,7 +290,7 @@ export default {
     selectItem(item) {
       this.selectedItem = item;
     },
-    onQuillEditorReady(quill) {
+    submitNewsForm(){
       console.log('News Title:', this.newsTitle);
       console.log('Author:', this.newsAuthor);
       console.log('Category:', this.newsCategory);
