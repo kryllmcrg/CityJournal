@@ -73,10 +73,9 @@
           <v-btn rounded outlined text @click="$vuetify.scrollTo('#contact')">
             <span class="mr-2">Contact</span>
           </v-btn>
+          <v-btn @click="subscribe">Subscribe</v-btn>
         </div>
       </v-app-bar>
-        <v-btn @click="subscribe">Subscribe</v-btn>
-
       <!-- Dialog for subscription confirmation -->
       <v-dialog v-model="subscriptionDialog" max-width="400">
         <v-card>
