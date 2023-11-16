@@ -170,35 +170,23 @@
           <v-card>
             <v-card-title class="headline">Add News</v-card-title>
             <v-card-text>
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-text-field v-model="newsTitle" label="News Title"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field v-model="newsAuthor" label="Author"></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-select v-model="newsCategory" :items="categories" label="Category"></v-select>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field v-model="newsTags" label="Tags"></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-date-picker v-model="publicationDate" label="Publication Date"></v-date-picker>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-file-input v-model="newsImage" label="News Image" accept="image/*"></v-file-input>
-                </v-col>
-              </v-row>
+              <!-- ... (your existing form fields) ... -->
+
               <v-row>
                 <v-col cols="12">
                   <!-- Include the Quill editor here -->
                   <div class="quill-editor-container">
-                    <vue-quill-editor v-model="newsContent" :options="editorOptions"></vue-quill-editor>
+                    <QuillEditor theme="snow" toolbar="#custom-toolbar" v-model="newsContent">
+                      <template #toolbar>
+                        <div id="custom-toolbar">
+                          <button class="ql-bold"></button>
+                          <button class="ql-italic"></button>
+                          <button class="ql-underline"></button>
+                          <button class="ql-strike"></button>
+                          <button id="your-button">Y</button>
+                        </div>
+                      </template>
+                    </QuillEditor>
                   </div>
                 </v-col>
               </v-row>
@@ -210,6 +198,7 @@
         </v-form>
       </v-container>
     </v-main>
+
 
     <!-- Message Box -->
     <v-snackbar v-model="showMessage" right>
@@ -227,9 +216,11 @@
   </v-card>
 </template>
 
-<script>
+<script >
 import 'quill/dist/quill.snow.css';
 import VueQuillEditor from 'vue-quill-editor';
+
+const content = ref({})
 
 export default {
   components: {
@@ -249,30 +240,7 @@ export default {
       newsImage: null,
       newsContent: '',
       categories: ['Category A', 'Category B', 'Category C'],
-      editorOptions: {
-        modules: {
-          toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'],
-            [{ 'header': 1 }, { 'header': 2 }],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'script': 'sub' }, { 'script': 'super' }],
-            [{ 'indent': '-1' }, { 'indent': '+1' }],
-            [{ 'direction': 'rtl' }],
-            [{ 'size': ['small', false, 'large', 'huge'] }],
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            [{ 'color': [] }, { 'background': [] }],
-            [{ 'font': [] }],
-            [{ 'align': [] }],
-            ['clean'],
-          ],
-        },
-        theme: 'snow',
-      },
     };
-  },
-  mounted() {
-    console.log('Quill Editor mounted');
   },
   methods: {
     toggleItem(item) {
@@ -281,21 +249,36 @@ export default {
     selectItem(item) {
       this.selectedItem = item;
     },
-    submitNewsForm() {
-      console.log('News Title:', this.newsTitle);
-      console.log('Author:', this.newsAuthor);
-      console.log('Category:', this.newsCategory);
-      console.log('Tags:', this.newsTags);
-      console.log('Publication Date:', this.publicationDate);
-      console.log('Image:', this.newsImage);
-      console.log('Content:', this.newsContent);
-    },
   },
 };
 </script>
 
   
   <style>
+.quill-editor-container {
+  width: 80%; /* Adjust the width as needed */
+  max-width: 800px; /* Set a maximum width for larger screens */
+  height: 300px; /* Adjust the height as needed */
+  margin: 50px auto; /* Center horizontally and add some top margin */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+  border-radius: 8px; /* Add rounded corners for a softer look */
+  overflow: hidden; /* Hide overflowing content */
+}
+
+#custom-toolbar {
+  background-color: #f5f5f5; /* Set a light background color for the toolbar */
+  border-bottom: 1px solid #ddd; /* Add a bottom border for separation */
+  padding: 8px; /* Add padding for spacing within the toolbar */
+}
+
+/* Style Quill editor content area */
+.ql-editor {
+  font-family: 'Arial', sans-serif; /* Set a default font family */
+  font-size: 16px; /* Set a default font size */
+  color: #333; /* Set a default text color */
+  padding: 15px; /* Add padding within the editor */
+  line-height: 1.6; /* Set the line height for better readability */
+}
   .background-container {
     position:fixed;
     top: 0;
