@@ -75,16 +75,21 @@
           </v-btn>
         </div>
       </v-app-bar>
-      <v-snackbar v-model="subscriptionSnackbar" :timeout="3000" bottom>
-      {{ "Thank you for subscribing!" }}
-      <v-btn
-        color="pink"
-        text
-        @click="subscriptionSnackbar = false"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
+        <v-btn @click="subscribe">Subscribe</v-btn>
+
+      <!-- Dialog for subscription confirmation -->
+      <v-dialog v-model="subscriptionDialog" max-width="400">
+        <v-card>
+          <v-card-title class="headline">Subscribe Confirmation</v-card-title>
+          <v-card-text>
+            Do you want to subscribe to our page?
+          </v-card-text>
+          <v-card-actions>
+            <v-btn @click="subscribeConfirmed">Yes</v-btn>
+            <v-btn @click="subscriptionDialog = false">No</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
   </template>
   
@@ -104,7 +109,7 @@
     data: () => ({
       drawer: null,
       isXs: false,
-      subscriptionSnackbar: false,
+      subscriptionDialog: false,
       items: [
         ["mdi-home-outline", "Home", "#hero"],
         ["mdi-information-outline", "Sobre", "#features"],
@@ -121,11 +126,20 @@
       onResize() {
         this.isXs = window.innerWidth < 850;
       },
-      showSubscriptionSnackbar() {
-        this.subscriptionSnackbar = true;
+      subscribe() {
+        // Show the subscription confirmation dialog
+        this.subscriptionDialog = true;
+      },
+
+      subscribeConfirmed() {
+        // Handle subscription logic here
+        // For example, you can show a success message or send a request to your server
+        console.log('User subscribed!');
+        
+        // Close the dialog
+        this.subscriptionDialog = false;
       },
     },
-
   
     watch: {
       isXs(value) {
