@@ -164,28 +164,65 @@
       <span>Message content goes here...</span>
     </v-snackbar>
 
-    <!-- Main Content -->
-    <v-main style="height: 750px; background-color: #f9f6f2">
+    <v-main>
       <v-container>
-        <v-row>
-          <v-col cols="12">
-            <v-form @submit.prevent="submitNewsForm">
-              <v-card>
-                <v-card-title class="headline">Add News</v-card-title>
-                <v-card-text>
-                  <!-- Form Fields for News Content and Title -->
+        <v-form @submit.prevent="submitNewsForm">
+          <v-card>
+            <v-card-title class="headline">Add News</v-card-title>
+            <v-card-text>
+
+              <!-- News Title and Author -->
+              <v-row>
+                <v-col cols="12" sm="6">
                   <v-text-field v-model="newsTitle" label="News Title"></v-text-field>
-                  <v-quill-editor v-model="newsContent" label="News Content" />
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn type="submit" color="primary">Save News</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-form>
-          </v-col>
-        </v-row>
+                </v-col>
+                <v-col cols="12" sm="6">
+                  <v-text-field v-model="newsAuthor" label="Author"></v-text-field>
+                </v-col>
+              </v-row>
+
+              <!-- Category, Tags, and Publication Date -->
+              <v-row>
+                <v-col cols="12" sm="4">
+                  <v-select v-model="newsCategory" :items="categories" label="Category"></v-select>
+                </v-col>
+                <v-col cols="12" sm="4">
+                  <v-text-field v-model="newsTags" label="Tags"></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="4">
+                  <v-date-picker v-model="publicationDate" label="Publication Date"></v-date-picker>
+                </v-col>
+              </v-row>
+
+              <!-- News Image -->
+              <v-row>
+                <v-col cols="12">
+                  <v-file-input v-model="newsImage" label="News Image" accept="image/*"></v-file-input>
+                </v-col>
+              </v-row>
+
+              <!-- Rich Text Editor -->
+              <v-row>
+    <v-col cols="12" class="quill-editor-container">
+      <vue-quill-editor v-model="newsContent" :options="editorOptions" @ready="onQuillEditorReady"></vue-quill-editor>
+    </v-col>
+  </v-row>
+
+            </v-card-text>
+            <v-card-actions>
+              <v-btn type="submit" color="primary">Save News</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-form>
       </v-container>
     </v-main>
+
+    <!-- Message Box -->
+    <v-snackbar v-model="showMessage" right>
+      <v-btn text @click="showMessage = false">Close</v-btn>
+      <!-- Add your message content here -->
+      <span>Message content goes here...</span>
+    </v-snackbar>
 
     <v-footer app class="footer">
       <v-spacer></v-spacer>
@@ -196,10 +233,11 @@
   </v-card>
 </template>
 
-  
-  <script>
+<script>
 import VueQuillEditor from 'vue-quill-editor';
+import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
 
 export default {
   components: {
@@ -212,9 +250,39 @@ export default {
       selectedItem: null,
       showMessage: false,
       newsTitle: '',
+      newsAuthor: '',
+      newsCategory: null,
+      newsTags: '',
+      publicationDate: null,
+      newsImage: null,
       newsContent: '',
+      categories: ['Sports', 'Technology', 'Health', 'Business'],
     };
   },
+  computed: {
+  editorOptions() {
+    return {
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{ 'header': 1 }, { 'header': 2 }],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          [{ 'script': 'sub' }, { 'script': 'super' }],
+          [{ 'indent': '-1' }, { 'indent': '+1' }],
+          [{ 'direction': 'rtl' }],
+          [{ 'size': ['small', false, 'large', 'huge'] }],
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+          ['clean'],
+        ],
+      },
+      theme: 'snow', // or 'bubble' for a bubble theme
+    };
+  },
+},
   methods: {
     toggleItem(item) {
       // ... (your existing toggleItem method)
@@ -222,30 +290,33 @@ export default {
     selectItem(item) {
       this.selectedItem = item;
     },
-    submitNewsForm() {
-      // Implement your logic to save the news
+    onQuillEditorReady(quill) {
       console.log('News Title:', this.newsTitle);
-      console.log('News Content:', this.newsContent);
-      // You can send the data to your backend or perform other actions here
+      console.log('Author:', this.newsAuthor);
+      console.log('Category:', this.newsCategory);
+      console.log('Tags:', this.newsTags);
+      console.log('Publication Date:', this.publicationDate);
+      console.log('Image:', this.newsImage);
+      console.log('Content:', this.newsContent);
     },
   },
 };
 </script>
 
-  
+
   <style>
   .background-container {
-    position:fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #673ab7;
-    color: #ffffff;
-    background-size: cover;
-    z-index: -1;
-    margin-bottom: 50%;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #673ab7;
+  color: #ffffff;
+  background-size: cover;
+  z-index: -1;
+  margin-bottom: 50%;
+}
   
   .footer {
     background-color: #673ab7; /* Background color of the footer */
@@ -269,6 +340,10 @@ export default {
     background-color: #9575cd; 
     color: #ffffff; 
   }
+
+  .quill-editor-container {
+  height: 400px; /* Adjust the height as needed */
+}
   
   </style>
   
