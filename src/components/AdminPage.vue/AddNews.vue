@@ -167,55 +167,58 @@
     <v-main>
       <v-container>
         <v-form @submit.prevent="submitNewsForm">
-          <v-card>
-            <v-card-title class="headline">Add News</v-card-title>
-            <v-card-text>
+          <v-row>
+            <v-col cols="12" md="12">
+              <v-card>
+                <v-card-title class="headline">Add News</v-card-title>
+                <v-card-text>
+                  <!-- News Title and Author -->
+                  <v-row>
+                    <v-col cols="12" sm="6">
+                      <v-text-field v-model="newsTitle" label="News Title"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                      <v-text-field v-model="newsAuthor" label="Author"></v-text-field>
+                    </v-col>
+                  </v-row>
 
-              <!-- News Title and Author -->
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-text-field v-model="newsTitle" label="News Title"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field v-model="newsAuthor" label="Author"></v-text-field>
-                </v-col>
-              </v-row>
+                  <!-- Category, Tags, and Publication Date -->
+                  <v-row>
+                    <v-col cols="12" sm="4">
+                      <v-select v-model="newsCategory" :items="categories" label="Category"></v-select>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                      <v-text-field v-model="newsTags" label="Tags"></v-text-field>
+                    </v-col>
+                    <v-col cols="5" sm="3">
+                      <v-date-picker v-model="publicationDate" label="Publication Date"></v-date-picker>
+                    </v-col>
+                  </v-row>
 
-              <!-- Category, Tags, and Publication Date -->
-              <v-row>
-                <v-col cols="12" sm="4">
-                  <v-select v-model="newsCategory" :items="categories" label="Category"></v-select>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field v-model="newsTags" label="Tags"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-date-picker v-model="publicationDate" label="Publication Date"></v-date-picker>
-                </v-col>
-              </v-row>
+                  <!-- News Image -->
+                  <v-row>
+                    <v-col cols="12">
+                      <v-file-input v-model="newsImage" label="News Image" accept="image/*"></v-file-input>
+                    </v-col>
+                  </v-row>
 
-              <!-- News Image -->
-              <v-row>
-                <v-col cols="12">
-                  <v-file-input v-model="newsImage" label="News Image" accept="image/*"></v-file-input>
-                </v-col>
-              </v-row>
-
-              <!-- Rich Text Editor -->
-              <v-row>
-    <v-col cols="12" class="quill-editor-container">
-      <vue-quill-editor v-model="newsContent" :options="editorOptions" @ready="onQuillEditorReady"></vue-quill-editor>
-    </v-col>
-  </v-row>
-
-            </v-card-text>
-            <v-card-actions>
-              <v-btn type="submit" color="primary">Save News</v-btn>
-            </v-card-actions>
-          </v-card>
+                  <!-- Rich Text Editor -->
+                  <v-row>
+                    <v-col cols="12" class="quill-editor-container">
+                      <vue-quill-editor v-model="newsContent" :options="editorOptions" @ready="onQuillEditorReady"></vue-quill-editor>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+                <v-card-actions>
+                  <v-btn type="submit" color="primary">Save News</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-form>
       </v-container>
     </v-main>
+    
 
     <!-- Message Box -->
     <v-snackbar v-model="showMessage" right>
@@ -235,9 +238,6 @@
 
 <script>
 import VueQuillEditor from 'vue-quill-editor';
-import 'quill/dist/quill.core.css';
-import 'quill/dist/quill.snow.css';
-import 'quill/dist/quill.bubble.css';
 
 export default {
   components: {
@@ -303,21 +303,20 @@ export default {
 };
 </script>
 
-
-  <style>
+<style>
   .background-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #673ab7;
-  color: #ffffff;
-  background-size: cover;
-  z-index: -1;
-  margin-bottom: 50%;
-}
-  
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #673ab7;
+    color: #ffffff;
+    background-size: cover;
+    z-index: -1;
+    margin-bottom: 50%;
+  }
+
   .footer {
     background-color: #673ab7; /* Background color of the footer */
     color: #ffffff; /* Text color in the footer */
@@ -326,25 +325,31 @@ export default {
     bottom: 0;
     width: 100%;
   }
+
   .v-snackbar {
     right: 16px; /* Adjust the distance from the right side */
     top: 16px; /* Adjust the distance from the top */
     max-width: 300px; /* Adjust the maximum width of the message box */
   }
+
   .v-list-item:hover {
     background-color: #9575cd;
-    color: #ffffff; 
+    color: #ffffff;
   }
-  
+
   .v-list-item-group:hover .v-list-item {
-    background-color: #9575cd; 
-    color: #ffffff; 
+    background-color: #9575cd;
+    color: #ffffff;
   }
 
   .quill-editor-container {
-  height: 400px; /* Adjust the height as needed */
-}
-  
-  </style>
-  
+    height: 400px; /* Adjust the height as needed */
+  }
+
+  /* Add this block to set the color of the rich text editor form */
+  .quill-editor-container .ql-editor {
+    color: #333; /* Change this to the desired text color */
+  }
+</style>
+
   
