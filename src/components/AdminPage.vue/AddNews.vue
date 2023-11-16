@@ -231,7 +231,6 @@
 import 'quill/dist/quill.snow.css';
 import VueQuillEditor from 'vue-quill-editor';
 
-
 export default {
   components: {
     VueQuillEditor,
@@ -271,6 +270,9 @@ export default {
         theme: 'snow',
       },
     };
+  },
+  mounted() {
+    console.log('Quill Editor mounted');
   },
   methods: {
     toggleItem(item) {
