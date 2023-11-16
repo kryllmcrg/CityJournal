@@ -75,6 +75,16 @@
           </v-btn>
         </div>
       </v-app-bar>
+      <v-snackbar v-model="subscriptionSnackbar" :timeout="3000" bottom>
+      {{ "Thank you for subscribing!" }}
+      <v-btn
+        color="pink"
+        text
+        @click="subscriptionSnackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
     </div>
   </template>
   
@@ -94,6 +104,7 @@
     data: () => ({
       drawer: null,
       isXs: false,
+      subscriptionSnackbar: false,
       items: [
         ["mdi-home-outline", "Home", "#hero"],
         ["mdi-information-outline", "Sobre", "#features"],
@@ -110,7 +121,11 @@
       onResize() {
         this.isXs = window.innerWidth < 850;
       },
+      showSubscriptionSnackbar() {
+        this.subscriptionSnackbar = true;
+      },
     },
+
   
     watch: {
       isXs(value) {
