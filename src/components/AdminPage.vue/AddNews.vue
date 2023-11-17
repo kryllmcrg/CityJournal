@@ -232,7 +232,7 @@ export default {
       publicationDate: null,
       newsImage: null,
       newsContent: '',
-      categories: ['Category A', 'Category B', 'Category C'],
+      categories: ['Government', 'Politics', 'Educaion','Health','Environment','Economy','Business','Fashion','Entertainment','Sport'],
     };
   },
   methods: {
