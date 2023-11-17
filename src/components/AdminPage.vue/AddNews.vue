@@ -161,38 +161,38 @@
     </v-snackbar>
 
     <v-main>
-    <v-container>
-      <!-- Wrap the v-form around your form elements -->
-      <v-form @submit.prevent="submitNewsForm">
-        <v-card>
-          <v-card-title class="headline">Add News</v-card-title>
-          <v-card-text>
-            <!-- Title -->
-            <v-text-field v-model="newsTitle" label="Title" required></v-text-field>
+      <v-container>
+        <!-- Wrap the v-form around your form elements -->
+        <v-form @submit.prevent="addNews">
+          <v-card>
+            <v-card-title class="headline">Add News</v-card-title>
+            <v-card-text>
+              <!-- Title -->
+              <v-text-field v-model="Title" label="Title" required></v-text-field>
 
-            <!-- Category -->
-            <v-select v-model="newsCategory" :items="categories" label="Category" required></v-select>
+              <!-- Category -->
+              <v-select v-model="Category" :items="categories" label="Category" required></v-select>
 
-            <!-- Author -->
-            <v-text-field v-model="newsAuthor" label="Author" required></v-text-field>
+              <!-- Author -->
+              <v-text-field v-model="Author" label="Author" required></v-text-field>
 
-            <!-- Stories of News -->
-            <v-textarea v-model="newsStories" label="Stories of News" required></v-textarea>
+              <!-- Image Upload -->
+              <v-file-input v-model="Image" label="Image" accept="image/*" required></v-file-input>
 
-            <!-- Image Upload -->
-            <v-file-input v-model="newsImage" label="Image" accept="image/*" required></v-file-input>
-          </v-card-text>
-          <v-card-actions>
-            <!-- Save News Button -->
-            <v-btn type="submit" color="primary" @click="submitNewsForm">Save News</v-btn>
+              <!-- Stories of News -->
+              <v-textarea v-model="Stories" label="Stories of News" required></v-textarea>
+            </v-card-text>
+            <v-card-actions>
+              <!-- Save News Button -->
+              <v-btn type="submit" color="primary">Save News</v-btn>
 
-            <!-- Edit News Button -->
-            <v-btn color="warning" @click="editNewsForm">Edit News</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-form>
-    </v-container>
-  </v-main>
+              <!-- Edit News Button -->
+              <v-btn color="warning" @click="editNewsForm">Edit News</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-form>
+      </v-container>
+    </v-main>
 
     <!-- Message Box -->
     <v-snackbar v-model="showMessage" right>
@@ -210,9 +210,10 @@
   </v-card>
 </template>
 
-<script >
+<script>
 import 'quill/dist/quill.snow.css';
-import VueQuillEditor from 'vue-quill-editor'
+import VueQuillEditor from 'vue-quill-editor';
+import axios from 'axios';
 
 export default {
   components: {
@@ -224,41 +225,53 @@ export default {
       rail: true,
       selectedItem: null,
       showMessage: false,
-      newsTitle: '',
-      newsAuthor: '',
-      newsCategory: null,
-      newsTags: '',
-      publicationDate: null,
-      newsImage: null,
-      newsContent: '',
-      categories: ['Government', 'Politics', 'Educaion','Health','Environment','Economy','Business','Fashion','Entertainment','Sport'],
+      Title: '',    
+      Author: '',   
+      Category: null,
+      Image: null,
+      Stories: '',
+      categories: ['Government', 'Politics', 'Education', 'Health', 'Environment', 'Economy', 'Business', 'Fashion', 'Entertainment', 'Sport'],
     };
   },
   methods: {
+    async addNews() {
+      try {
+        console.log('Title:', this.Title);    
+        console.log('Author:', this.Author);  
+        console.log('Category:', this.Category);
+        console.log('Image:', this.Image);
+        console.log('Stories:', this.Stories);
+
+        const response = await axios.post('/add', {
+          Title: this.Title,    
+          Author: this.Author,  
+          Category: this.Category,
+          Image: this.Image,
+          Stories: this.Stories,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        console.log('Response:', response.data);
+        // Assuming you want to show a success message after saving
+        this.showMessage = true;
+      } catch (error) {
+        console.error('Error:', error);
+        // Handle error and show appropriate message to the user
+      }
+    },
     toggleItem(item) {
       // ... (your existing toggleItem method)
     },
     selectItem(item) {
       this.selectedItem = item;
     },
-    submitNewsForm() {
-      // Handle the form submission logic here
-      console.log('Form submitted', {
-        title: this.newsTitle,
-        author: this.newsAuthor,
-        category: this.newsCategory,
-        image: this.newsImage,
-        stories: this.newsStories,
-        // ... (your existing data properties) ...
-    });
-  },
-  },
-  editNewsForm() {
-    // Handle the logic for editing the news here
-    console.log('Edit News button clicked');
   },
 };
 </script>
+
 
   
   <style>
