@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Landing from '../components/Landing.vue'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import Admin from '../components/AdminPage.vue/Admin.vue'
@@ -8,6 +9,10 @@ import RichTextEditor from '../components/RichTextEditor.vue'
 import Staff from '../components/StaffPage.vue/Staff.vue'
 
 const routes = [
+  {
+    path: '/landing',
+    component: Landing
+  },
   {
     path: '/login',
     component: Login
