@@ -184,7 +184,10 @@
           </v-card-text>
           <v-card-actions>
             <!-- Save News Button -->
-            <v-btn type="submit" color="primary" @submit.prevent="submitNewsForm">Save News</v-btn>
+            <v-btn type="submit" color="primary" @click="submitNewsForm">Save News</v-btn>
+
+            <!-- Edit News Button -->
+            <v-btn color="warning" @click="editNewsForm">Edit News</v-btn>
           </v-card-actions>
         </v-card>
       </v-form>
@@ -249,6 +252,10 @@ export default {
         // ... (your existing data properties) ...
     });
   },
+  },
+  editNewsForm() {
+    // Handle the logic for editing the news here
+    console.log('Edit News button clicked');
   },
 };
 </script>
