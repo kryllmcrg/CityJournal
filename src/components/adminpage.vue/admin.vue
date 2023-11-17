@@ -194,8 +194,6 @@
 }
 </style>
 
-
-
 <script>
 export default {
   data() {
@@ -209,7 +207,7 @@ export default {
   methods: {
     toggleItem(item) {
       if (this.selectedItem === item) {
-        // If News is clicked again, hide the items
+        // If the same item is clicked again, close the section
         this.selectedItem = null;
       } else {
         // If a different item is clicked, switch to that item

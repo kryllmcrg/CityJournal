@@ -189,12 +189,12 @@ export default {
   },
   methods: {
     toggleItem(item) {
-      if (this.selectedItem === item) {
+      if (this.selectedItem == item) {
         // If News is clicked again, hide the items
-        this.selectedItem = null;
+        this.selectedItem = item;
       } else {
         // If a different item is clicked, switch to that item
-        this.selectedItem = item;
+        this.selectedItem = null;
       }
     },
     selectItem(item) {
