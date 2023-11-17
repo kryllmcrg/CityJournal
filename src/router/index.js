@@ -8,6 +8,7 @@ import ContactSection from '../components/UserPage.vue/ContactSection.vue'
 import HomeSection from '../components/UserPage.vue/HomeSection.vue'
 import AddNews from '../components/AdminPage.vue/AddNews.vue'
 import RichTextEditor from '../components/RichTextEditor.vue'
+import Staff from '../components/StaffPage.vue/Staff.vue'
 
 const routes = [
   {
@@ -45,6 +46,10 @@ const routes = [
   {
     path: '/rich',
     component:RichTextEditor
+  },
+  {
+    path: '/staff',
+    component:Staff
   }
 ]
 
