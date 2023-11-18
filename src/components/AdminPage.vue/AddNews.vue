@@ -191,8 +191,21 @@
             </v-card-actions>
           </v-card>
         </v-form>
+
+        <!-- Data Table -->
+        <v-data-table
+          :headers="dataTableHeaders"
+          :items="newsData"
+          :search="search"
+        >
+          <template v-slot:item.actions="{ item }">
+            <!-- You can add action buttons here, such as edit or delete -->
+            <v-btn @click="editNews(item)">Edit</v-btn>
+            <v-btn @click="deleteNews(item)">Delete</v-btn>
+          </template>
+        </v-data-table>
       </v-container>
-    </v-main>
+    </v-main>``
 
     <!-- Message Box -->
     <v-snackbar v-model="showMessage" right>
@@ -231,6 +244,25 @@ export default {
       Image: null,
       Stories: '',
       categories: ['Government', 'Politics', 'Education', 'Health', 'Environment', 'Economy', 'Business', 'Fashion', 'Entertainment', 'Sport'],
+      newsData: [
+        {
+          id: 1,
+          title: 'Breaking News 1',
+          category: 'Politics',
+          author: 'John Doe',
+          image: 'https://example.com/image1.jpg',
+          stories: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+        },
+        {
+          id: 2,
+          title: 'Sports Update',
+          category: 'Sport',
+          author: 'Jane Smith',
+          image: 'https://example.com/image2.jpg',
+          stories: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...',
+        },
+        // Add more news items as needed
+      ],
     };
   },
   methods: {
@@ -272,8 +304,6 @@ export default {
 };
 </script>
 
-
-  
   <style>
   .background-container {
     position:fixed;
