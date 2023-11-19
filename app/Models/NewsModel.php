@@ -15,7 +15,7 @@ class NewsModel extends Model
     protected $allowedFields    = ['title', 'author', 'category', 'image', 'stories'];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
