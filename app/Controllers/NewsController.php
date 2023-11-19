@@ -11,7 +11,7 @@ class NewsController extends BaseController
 {
     use ResponseTrait;
 
-    public function create()
+    public function add()
 {
     try {
         $newsModel = new NewsModel();
