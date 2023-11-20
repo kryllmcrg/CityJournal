@@ -27,97 +27,78 @@
         </v-list-item>
       </v-list-item-group>
 
-      <!-- Navigation Section -->
+     <!-- Navigation Section -->
       <v-list dense nav>
         <v-divider></v-divider>
         <!-- Dashboard -->
         <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
 
-        <!-- Users -->
-        <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
+       <!-- Team -->
+        <v-list-item-group v-model="selectedItem">
+            <v-list-item @click="selectItem('staff')" prepend-icon="mdi-account-group" title="Staff" value="staff"></v-list-item>
+
+          <!-- View Role -->
+          <v-list-item v-if="selectedItem === 'staff'">
+            <v-list-item-content>
+              <router-link to="/viewrole">
+                <v-list-item @click="selectItem('role')" prepend-icon="mdi-account-circle" title="View Role" value="role"></v-list-item>
+              </router-link>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+
 
         <!-- News Section -->
-        <v-divider></v-divider>
-        <v-list-item-group v-model="selectedItem">
-          <v-list-item @click="selectItem('news')" prepend-icon="mdi-newspaper-variant-outline" title="News" value="news"></v-list-item>
-          <v-list-item v-if="selectedItem === 'news'">
-            <v-list-item-content>
-              <router-link to="/addnews">
-                <v-list-item @click="selectItem('addNews')" prepend-icon="mdi-plus-circle" title="Add News" value="addNews"></v-list-item>
-              </router-link>
-              <v-list-item @click="selectItem('editNews')" prepend-icon="mdi-pencil" title="Edit News" value="editNews"></v-list-item>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
+          <v-list-item-group v-model="selectedItem">
+              <v-list-item @click="selectItem('news')" prepend-icon="mdi-newspaper-variant" title="News" value="news"></v-list-item>
 
-        <!-- Categories Section -->
-        <v-divider></v-divider>
-        <v-list-item-group v-model="selectedItem">
-          <v-list-item @click="selectItem('categories')" prepend-icon="mdi-format-list-bulleted" title="Categories" value="categories"></v-list-item>
+            <!--News-->
+            <v-list-item v-if="selectedItem === 'news'">
+              <v-list-item-content>
+                <router-link to="/status">
+                  <v-list-item @click="selectItem('status')" prepend-icon="mdi-alert-octagon" title="Status" value="status"></v-list-item>
+                </router-link>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
 
-          <!-- Add Category -->
-          <v-list-item v-if="selectedItem === 'categories'">
-            <v-list-item-content>
-              <v-list-item @click="selectItem('addCategory')" prepend-icon="mdi-plus-circle" title="Add Category" value="addCategory"></v-list-item>
-              <v-list-item @click="selectItem('manageCategory')" prepend-icon="mdi-pencil" title="Manage Category" value="manageCategory"></v-list-item>
-            </v-list-item-content>
-          </v-list-item>
-
-          <!-- Sub Categories Section -->
-          <v-divider></v-divider>
-          <v-list-item v-if="selectedItem === 'categories'">
-            <v-list-item-group v-model="selectedSubItem">
-              <v-list-item @click="selectSubItem('subCategories')" prepend-icon="mdi-subdirectory-arrow-right" title="Sub Categories" value="subCategories"></v-list-item>
-
-              <!-- Add Subcategory -->
-              <v-list-item v-if="selectedSubItem === 'subCategories'">
-                <v-list-item @click="selectSubItem('addSubcategory')" prepend-icon="mdi-plus-circle" title="Add Subcategory" value="addSubcategory"></v-list-item>
-                <v-list-item @click="selectSubItem('manageSubcategory')" prepend-icon="mdi-pencil" title="Manage Subcategory" value="manageSubcategory"></v-list-item>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list-item>
-        </v-list-item-group>
-
-        <!-- Post Section -->
-        <v-divider></v-divider>
-        <v-list-item-group v-model="selectedItem">
-          <v-list-item @click="selectItem('post')" prepend-icon="mdi-file-document-outline" title="Post" value="post"></v-list-item>
-
-          <!-- Manage Posts -->
-          <v-list-item v-if="selectedItem === 'post'">
-            <v-list-item-content>
-              <v-list-item @click="selectItem('addPosts')" prepend-icon="mdi-plus-circle" title="Add Posts" value="addPosts"></v-list-item>
-              <v-list-item @click="selectItem('managePosts')" prepend-icon="mdi-pencil" title="Manage Posts" value="managePosts"></v-list-item>
-              <v-list-item @click="selectItem('trashPosts')" prepend-icon="mdi-delete" title="Trash Posts" value="trashPosts"></v-list-item>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
 
         <!-- Pages Section -->
-        <v-divider></v-divider>
-        <v-list-item-group v-model="selectedItem">
-          <v-list-item @click="selectItem('pages')" prepend-icon="mdi-file-multiple-outline" title="Pages" value="pages"></v-list-item>
+          <v-divider></v-divider>
+          <v-list-item-group v-model="selectedItem">
+              <v-list-item @click="selectItem('pages')" prepend-icon="mdi-file-document-multiple" title="Pages" value="pages"></v-list-item>
 
-          <!-- About Us -->
-          <v-list-item v-if="selectedItem === 'pages'">
-            <v-list-item-content>
-              <v-list-item @click="selectItem('aboutUs')" prepend-icon="mdi-information" title="About Us" value="aboutUs"></v-list-item>
-              <v-list-item @click="selectItem('contactUs')" prepend-icon="mdi-email" title="Contact Us" value="contactUs"></v-list-item>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
+            <!-- About Us -->
+            <v-list-item v-if="selectedItem === 'pages'">
+              <v-list-item-content>
+                <router-link to="/aboutus">
+                  <v-list-item @click="selectItem('aboutUs')" prepend-icon="mdi-information" title="About Us" value="aboutUs"></v-list-item>
+                </router-link>
+                <router-link to="/contactus">
+                  <v-list-item @click="selectItem('contactUs')" prepend-icon="mdi-email" title="Contact Us" value="contactUs"></v-list-item>
+                </router-link>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+
 
         <!-- Comments Section -->
-        <v-divider></v-divider>
-        <v-list-item-group v-model="selectedItem">
-          <v-list-item @click="selectItem('comments')" prepend-icon="mdi-newspaper-variant-outline" title="Comments" value="comments"></v-list-item>
-          <v-list-item v-if="selectedItem === 'comments'">
-            <v-list-item-content>
-              <v-list-item @click="selectItem('waitingApproval')" prepend-icon="mdi-plus-circle" title="Waiting for Approval" value="waitingApproval"></v-list-item>
-              <v-list-item @click="selectItem('approvedComments')" prepend-icon="mdi-pencil" title="Approved Comments" value="approvedComments"></v-list-item>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
+          <v-divider></v-divider>
+          <v-list-item-group v-model="selectedItem">
+              <v-list-item @click="selectItem('comments')" prepend-icon="mdi-comment-multiple-outline" title="Comments" value="comments"></v-list-item>
+            
+            <v-list-item v-if="selectedItem === 'comments'">
+              <v-list-item-content>
+                <router-link to="/waitingapproval">
+                  <v-list-item @click="selectItem('waitingApproval')" prepend-icon="mdi-clock-time-four-outline" title="Waiting for Approval" value="waitingApproval"></v-list-item>
+                </router-link>
+                <router-link to="/approvedcomments">
+                  <v-list-item @click="selectItem('approvedComments')" prepend-icon="mdi-check-circle-outline" title="Approved Comments" value="approvedComments"></v-list-item>
+                </router-link>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+
 
         <!-- Other Admin-related Sections -->
         <v-divider></v-divider>
@@ -136,6 +117,9 @@
 
           <!-- Collaboration -->
           <v-list-item prepend-icon="mdi-account-multiple-outline" title="Collaboration" value="collaboration"></v-list-item>
+
+          <!-- Log Out -->
+          <v-list-item prepend-icon="mdi-logout" title="Log Out" value="logOut"></v-list-item>
 
           <!-- Add more sections/items as needed -->
         </v-list-item-group>
@@ -210,8 +194,6 @@
 }
 </style>
 
-
-
 <script>
 export default {
   data() {
@@ -225,7 +207,7 @@ export default {
   methods: {
     toggleItem(item) {
       if (this.selectedItem === item) {
-        // If News is clicked again, hide the items
+        // If the same item is clicked again, close the section
         this.selectedItem = null;
       } else {
         // If a different item is clicked, switch to that item

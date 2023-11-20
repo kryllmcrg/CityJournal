@@ -160,46 +160,10 @@
       <span>Message content goes here...</span>
     </v-snackbar>
 
-    <v-main>
-      <v-container>
-        <!-- Wrap the v-form around your form elements -->
-        <v-form @submit.prevent="addNews">
-          <v-card>
-            <v-card-title class="headline">Add News</v-card-title>
-            <v-card-text>
-              <!-- Title -->
-              <v-text-field v-model="Title" label="Title" required></v-text-field>
-
-              <!-- Category -->
-              <v-select v-model="Category" :items="categories" label="Category" required></v-select>
-
-              <!-- Author -->
-              <v-text-field v-model="Author" label="Author" required></v-text-field>
-
-              <!-- Image Upload -->
-              <v-file-input v-model="Image" label="Image" accept="image/*" required></v-file-input>
-
-              <!-- Stories of News -->
-              <v-textarea v-model="Stories" label="Stories of News" required></v-textarea>
-            </v-card-text>
-            <v-card-actions>
-              <!-- Save News Button -->
-              <v-btn type="submit" color="primary">Save News</v-btn>
-
-              <!-- Edit News Button -->
-              <v-btn color="warning" @click="editNewsForm">Edit News</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-form>
-      </v-container>
-    </v-main>``
-
-    <!-- Message Box -->
-    <v-snackbar v-model="showMessage" right>
-      <v-btn text @click="showMessage = false">Close</v-btn>
-      <!-- Add your message content here -->
-      <span>Message content goes here...</span>
-    </v-snackbar>
+    <!-- Main Content -->
+    <v-main style="height: 750px; background-color: #f9f6f2">
+      
+    </v-main>
 
     <v-footer app class="footer">
       <v-spacer></v-spacer>
@@ -210,106 +174,75 @@
   </v-card>
 </template>
 
-<script>
-import 'quill/dist/quill.snow.css';
-import VueQuillEditor from 'vue-quill-editor';
-import axios from 'axios';
+<!-- ... (your existing script and style sections) -->
 
+<script>
 export default {
-  components: {
-    VueQuillEditor,
-  },
   data() {
     return {
       drawer: true,
       rail: true,
       selectedItem: null,
+      selectedSubItem: null, // Add selectedSubItem property
       showMessage: false,
-      Title: '',    
-      Author: '',   
-      Category: null,
-      Image: null,
-      Stories: '',
-      categories: ['Government', 'Politics', 'Education', 'Health', 'Environment', 'Economy', 'Business', 'Fashion', 'Entertainment', 'Sport'],
     };
   },
   methods: {
-    async addNews() {
-      try {
-        console.log('Title:', this.Title);    
-        console.log('Author:', this.Author);  
-        console.log('Category:', this.Category);
-        console.log('Image:', this.Image);
-        console.log('Stories:', this.Stories);
-
-        const response = await axios.post('/add', {
-          Title: this.Title,    
-          Author: this.Author,  
-          Category: this.Category,
-          Image: this.Image,
-          Stories: this.Stories,
-        }, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        console.log('Response:', response.data);
-        // Assuming you want to show a success message after saving
-        this.showMessage = true;
-      } catch (error) {
-        console.error('Error:', error);
-        // Handle error and show appropriate message to the user
-      }
-    },
     toggleItem(item) {
-      // ... (your existing toggleItem method)
+      if (this.selectedItem == item) {
+        // If News is clicked again, hide the items
+        this.selectedItem = item;
+      } else {
+        // If a different item is clicked, switch to that item
+        this.selectedItem = null;
+      }
     },
     selectItem(item) {
       this.selectedItem = item;
+    },
+    selectSubItem(subItem) {
+      this.selectedSubItem = subItem;
+      // Add your logic here for handling the selection of sub-items
     },
   },
 };
 </script>
 
-  <style>
-  .background-container {
-    position:fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #673ab7;
-    color: #ffffff;
-    background-size: cover;
-    z-index: -1;
-    margin-bottom: 50%;
-  }
-  
-  .footer {
-    background-color: #673ab7; /* Background color of the footer */
-    color: #ffffff; /* Text color in the footer */
-    padding: 10px; /* Adjust padding as needed */
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-  .v-snackbar {
-    right: 16px; /* Adjust the distance from the right side */
-    top: 16px; /* Adjust the distance from the top */
-    max-width: 300px; /* Adjust the maximum width of the message box */
-  }
-  .v-list-item:hover {
-    background-color: #9575cd;
-    color: #ffffff; 
-  }
-  
-  .v-list-item-group:hover .v-list-item {
-    background-color: #9575cd; 
-    color: #ffffff; 
-  }
-  .quill-editor-container {
-  width: 100%; /* Set the desired width */
-  height: 300px; /* Set the desired height */
+<style>
+.background-container {
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #673ab7;
+  color: #ffffff;
+  background-size: cover;
+  z-index: -1;
+  margin-bottom: 50%;
 }
-  </style>
+
+.footer {
+  background-color: #673ab7; /* Background color of the footer */
+  color: #ffffff; /* Text color in the footer */
+  padding: 10px; /* Adjust padding as needed */
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.v-snackbar {
+  right: 16px; /* Adjust the distance from the right side */
+  top: 16px; /* Adjust the distance from the top */
+  max-width: 300px; /* Adjust the maximum width of the message box */
+}
+.v-list-item:hover {
+  background-color: #9575cd;
+  color: #ffffff; 
+}
+
+.v-list-item-group:hover .v-list-item {
+  background-color: #9575cd; 
+  color: #ffffff; 
+}
+</style>
+

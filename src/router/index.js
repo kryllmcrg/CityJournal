@@ -1,15 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Landing from '../components/Landing.vue'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import Admin from '../components/AdminPage.vue/Admin.vue'
 import User from '../components/UserPage.vue/User.vue'
-import AboutSection from '../components/UserPage.vue/AboutSection.vue'
-import ContactSection from '../components/UserPage.vue/ContactSection.vue'
-import HomeSection from '../components/UserPage.vue/HomeSection.vue'
 import AddNews from '../components/AdminPage.vue/AddNews.vue'
 import RichTextEditor from '../components/RichTextEditor.vue'
+import Staff from '../components/StaffPage.vue/Staff.vue'
 
 const routes = [
+  {
+    path: '/landing',
+    component: Landing
+  },
   {
     path: '/login',
     component: Login
@@ -23,28 +26,20 @@ const routes = [
     component: Admin
   },
   {
-    path: '/user',
-    component: User
-  },
-  {
-    path: '/about',
-    component: AboutSection
-  },
-  {
-    path: '/contact',
-    component: ContactSection
-  },
-  {
-    path: '/home',
-    component: HomeSection
-  },
-  {
     path: '/addnews',
     component:AddNews
   },
   {
     path: '/rich',
     component:RichTextEditor
+  },
+  {
+    path: '/staff',
+    component:Staff
+  },
+  {
+    path: '/user',
+    component:User
   }
 ]
 
