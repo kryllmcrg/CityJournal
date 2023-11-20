@@ -42,6 +42,10 @@ const routes = [
     path: '/user',
     component:User
   }
+  {
+    path: '/pastnews',
+    component:User
+  }
 ]
 
 const router = createRouter({
