@@ -44,7 +44,7 @@ const routes = [
   },
   {
     path: '/pastnews',
-    component:User
+    component:PastNews
   }
 ]
 
