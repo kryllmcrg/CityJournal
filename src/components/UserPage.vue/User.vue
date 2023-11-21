@@ -25,7 +25,7 @@
     </v-row>
 
     <!-- News Cards -->
-    <v-row justify="center">
+    <v-row>
       <v-col v-for="newsItem in approvedNews" :key="newsItem.id" cols="12" md="4">
         <v-card class="news-card">
           <v-img :src="newsItem.image" height="200px"></v-img>
