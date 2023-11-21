@@ -7,7 +7,7 @@ import User from '../components/UserPage.vue/User.vue'
 import AddNews from '../components/AdminPage.vue/AddNews.vue'
 import RichTextEditor from '../components/RichTextEditor.vue'
 import Staff from '../components/StaffPage.vue/Staff.vue'
-import PastNews from '../components/PastNews.vue'
+import PastNews from '../components/UserPage.vue/PastNews.vue'
 
 const routes = [
   {
