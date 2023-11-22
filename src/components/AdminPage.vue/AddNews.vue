@@ -242,21 +242,34 @@ export default {
         console.log('Image:', this.Image);
         console.log('Stories:', this.Stories);
 
-        const response = await axios.post('/add', {
-          Title: this.Title,    
-          Author: this.Author,  
-          Category: this.Category,
-          Image: this.Image,
-          Stories: this.Stories,
-        }, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const formData = new FormData();
+        formData.append('Title', this.Title);
+        formData.append('Author', this.Author);
+        formData.append('Category', this.Category);
+        formData.append('Image',this.Image[0],this.Image[0].name)
+        formData.append('Stories', this.Stories);
 
-        console.log('Response:', response.data);
-        // Assuming you want to show a success message after saving
-        this.showMessage = true;
+        const response = await axios.post('/add',formData,{
+          headers: {'Content-Type': 'multipart/form-data'}
+        })
+
+        console.log(response);
+
+        // const response = aw  ait axios.post('/add', {
+        //   Title: this.Title,    
+        //   Author: this.Author,  
+        //   Category: this.Category,
+        //   Image: this.Image,
+        //   Stories: this.Stories,
+        // }, {
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        // });
+
+        // console.log('Response:', response.data);
+        // // Assuming you want to show a success message after saving
+        // this.showMessage = true;
       } catch (error) {
         console.error('Error:', error);
         // Handle error and show appropriate message to the user
