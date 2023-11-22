@@ -14,13 +14,13 @@ class NewsController extends BaseController
     {
         try {
             $newsModel = new NewsModel();
-    
+            $image = $this->request->getFile('Image');
             // Retrieve data from the request
             $data = [
                 'title' => $this->request->getVar('Title'),
                 'author' => $this->request->getVar('Author'),
                 'category' => $this->request->getVar('Category'),
-                'image' => $this->request->getVar('Image'),
+                'image' => $image->getName(),
                 'stories' => $this->request->getVar('Stories'),
                 // Add other fields as needed
             ];
