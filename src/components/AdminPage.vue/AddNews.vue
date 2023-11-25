@@ -56,8 +56,8 @@
               <router-link to="/addnews">
                 <v-list-item @click="selectItem('addNews')" prepend-icon="mdi-plus-circle" title="Add News" value="addNews"></v-list-item>
               </router-link>
-              <router-link to="/editnews">
-              <v-list-item @click="selectItem('editNews')" prepend-icon="mdi-pencil" title="Edit News" value="editNews"></v-list-item>
+              <router-link to="/managenews">
+              <v-list-item @click="selectItem('manageNews')" prepend-icon="mdi-pencil" title="Manage News" value="manageNews"></v-list-item>
             </router-link>
             </v-list-item-content>
           </v-list-item>
@@ -165,7 +165,7 @@
         <!-- Wrap the v-form around your form elements -->
         <v-form @submit.prevent="addNews">
           <v-card>
-            <v-card-title class="headline">Add News</v-card-title>
+            <v-card-title class="headline">Create News</v-card-title>
             <v-card-text>
               <!-- Title -->
               <v-text-field v-model="Title" label="Title" required></v-text-field>
@@ -181,6 +181,27 @@
 
               <!-- Stories of News -->
               <v-textarea v-model="Stories" label="Stories of News" required></v-textarea>
+
+         
+                <editor
+                  api-key="no-api-key"
+                  :init="{
+                    height: 500,
+                    menubar: false,
+                    plugins: [
+                      'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+                      'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+                      'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
+                    ],
+                    toolbar:
+                      'undo redo | casechange blocks | bold italic backcolor | \
+                      alignleft aligncenter alignright alignjustify | \
+                      bullist numlst checklist outdent indent | removeformat | a11ycheck code table help'
+                  }"
+                  initial-value=""
+                />
+         
+
             </v-card-text>
             <v-card-actions>
               <!-- Save News Button -->
@@ -211,13 +232,12 @@
 </template>
 
 <script>
-import 'quill/dist/quill.snow.css';
-import VueQuillEditor from 'vue-quill-editor';
+import Editor from '@tinymce/tinymce-vue'
 import axios from 'axios';
 
 export default {
   components: {
-    VueQuillEditor,
+    Editor
   },
   data() {
     return {

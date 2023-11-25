@@ -56,8 +56,8 @@
               <router-link to="/addnews">
                 <v-list-item @click="selectItem('addNews')" prepend-icon="mdi-plus-circle" title="Add News" value="addNews"></v-list-item>
               </router-link>
-              <router-link to="/editnews">
-              <v-list-item @click="selectItem('editNews')" prepend-icon="mdi-pencil" title="Edit News" value="editNews"></v-list-item>
+              <router-link to="/managenews">
+              <v-list-item @click="selectItem('manageNews')" prepend-icon="mdi-pencil" title="Manage News" value="manageNews"></v-list-item>
             </router-link>
             </v-list-item-content>
           </v-list-item>
