@@ -14,29 +14,32 @@ class NewsController extends BaseController
     {
         try {
             $newsModel = new NewsModel();
-            $image = $this->request->getFile('Image');
+            $image = $this->request->getFile('ImageURL');
             // Retrieve data from the request
             $data = [
-                'title' => $this->request->getVar('Title'),
-                'author' => $this->request->getVar('Author'),
-                'category' => $this->request->getVar('Category'),
-                'image' => $image->getName(),
-                'stories' => $this->request->getVar('Stories'),
+
+                'Title' => $this->request->getVar('Title'),
+                'Author' => $this->request->getVar('Author'),
+                'Category' => $this->request->getVar('Category'),
+                'ImageURL' => $image->getName(),
+                'Content' => $this->request->getVar('Content'),
+                'PublishDate' => $this->request->getVar('PublishDate'),
                 // Add other fields as needed
             ];
     
             // Validate data
-            if (empty($data['title']) || empty($data['author']) || empty($data['category']) || empty($data['image']) || empty($data['stories'])) {
+            if (empty($data['Title']) || empty($data['Author']) || empty($data['Category']) || empty($data['ImageURL']) || empty($data['Content']) || empty($data['PublishDate'])) {
                 return $this->respond(["error" => "Error: Required data is missing."], 400);
             }
     
             // Validation Rules
             $validationRules = [
-                'title' => 'required',
-                'author' => 'required',
-                'category' => 'required',
-                'image' => 'required',
-                'stories' => 'required',
+                'Title' => 'required',
+                'Author' => 'required',
+                'Category' => 'required',
+                'ImageURL' => 'required',
+                'Content' => 'required',
+                'PublishDate' => 'required',
                 // Add other validation rules as needed
             ];
     
@@ -46,16 +49,19 @@ class NewsController extends BaseController
             // Insert data into the database
             if (!$newsModel->insert($data)) {
                 // Handle insertion failure, log the error, return an error response, etc.
-                return $this->respond(["error" => "Error: Unable to insert data."], 500);
+                return $this->respond(["error" => "Error: Unable to insert data."]);
             }
+
+            // $newsModel->insert($data);
     
             $response = [
                 'message' => 'News created successfully',
+                $data
             ];
     
             return $this->respond($response, 200);
         } catch (\Throwable $th) {
-            return $this->respond(["error" => "Error: " . $th->getMessage()], 500);
+            return $this->respond(["error" => "Error: " . $th->getMessage()]);
         }
     }
     

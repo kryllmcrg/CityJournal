@@ -6,13 +6,13 @@ use CodeIgniter\Model;
 
 class AccountModel extends Model
 {
-    protected $table            = 'log_reg';
-    protected $primaryKey       = 'id';
+    protected $table            = 'users';
+    protected $primaryKey       = 'UserID';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username', 'email','password',];
+    protected $allowedFields    = ['FirstName', 'LastName', 'Role', 'Username', 'Email','Password', 'Token'];
 
     // Dates
     protected $useTimestamps = false;

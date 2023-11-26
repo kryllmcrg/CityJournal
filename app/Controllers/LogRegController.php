@@ -22,19 +22,19 @@ class LogRegController extends BaseController
         try {
             $accountModel = new AccountModel();
     
-            $email = $this->request->getVar('email');
-            $password = $this->request->getVar('password');
+            $Email = $this->request->getVar('Email');
+            $Password = $this->request->getVar('Password');
             
-            $user = $accountModel->where('email', $email)->first();
+            $user = $accountModel->where('Email', $Email)->first();
     
             if(is_null($user)) {
-                return $this->respond(['error' => 'Invalid email or password.'], 401);
+                return $this->respond(['error' => 'Invalid Email or Password.'], 401);
             }
     
-            $pwd_verify = password_verify($password, $user['password']);
+            $pwd_verify = Password_verify($Password, $user['Password']);
     
             if(!$pwd_verify) {
-                return $this->respond(['error' => 'Invalid email or password.'], 401);
+                return $this->respond(['error' => 'Invalid Email or Password.'], 401);
             }
     
             $key = getenv('JWT_SECRET');
@@ -43,11 +43,11 @@ class LogRegController extends BaseController
     
             $payload = array(
                 "iss" => "Issuer of the JWT",
-                "aud" => "Audience that the JWT",
+                "aud" => $user['Role'],
                 "sub" => "Subject of the JWT",
                 "iat" => $iat, //Time the JWT issued at
                 "exp" => $exp, // Expiration time of token
-                "email" => $user['email'],
+                "Email" => $user['Email'],
             );
             
             $token = JWT::encode($payload, $key, 'HS256');
@@ -67,19 +67,26 @@ class LogRegController extends BaseController
     {
         try {
             $rules = [
-                'username' => ['rules' => 'required|min_length[4]|max_length[255]   |is_unique[log_reg.username]'],
-                'email' => ['rules' => 'required|min_length[4]|max_length[255]|valid_email|is_unique[log_reg.email]'],
-                'password' => ['rules' => 'required|min_length[8]|max_length[255]'],
-                'confirm_password'  => [ 'label' => 'confirm password', 'rules' => 'matches[password]']
+
+                'FirstName' => ['rules' => 'required|min_length[2]|max_length[255]'],
+                'LastName' => ['rules' => 'required|min_length[2]|max_length[255]'],
+                'Username' => ['rules' => 'required|min_length[4]|max_length[255]|is_unique[users.username]'],
+                'Email' => ['rules' => 'required|min_length[4]|max_length[255]|valid_email|is_unique[users.email]'],
+                'Role' => ['rules' => 'required|in_list[Admin,User,Guest]'],
+                'Password' => ['rules' => 'required|min_length[8]|max_length[255]'],
+                'confirm_password' => ['label' => 'Confirm Password', 'rules' => 'matches[Password]'],
             ];
                 
       
             if($this->validate($rules)){
                 $model = new AccountModel();
                 $data = [
-                    'username'    => $this->request->getVar('username'),
-                    'email'    => $this->request->getVar('email'),
-                    'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT)
+                    'FirstName' => $this->request->getVar('FirstName'),
+                    'LastName'  => $this->request->getVar('LastName'),
+                    'Role'       => $this->request->getVar('Role'),
+                    'Username'   => $this->request->getVar('Username'),
+                    'Email'      => $this->request->getVar('Email'),
+                    'Password'   => password_hash($this->request->getVar('Password'), PASSWORD_DEFAULT)
                 ];
                 $model->save($data);
                  

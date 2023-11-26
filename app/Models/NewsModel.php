@@ -6,16 +6,16 @@ use CodeIgniter\Model;
 
 class NewsModel extends Model
 {
-    protected $table            = 'adding_news';
-    protected $primaryKey       = 'id';
+    protected $table            = 'articles';
+    protected $primaryKey       = 'ArticleID';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['title', 'author', 'category', 'image', 'stories'];
+    protected $allowedFields    = ['JournalID', 'Title', 'Content', 'Category', 'Author','ImageURL', 'PublishDate', 'Status'];
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
