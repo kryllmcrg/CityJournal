@@ -110,8 +110,8 @@
             <!-- Manage Posts -->
             <v-list-item v-if="selectedItem === 'post'">
               <v-list-item-content>
-                <router-link to="/addposts">
-                  <v-list-item @click="selectItem('addPosts')" prepend-icon="mdi-plus-circle" title="Add Posts" value="addPosts"></v-list-item>
+                <router-link to="/viewposts">
+                  <v-list-item @click="selectItem('viewPosts')" prepend-icon="mdi-plus-circle" title="View Posts" value="viewPosts"></v-list-item>
                 </router-link>
                 <router-link to="/manageposts">
                   <v-list-item @click="selectItem('managePosts')" prepend-icon="mdi-pencil" title="Manage Posts" value="managePosts"></v-list-item>

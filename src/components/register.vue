@@ -7,9 +7,16 @@
             <v-card-title class="headline text-center">Register</v-card-title>
             <v-card-text>
               <v-form @submit.prevent="register">
+
+                <v-text-field v-model="firstName" label="First Name" outlined></v-text-field>
+
+                <v-text-field v-model="lastName" label="Last Name" outlined></v-text-field>
+
                 <v-text-field v-model="username" label="Username" outlined></v-text-field>
 
                 <v-text-field v-model="email" label="Email" outlined></v-text-field>
+
+                <v-text-field v-model="role" label="Role" outlined></v-text-field>
 
                 <v-text-field
                   v-model="password"
@@ -52,10 +59,13 @@ export default {
   name: 'Register',
   data() {
     return {
+      firstName: '',
+      lastName: '', 
       username: '',
       email: '',
+      role: '', 
       password: '',
-      confirm_password: '',
+      confirm_password: '',    
       passwordVisible: false,
       confirmPasswordVisible: false,
     };
@@ -63,14 +73,20 @@ export default {
   methods: {
     async register() {
       try {
+        console.log('First Name:', this.firstName); 
+        console.log('Last Name:', this.lastName);  
         console.log('Username:', this.username);
         console.log('Email:', this.email);
+        console.log('Role:', this.role);
         console.log('Password:', this.password);
-        console.log('Confirm Password:', this.confirm_password);
+        console.log('Confirm Password:', this.confirm_password);           
 
-        const response = await axios.post('/register', {
+        const response = await axios.post('/register', {    
+          firstName: this.firstName,
+          lastName: this.lastName,  
           username: this.username,
           email: this.email,
+          role: this.role,     
           password: this.password,
           confirm_password: this.confirm_password,
         }, {

@@ -8,6 +8,7 @@ import AddNews from '../components/AdminPage.vue/AddNews.vue'
 import RichTextEditor from '../components/RichTextEditor.vue'
 import Staff from '../components/StaffPage.vue/Staff.vue'
 import PastNews from '../components/UserPage.vue/PastNews.vue'
+import HomePage from '../components/UserPage.vue/HomePage.vue'
 
 const routes = [
   {
@@ -45,6 +46,10 @@ const routes = [
   {
     path: '/pastnews',
     component:PastNews
+  },
+  {
+    path: '/home',
+    component:HomePage
   }
 ]
 

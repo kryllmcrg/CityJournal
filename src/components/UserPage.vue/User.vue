@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <!-- Page Title -->
-    <v-row justify="center">
+    <v-row justify="center" class="mb-4">
       <v-col cols="12" md="8">
         <v-card class="elevation-12">
           <v-card-title class="headline primary--text text--darken-1">
@@ -10,8 +10,9 @@
         </v-card>
       </v-col>
     </v-row>
+
     <!-- Category Filter Form -->
-    <v-row justify="center">
+    <v-row justify="center" class="mb-4">
       <v-col cols="12" md="8">
         <v-form @submit.prevent="filterNews">
           <v-select
@@ -27,28 +28,28 @@
     <!-- News Cards -->
     <v-row>
       <v-col v-for="newsItem in approvedNews" :key="newsItem.id" cols="12" md="4">
-        <v-card class="news-card">
+        <v-card class="news-card" elevation="12">
           <v-img :src="newsItem.image" height="200px"></v-img>
-          <v-card-title>{{ newsItem.title }}</v-card-title>
-          <v-card-subtitle>{{ newsItem.date }}</v-card-subtitle>
-          <v-card-subtitle>Author: {{ newsItem.author }}</v-card-subtitle>
-          <v-card-subtitle>Category: {{ newsItem.category }}</v-card-subtitle>
-          <v-card-text>{{ newsItem.summary }}</v-card-text>
-          <v-card-text>Stories: {{ newsItem.stories }}</v-card-text>
-          <v-card-text>Created At: {{ newsItem.created_at }}</v-card-text>
-          <v-card-text>Updated At: {{ newsItem.updated_at }}</v-card-text>
+          <v-card-title class="headline">{{ newsItem.title }}</v-card-title>
+          <v-card-subtitle class="grey--text">{{ newsItem.date }}</v-card-subtitle>
+          <v-card-subtitle class="grey--text">Author: {{ newsItem.author }}</v-card-subtitle>
+          <v-card-subtitle class="grey--text">Category: {{ newsItem.category }}</v-card-subtitle>
+          <v-card-text class="body-1">{{ newsItem.summary }}</v-card-text>
+          <v-card-text class="caption">Stories: {{ newsItem.stories }}</v-card-text>
+          <v-card-text class="caption">Created At: {{ newsItem.created_at }}</v-card-text>
+          <v-card-text class="caption">Updated At: {{ newsItem.updated_at }}</v-card-text>
 
           <!-- Comments Section -->
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn color="primary" @click="viewDetails(newsItem.id)">View Details</v-btn>
+            <v-btn text color="primary" @click="viewDetails(newsItem.id)">View Details</v-btn>
           </v-card-actions>
           <v-divider></v-divider>
           <v-card-subtitle class="comment-header">Comments:</v-card-subtitle>
           <v-list>
             <!-- Iterate over comments for this news item -->
             <v-list-item v-for="comment in newsItem.comments" :key="comment.id">
-              <v-list-item-content>{{ comment.text }}</v-list-item-content>
+              <v-list-item-content class="caption">{{ comment.text }}</v-list-item-content>
             </v-list-item>
           </v-list>
           <v-divider></v-divider>
@@ -60,13 +61,14 @@
         </v-card>
       </v-col>
     </v-row>
+
     <!-- Footer Section -->
-    <v-row justify="center">
+    <v-row justify="center" class="mt-4">
       <v-col cols="12">
         <v-footer app>
           <!-- Your footer content goes here -->
           <v-spacer></v-spacer>
-          <span>&copy; 2023 Your News App</span>
+          <span class="caption">&copy; 2023 Your News App</span>
         </v-footer>
       </v-col>
     </v-row>
