@@ -141,13 +141,6 @@
       <div class="background-container"></div>
     </v-app-bar>
 
-    <!-- Message Box -->
-    <v-snackbar v-model="showMessage" right>
-      <v-btn text @click="showMessage = false">Close</v-btn>
-      <!-- Add your message content here -->
-      <span>Message content goes here...</span>
-    </v-snackbar>
-
     <!-- Main Content -->
     <v-main style="height: 750px; background-color: #f9f6f2">
       

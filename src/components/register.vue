@@ -81,12 +81,12 @@ export default {
         console.log('Password:', this.password);
         console.log('Confirm Password:', this.confirm_password);           
 
-        const response = await axios.post('/register', {    
+        const response = await axios.post('/register', {
           firstName: this.firstName,
           lastName: this.lastName,  
           username: this.username,
           email: this.email,
-          role: this.role,     
+          role: this.role,
           password: this.password,
           confirm_password: this.confirm_password,
         }, {

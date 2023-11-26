@@ -206,21 +206,13 @@
             <v-card-actions>
               <!-- Save News Button -->
               <v-btn type="submit" color="primary">Save News</v-btn>
-
               <!-- Edit News Button -->
               <v-btn color="warning" @click="editNewsForm">Edit News</v-btn>
             </v-card-actions>
           </v-card>
         </v-form>
       </v-container>
-    </v-main>``
-
-    <!-- Message Box -->
-    <v-snackbar v-model="showMessage" right>
-      <v-btn text @click="showMessage = false">Close</v-btn>
-      <!-- Add your message content here -->
-      <span>Message content goes here...</span>
-    </v-snackbar>
+    </v-main>
 
     <v-footer app class="footer">
       <v-spacer></v-spacer>
