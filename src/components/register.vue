@@ -8,18 +8,24 @@
             <v-card-text>
               <v-form @submit.prevent="register">
 
-                <v-text-field v-model="firstName" label="First Name" outlined></v-text-field>
+                <v-text-field v-model="FirstName" label="First Name" outlined></v-text-field>
 
-                <v-text-field v-model="lastName" label="Last Name" outlined></v-text-field>
+                <v-text-field v-model="LastName" label="Last Name" outlined></v-text-field>
 
-                <v-text-field v-model="username" label="Username" outlined></v-text-field>
+                <v-text-field v-model="Username" label="Username" outlined></v-text-field>
 
-                <v-text-field v-model="email" label="Email" outlined></v-text-field>
+                <v-text-field v-model="Email" label="Email" outlined></v-text-field>
 
-                <v-text-field v-model="role" label="Role" outlined></v-text-field>
+                <!-- Role Dropdown -->
+                <v-select
+                  v-model="Role"
+                  :items="['Admin', 'User', 'Staff']"
+                  label="Role"
+                  outlined
+                ></v-select>
 
                 <v-text-field
-                  v-model="password"
+                  v-model="Password"
                   :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                   :type="passwordVisible ? 'text' : 'password'"
                   label="Password"
@@ -59,12 +65,12 @@ export default {
   name: 'Register',
   data() {
     return {
-      firstName: '',
-      lastName: '', 
-      username: '',
-      email: '',
-      role: '', 
-      password: '',
+      FirstName: '',
+      LastName: '', 
+      Username: '',
+      Email: '',
+      Role: '', 
+      Password: '',
       confirm_password: '',    
       passwordVisible: false,
       confirmPasswordVisible: false,
@@ -73,21 +79,21 @@ export default {
   methods: {
     async register() {
       try {
-        console.log('First Name:', this.firstName); 
-        console.log('Last Name:', this.lastName);  
-        console.log('Username:', this.username);
-        console.log('Email:', this.email);
-        console.log('Role:', this.role);
-        console.log('Password:', this.password);
+        console.log('First Name:', this.FirstName); 
+        console.log('Last Name:', this.LastName);  
+        console.log('Username:', this.Username);
+        console.log('Email:', this.Email);
+        console.log('Role:', this.Role);
+        console.log('Password:', this.Password);
         console.log('Confirm Password:', this.confirm_password);           
 
         const response = await axios.post('/register', {
-          firstName: this.firstName,
-          lastName: this.lastName,  
-          username: this.username,
-          email: this.email,
-          role: this.role,
-          password: this.password,
+          FirstName: this.FirstName,
+          LastName: this.LastName,  
+          Username: this.Username,
+          Email: this.Email,
+          Role: this.Role,
+          Password: this.Password,
           confirm_password: this.confirm_password,
         }, {
           headers: {

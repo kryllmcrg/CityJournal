@@ -7,12 +7,12 @@
             <v-card-title class="headline text-center">Login</v-card-title>
             <v-card-text>
               <v-form @submit.prevent="login">
-                <v-text-field v-model="email" label="Email" outlined></v-text-field>
+                <v-text-field v-model="Email" label="Email" outlined></v-text-field>
 
                 <v-text-field
-                  v-model="password"
+                  v-model="Password"
                   :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                  :type="passwordVisible ? 'text' : 'password'"
+                  :type="passwordVisible ? 'text' : 'Password'"
                   label="Password"
                   outlined
                   @click:append="togglePasswordVisibility"
@@ -40,25 +40,26 @@
 <script>
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import axios from 'axios';
+import { jwtDecode as jwt_decode } from 'jwt-decode';
 
 export default {
   name: 'Login',
   data() {
     return {
-      email: '',
-      password: '',
+      Email: '',
+      Password: '',
       passwordVisible: false,
     };
   },
   methods: {
     async login() {
       try {
-        console.log('Email:', this.email);
-        console.log('Password:', this.password);
+        console.log('Email:', this.Email);
+        console.log('Password:', this.Password);
 
         const response = await axios.post('/login', {
-          email: this.email,
-          password: this.password,
+          Email: this.Email,
+          Password: this.Password,
         }, {
           headers: {
             'Content-Type': 'application/json',
@@ -66,6 +67,31 @@ export default {
         });
 
         console.log('Response:', response.data);
+
+        // Decode the JWT token
+        const decodedToken = jwt_decode(response.data.token);
+        const role = decodedToken.aud;
+
+        console.log('Role:', role);
+
+        // Store the token in sessionStorage
+        sessionStorage.setItem('token', response.data.token);
+
+        // Redirect based on the user role
+        switch (role) {
+          case 'User':
+            this.$router.push({ name: 'User' });
+            break;
+          case 'Admin':
+            this.$router.push({ name: 'Admin' });
+            break;
+          case 'Journalist':
+            this.$router.push({ name: 'Staff' });
+            break;
+          default:
+            this.$router.push('/login');
+        }
+
       } catch (error) {
         console.error('Error:', error);
       }

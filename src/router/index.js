@@ -5,12 +5,12 @@ import Register from '../components/Register.vue'
 import ForgotPage from '../components/Forgot.vue'
 import RichTextEditor from '../components/RichTextEditor.vue'
 import Admin from '../components/AdminPage.vue/Admin.vue'
-import AddNews from '../components/AdminPage.vue/AddNews.vue'
 import NewsStatus from '../components/AdminPage.vue/NewsStatus.vue'
 import User from '../components/UserPage.vue/User.vue'
 import PastNews from '../components/UserPage.vue/PastNews.vue'
-import HomePage from '../components/UserPage.vue/HomePage.vue'
+import AddNews from '../components/StaffPage.vue/AddNews.vue'
 import Staff from '../components/StaffPage.vue/Staff.vue'
+import ManageNews from '../components/StaffPage.vue/ManageNews.vue'
 
 const routes = [
   {
@@ -27,6 +27,7 @@ const routes = [
   },
   {
     path: '/admin',
+    name: 'Admin',
     component: Admin
   },
   {
@@ -39,19 +40,17 @@ const routes = [
   },
   {
     path: '/staff',
+    name: 'Staff',
     component:Staff
   },
   {
     path: '/user',
+    name: 'User',
     component:User
   },
   {
     path: '/pastnews',
     component:PastNews
-  },
-  {
-    path: '/home',
-    component:HomePage
   },
   {
     path: '/forgot',
@@ -60,6 +59,10 @@ const routes = [
   {
     path: '/status',
     component:NewsStatus
+  },
+  {
+    path: '/managenews',
+    component:ManageNews
   }
 ]
 

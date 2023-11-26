@@ -143,8 +143,34 @@
 
     <!-- Main Content -->
     <v-main style="height: 750px; background-color: #f9f6f2">
-      
-    </v-main>
+    <!-- Dashboard Content -->
+    <v-container fluid>
+      <v-row>
+        <!-- Widgets/Statistics -->
+        <v-col cols="12" md="4">
+          <v-card class="dashboard-widget">
+            <v-card-title>Total News</v-card-title>
+            <v-card-subtitle>{{ totalNews }}</v-card-subtitle>
+          </v-card>
+        </v-col>
+
+        <v-col cols="12" md="4">
+          <v-card class="dashboard-widget">
+            <v-card-title>Published News</v-card-title>
+            <v-card-subtitle>{{ publishedNews }}</v-card-subtitle>
+          </v-card>
+        </v-col>
+
+        <v-col cols="12" md="4">
+          <v-card class="dashboard-widget">
+            <v-card-title>Pending Approval</v-card-title>
+            <v-card-subtitle>{{ pendingApproval }}</v-card-subtitle>
+          </v-card>
+        </v-col>
+      </v-row>
+
+    </v-container>
+  </v-main>
 
     <v-footer app class="footer">
       <v-spacer></v-spacer>
@@ -156,6 +182,33 @@
 </template>
 
 <!-- ... (your existing script and style sections) -->
+
+<script>
+export default {
+  data() {
+    return {
+      drawer: true,
+      rail: true,
+      selectedItem: null,
+      showMessage: false,
+    };
+  },
+  methods: {
+    toggleItem(item) {
+      if (this.selectedItem === item) {
+        // If the same item is clicked again, close the section
+        this.selectedItem = null;
+      } else {
+        // If a different item is clicked, switch to that item
+        this.selectedItem = item;
+      }
+    },
+    selectItem(item) {
+      this.selectedItem = item;
+    },
+  },
+};
+</script>
 
 
 <style>
@@ -185,36 +238,23 @@
   top: 16px; /* Adjust the distance from the top */
   max-width: 300px; /* Adjust the maximum width of the message box */
 }
-</style>
 
-<script>
-export default {
-  data() {
-    return {
-      drawer: true,
-      rail: true,
-      selectedItem: null,
-      showMessage: false,
-    };
-  },
-  methods: {
-    toggleItem(item) {
-      if (this.selectedItem === item) {
-        // If the same item is clicked again, close the section
-        this.selectedItem = null;
-      } else {
-        // If a different item is clicked, switch to that item
-        this.selectedItem = item;
-      }
-    },
-    selectItem(item) {
-      this.selectedItem = item;
-    },
-  },
-};
-</script>
+.dashboard-widget {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  transition: transform 0.3s ease-in-out;
+}
 
-<style>
+.dashboard-widget:hover {
+  transform: scale(1.05);
+}
 .v-list-item:hover {
   background-color: #9575cd;
   color: #ffffff; 
