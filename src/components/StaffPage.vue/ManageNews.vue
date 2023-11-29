@@ -266,6 +266,11 @@
                     type="date" class="mt-5"
                   ></v-text-field>
 
+                  <v-text-field
+                    v-model="editedItem.Status"
+                    label="Status"
+                  ></v-text-field>
+
                   </v-col>
                 </v-row>
               </v-container>
@@ -365,6 +370,7 @@ export default {
         { title: 'Image', key: 'ImageURL' },
         { title: 'Content', key: 'Content' },
         { title: 'Publish Date', key: 'PublishDate' },
+        { title: 'Status', key: 'Status' },
         { title: 'Actions', key: 'actions', sortable: false },
       ],
       desserts: [],
@@ -375,7 +381,8 @@ export default {
         Category: '',
         ImageURL: '',
         Content: '',
-        PublishDate: new Date().toISOString().substr(0,10)
+        PublishDate: new Date().toISOString().substr(0,10),
+        Status: '',
       },
       defaultItem: {
         Title: '',
@@ -383,7 +390,8 @@ export default {
         Category: '',
         ImageURL: '',
         Content: '',
-        PublishDate: new Date().toISOString().substr(0,10)
+        PublishDate: new Date().toISOString().substr(0,10),
+        Status: '',
       },
 
       categoryOptions: [
@@ -483,6 +491,7 @@ export default {
         ImageURL: '',
         Content: '',
         PublishDate: '' ,
+        Status: '',
         },
         // Add more initial data as needed
       ];
