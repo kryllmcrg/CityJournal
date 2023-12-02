@@ -7,7 +7,10 @@ import RichTextEditor from '../components/RichTextEditor.vue'
 import Admin from '../components/AdminPage.vue/Admin.vue'
 import NewsStatus from '../components/AdminPage.vue/NewsStatus.vue'
 import Collaboration from '../components/AdminPage.vue/Collaboration.vue'
-import User from '../components/UserPage.vue/User.vue'
+import News from '../components/UserPage.vue/News.vue'
+import Home from '../components/UserPage.vue/Home.vue'
+import Contact from '../components/UserPage.vue/Contact.vue'
+import About from '../components/UserPage.vue/About.vue'
 import AddNews from '../components/StaffPage.vue/AddNews.vue'
 import Staff from '../components/StaffPage.vue/Staff.vue'
 import ManageNews from '../components/StaffPage.vue/ManageNews.vue'
@@ -45,11 +48,6 @@ const routes = [
     component:Staff
   },
   {
-    path: '/user',
-    name: 'User',
-    component:User
-  },
-  {
     path: '/forgot',
     component:ForgotPage
   },
@@ -68,6 +66,22 @@ const routes = [
   {
     path: '/category',
     component:Category
+  },
+  {
+    path: '/news',
+    component:News
+  },
+  {
+    path: '/home',
+    component:Home
+  },
+  {
+    path: '/contact',
+    component:Contact
+  },
+  {
+    path: '/about',
+    component:About
   }
 ]
 
