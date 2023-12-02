@@ -72,7 +72,7 @@
           <!-- Add Category -->
           <v-list-item-group v-if="selectedItem === 'categories'">
             <v-list-item-content>
-              <router-link to="/addcategory">
+              <router-link to="/category">
                 <v-list-item @click="selectItem('addCategory')" prepend-icon="mdi-plus-circle" title="Add Category" value="addCategory"></v-list-item>
               </router-link>
 

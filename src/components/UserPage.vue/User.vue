@@ -6,29 +6,28 @@
       <v-toolbar-title>{{ capitalize(value) }}</v-toolbar-title>
     </v-app-bar>
 
-    <!-- Navigation Drawer -->
-    <v-navigation-drawer app v-model="drawer" color="deep-purple darken-2" dark>
-      <v-list>
-        <v-list-item v-for="item in navItems" :key="item.text" :to="item.to" link>
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
     <!-- Main Content -->
     <v-main>
       <v-container>
-       
+        <v-row>
+          <v-col cols="12">
+            <v-card class="news-card" @click="navigateToFullStory">
+              <v-card-title class="headline">Latest News</v-card-title>
+              <v-card-text class="article-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac justo nec urna porttitor
+                vestibulum.
+              </v-card-text>
+              <v-card-actions>
+                <v-btn class="news-btn" @click="navigateToFullStory">Read More</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
 
     <!-- Bottom Navigation -->
-    <v-bottom-navigation v-model="value" app color="deep-purple darken-4" dark>
+    <v-bottom-navigation v-model="value" app color="purple darken-3" dark>
       <v-btn v-for="item in navItems" :key="item.text" :to="item.to" value="Home" height="100%" :color="color">
         <span>{{ item.text }}</span>
         <v-icon style="margin: 0 4px;">{{ item.icon }}</v-icon>
@@ -44,8 +43,26 @@
         <v-icon style="margin: 0 4px;">mdi-logout</v-icon>
       </v-btn>
     </v-bottom-navigation>
+
+
+    <!-- Navigation Drawer -->
+    <v-navigation-drawer app v-model="drawer" color="white" dark>
+      <v-list>
+        <v-list-item v-for="item in navItems" :key="item.text" :to="item.to" link>
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.text }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
   </v-app>
 </template>
+
+<!-- ... (unchanged) ... -->
+
 
 <script>
 export default {
@@ -135,6 +152,9 @@ export default {
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
     margin-bottom: 16px;
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
   }
 
   .sidebar-card:hover {
@@ -144,11 +164,12 @@ export default {
   .sidebar-btn {
     color: #007BFF;
     font-size: 16px;
+    text-align: center; /* Center text */
   }
 
   .sidebar-btn:hover {
     color: #0056b3;
-  }
+  }s
 
   /* Adjust the z-index and position of the bottom navigation */
   .v-bottom-navigation {
