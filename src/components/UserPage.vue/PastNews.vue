@@ -1,37 +1,94 @@
 <template>
   <v-app>
-    <v-app-bar
-      :color="color"
-      app
-      dark
-    >
-      <v-toolbar-title>
-        {{ capitalize(value) }}
-      </v-toolbar-title>
+    <!-- App Bar -->
+    <v-app-bar app dark color="deep-purple darken-4">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>{{ capitalize(value) }}</v-toolbar-title>
     </v-app-bar>
+
+    <!-- Navigation Drawer -->
+    <v-navigation-drawer app v-model="drawer" color="deep-purple darken-2" dark>
+      <v-list>
+        <v-list-item v-for="item in navItems" :key="item.text" :to="item.to" link>
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.text }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <!-- Main Content -->
     <v-main>
       <v-container>
-        Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Quis blanditiis beatae praesentium repudiandae
-        sunt officiis, vero maxime officia obcaecati nisi
-        excepturi. Sit laboriosam provident laborum? Rem
-        recusandae ea possimus illo.
+        <router-view></router-view>
+
+        <!-- Main Layout -->
+        <v-row class="wrap">
+          <!-- Side Column -->
+          <v-row>
+    <v-col cols="12">
+      <h2 class="headline">Side</h2>
+      <v-card class="sidebar-card" @click="navigateToFullStory">
+        <v-card-title class="panel-heading">Latest News</v-card-title>
+        <v-card-text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+        </v-card-text>
+        <v-card-actions class="text-center">
+          <v-btn text class="sidebar-btn" large>
+            <span class="glyphicon glyphicon-plus"></span> Read More
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+      <v-divider></v-divider>
+      <!-- Repeat the Sidebar Card Block as needed -->
+    </v-col>
+  </v-row>
+
+          <!-- Main Content Column -->
+          <v-col cols="12" md="9">
+            <v-row>
+              <v-col cols="12">
+                <h2 class="headline">Article Title</h2>
+                <p class="article-text">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+                  Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
+                  dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
+                  Aliquam in felis sit amet augue.
+                </p>
+                <v-row class="text-center">
+                  <v-col>
+                    <v-btn text class="article-btn" large>
+                      <span class="glyphicon glyphicon-plus"></span> Full Story
+                    </v-btn>
+                  </v-col>
+                  <v-col>
+                    <v-btn text class="article-btn" large>
+                      <span class="glyphicon glyphicon-comment"></span> Comments
+                    </v-btn>
+                  </v-col>
+                  <v-col>
+                    <v-btn text class="article-btn" large>
+                      <span class="glyphicon glyphicon-share"></span> Shares
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+            <v-divider></v-divider>
+            <!-- Repeat the Article Block as needed -->
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
-    <v-bottom-navigation v-model="value" app :background-color="color" dark>
-      <v-btn value="Home" height="100%" :color="color">
-        <span>Home</span>
-        <v-icon style="margin: 0 4px;">mdi-home</v-icon>
-      </v-btn>
 
-      <v-btn value="About" height="100%" :color="color">
-        <span>About</span>
-        <v-icon style="margin: 0 4px;">mdi-information</v-icon>
-      </v-btn>
-
-      <v-btn value="Contact" height="100%" :color="color">
-        <span>Contact Us</span>
-        <v-icon style="margin: 0 4px;">mdi-email</v-icon>
+    <!-- Bottom Navigation -->
+    <v-bottom-navigation v-model="value" app color="deep-purple darken-4" dark>
+      <v-btn v-for="item in navItems" :key="item.text" :to="item.to" value="Home" height="100%" :color="color">
+        <span>{{ item.text }}</span>
+        <v-icon style="margin: 0 4px;">{{ item.icon }}</v-icon>
       </v-btn>
 
       <v-btn v-if="!isLoggedIn" value="Login" height="100%" :color="color" @click="login">
@@ -50,14 +107,113 @@
 <script>
 export default {
   name: 'App',
-  data: () => ({
-    value: 'home',
-    color: '#F3E5F5',
-  }),
+  data() {
+    return {
+      value: 'home',
+      color: 'deep-purple darken-4',
+      drawer: false,
+      navItems: [
+        { text: 'Home', to: '/', icon: 'mdi-home' },
+        { text: 'About', to: '/about', icon: 'mdi-information' },
+        { text: 'Contact', to: '/contact', icon: 'mdi-email' },
+        { text: 'News', to: '/news', icon: 'mdi-newspaper' },
+      ],
+      fname: '',
+      lname: '',
+      email: '',
+      phone: '',
+      message: '',
+    };
+  },
   methods: {
     capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     },
+    login() {
+      // Your login logic
+    },
+    logout() {
+      // Your logout logic
+    },
+    submitForm() {
+      // Handle form submission logic here
+    },
+    navigateToFullStory() {
+      // Handle navigation to the full story
+    },
   },
 };
 </script>
+
+<style>
+  .header {
+    color: #36A0FF;
+    font-size: 27px;
+    padding: 10px;
+  }
+
+  .bigicon {
+    font-size: 35px;
+    color: #36A0FF;
+  }
+
+  .headline {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .news-card {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .news-card:hover {
+    transform: scale(1.05);
+  }
+
+  .article-text {
+    line-height: 1.6;
+    color: #666;
+  }
+
+  .news-btn,
+  .article-btn {
+    color: #007BFF;
+  }
+
+  .news-btn:hover,
+  .article-btn:hover {
+    color: #0056b3;
+  }
+
+  .sidebar-card {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+
+  .sidebar-card:hover {
+    transform: scale(1.05);
+  }
+
+  .sidebar-btn {
+    color: #007BFF;
+    font-size: 16px;
+  }
+
+  .sidebar-btn:hover {
+    color: #0056b3;
+  }
+
+  /* Adjust the z-index and position of the bottom navigation */
+  .v-bottom-navigation {
+    z-index: 100; /* Ensure it appears above other elements */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+</style>
+
