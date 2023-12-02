@@ -6,11 +6,12 @@ import ForgotPage from '../components/Forgot.vue'
 import RichTextEditor from '../components/RichTextEditor.vue'
 import Admin from '../components/AdminPage.vue/Admin.vue'
 import NewsStatus from '../components/AdminPage.vue/NewsStatus.vue'
+import Collaboration from '../components/AdminPage.vue/Collaboration.vue'
 import User from '../components/UserPage.vue/User.vue'
-import PastNews from '../components/UserPage.vue/PastNews.vue'
 import AddNews from '../components/StaffPage.vue/AddNews.vue'
 import Staff from '../components/StaffPage.vue/Staff.vue'
 import ManageNews from '../components/StaffPage.vue/ManageNews.vue'
+import Category from '../components/StaffPage.vue/Category.vue'
 
 const routes = [
   {
@@ -49,10 +50,6 @@ const routes = [
     component:User
   },
   {
-    path: '/pastnews',
-    component:PastNews
-  },
-  {
     path: '/forgot',
     component:ForgotPage
   },
@@ -63,6 +60,14 @@ const routes = [
   {
     path: '/managenews',
     component:ManageNews
+  },
+  {
+    path: '/collab',
+    component:Collaboration
+  },
+  {
+    path: '/category',
+    component:Category
   }
 ]
 
