@@ -106,7 +106,7 @@ class NewsController extends BaseController
             $data['Status'] = $status;
 
             $model = new NewsModel();
-            $model->where('ArticleID', $articleID)->set($data)->update();
+            $model->where('Articlep-ID', $articleID)->set($data)->update();
 
             return $this->respond([$data,$articleID]);
         } catch (\Throwable $th) {
