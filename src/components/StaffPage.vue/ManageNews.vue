@@ -158,35 +158,19 @@
 
       <v-data-table
     :headers="headers"
-    :items="desserts"
+    :items="Articles"
     :sort-by="[{ key: 'PublishDate', order: 'asc' }]"
-    style="max-width: 80%; height: 50vh; margin: auto;"
+    style="max-width: 80%; height: 90vh; margin: auto;"
   >
     <template v-slot:top>
       <v-toolbar
         flat
       >
         <v-toolbar-title>Manage News</v-toolbar-title>
-        <v-divider
-          class="mx-4"
-          inset
-          vertical
-        ></v-divider>
-        <v-spacer></v-spacer>
         <v-dialog
           v-model="dialog"
           max-width="1000px"
         >
-          <template v-slot:activator="{ props }">
-            <v-btn
-              color="primary"
-              dark
-              class="mb-2"
-              v-bind="props"
-            >
-              New Item
-            </v-btn>
-          </template>
           <v-card>
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
@@ -233,13 +217,6 @@
                     sm="6"
                     md="4"
                   >
-                  <v-file-input
-                    v-model="editedItem.ImageURL"
-                    label="Image"
-                    placeholder="Select an image"
-                    accept="image/*"
-                    @change="handleImageUpload"
-                  ></v-file-input>
 
                   </v-col>
                   <v-col
@@ -308,6 +285,16 @@
         </v-dialog>
       </v-toolbar>
     </template>
+    <template v-slot:item.ImageURL="{ item }">
+        <v-row>
+          <v-img
+          :src="item.ImageURL"
+          aspect-ratio="1"
+          cover
+          class="ma-5"
+          ></v-img>
+        </v-row>
+    </template>
     <template v-slot:item.actions="{ item }">
       <v-icon
         size="small"
@@ -347,6 +334,7 @@
 <!-- ... (your existing script and style sections) -->
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -367,13 +355,13 @@ export default {
         },
         { title: 'Author', key: 'Author' },
         { title: 'Category', key: 'Category' },
-        { title: 'Image', key: 'ImageURL' },
+        { title: 'Image', key: 'ImageURL', src: 'ImageURL'},
         { title: 'Content', key: 'Content' },
         { title: 'Publish Date', key: 'PublishDate' },
         { title: 'Status', key: 'Status' },
         { title: 'Actions', key: 'actions', sortable: false },
       ],
-      desserts: [],
+      Articles: [],
       editedIndex: -1,
       editedItem: {
         Title: '',
@@ -425,6 +413,12 @@ export default {
     this.initialize();
   },
   methods: {
+    async initialize() {
+      const response = await axios.get('/displayNews');
+
+      this.Articles = response.data;
+    },
+    
     toggleItem(item) {
       if (this.selectedItem == item) {
         this.selectedItem = null;
@@ -441,19 +435,19 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.Articles.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.Articles.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
+      this.Articles.splice(this.editedIndex, 1);
       this.closeDelete();
     },
 
@@ -475,26 +469,11 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        Object.assign(this.Articles[this.editedIndex], this.editedItem);
       } else {
-        this.desserts.push(this.editedItem);
+        this.Articles.push(this.editedItem);
       }
       this.close();
-    },
-
-    initialize() {
-      this.desserts = [
-        {
-          Title: '',
-        Author: '' ,
-        Category: '',
-        ImageURL: '',
-        Content: '',
-        PublishDate: '' ,
-        Status: '',
-        },
-        // Add more initial data as needed
-      ];
     },
   },
 };

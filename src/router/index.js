@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Landing from '../components/Landing.vue'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import ForgotPage from '../components/Forgot.vue'
@@ -17,10 +16,6 @@ import ManageNews from '../components/StaffPage.vue/ManageNews.vue'
 import Category from '../components/StaffPage.vue/Category.vue'
 
 const routes = [
-  {
-    path: '/landing',
-    component: Landing
-  },
   {
     path: '/login',
     component: Login

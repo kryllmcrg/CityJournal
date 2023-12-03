@@ -175,11 +175,26 @@
 
               <!-- Author -->
               <v-text-field v-model="Author" label="Author" required></v-text-field>
-
-              <!-- Image Upload -->
-              <v-file-input v-model="ImageURL" label="Image" accept="image/*" required></v-file-input>
-
-         
+              
+              <div>
+                <v-img
+                    class="mb-3"
+                    :aspect-ratio="1"
+                    :src="
+                        ($refs.FileInput &&
+                        $refs.FileInput.getObjectURL(
+                            selectedFile[0]
+                        )) ||
+                        require('@/assets/images/default_images.webp')
+                    "
+                    height="150"
+                    ></v-img>
+                    <FileUpload
+                        v-model="selectedFile"
+                        @update:value="selectedFile = $event"
+                        ref="FileInput"
+                    />
+                </div>
                 <editor
                   api-key="no-api-key"
                   :init="{
@@ -205,8 +220,7 @@
             <v-card-actions>
               <!-- Save News Button -->
               <v-btn type="submit" color="primary">Save News</v-btn>
-              <!-- Edit News Button -->
-              <v-btn color="warning" @click="editNewsForm">Edit News</v-btn>
+              
             </v-card-actions>
           </v-card>
         </v-form>
@@ -223,12 +237,14 @@
 </template>
 
 <script>
+import FileUpload from '@/components/FileUpload.vue'
 import Editor from '@tinymce/tinymce-vue'
 import axios from 'axios';
 
 export default {
   components: {
-    Editor
+    Editor,
+    FileUpload
   },
   data() {
     return {
@@ -243,9 +259,16 @@ export default {
       Content: '',
       PublishDate: new Date().toISOString().substr(0,10),
       categories: ['Government', 'Politics', 'Education', 'Health', 'Environment', 'Economy', 'Business', 'Fashion', 'Entertainment', 'Sport'],
+      selectedFile: '',
     };
   },
   methods: {
+    getObjectURL(file) {
+            if (file) {
+                return URL.createObjectURL(file);
+            }
+            return null;
+        },
     async addNews() {
       try {
         console.log('Title:', this.Title);    
@@ -258,11 +281,10 @@ export default {
         formData.append('Title', this.Title);
         formData.append('Author', this.Author);
         formData.append('Category', this.Category);
-        formData.append('ImageURL',this.ImageURL[0],this.ImageURL[0].name)
+        formData.append('ImageURL',this.selectedFile[0],this.selectedFile[0].name)
         formData.append('Content', this.Content);
         formData.append('PublishDate', this.PublishDate);
 
-        console.log(this.ImageURL[0].name);
         const response = await axios.post('/add',formData,{
           headers: {'Content-Type': 'multipart/form-data'}
         })

@@ -20,17 +20,52 @@
       <!-- Main Content -->
       <v-main class="main-content">
         <v-container fluid>
-  
-          <!-- Featured Articles -->
+
+          <!-- News Cards -->
           <v-row>
-            <v-col md="4" lg="4">
-              <v-card class="blog-stripe">
-                <v-img src="http://placehold.it/500x400" alt="" class="feature"></v-img>
-                <v-card-title class="block-title">
-                  <h2 class="text-center">Featured article title</h2>
-                  <p class="author text-center"><small>Author name</small></p>
-                </v-card-title>
+            <!-- Existing News Card -->
+            <v-col xs="12" sm="8" md="8" lg="8">
+              <v-card class="news-card" @click="navigateToFullStory('Latest News')">
+                <v-card-title class="headline">Latest News</v-card-title>
+                <v-card-text class="article-text">
+                  Lorem ipsum dolor sit amet, adipiscing elit. Proin ac justo nec urna porttitor vestibulum.
+                </v-card-text>
+                <v-card-actions>
+                  <v-btn class="news-btn" @click="navigateToFullStory('Latest News')">Read More</v-btn>
+                </v-card-actions>
               </v-card>
+            </v-col>
+  
+            <!-- New News Card -->
+            <v-col xs="12" sm="4" md="4" lg="4">
+              <v-card class="news-card" @click="navigateToFullStory('New News')">
+                <v-card-title class="headline">New News</v-card-title>
+                <v-card-text class="article-text">
+                  New content goes here.
+                </v-card-text>
+                <v-card-actions>
+                  <v-btn class="news-btn" @click="navigateToFullStory('New News')">Read More</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+            
+          <!-- Featured Articles -->
+          <v-row> 
+            <v-col md="4" lg="4">
+              <v-list class="all-blogs">
+                <v-list-item-group>
+                  <v-list-item v-for="blog in blogs" :key="blog.title">
+                    <v-list-item-avatar>
+                      <v-img src="http://placehold.it/200x100"></v-img>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title>{{ blog.title }}</v-list-item-title>
+                      <v-list-item-subtitle class="author">{{ blog.author }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
             </v-col>
             <v-col md="4" lg="4">
               <v-list class="all-blogs">

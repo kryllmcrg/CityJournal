@@ -144,27 +144,167 @@
       <!-- Main Content -->
       <v-main style="height: 750px; background-color: #f9f6f2">
         <v-container>
-    <v-data-table
-      :headers="headers"
-      :items="articles"
-      :items-per-page="10"
-      class="elevation-1"
-    >
-      <template v-slot:item="{ item }">
-        <tr>
-          <td>{{ item.ArticleID }}</td>
-          <td>{{ item.Title }}</td>
-          <td>{{ item.Content }}</td>
-          <td>{{ item.JournalistID }}</td>
-          <td>{{ item.EditorID }}</td>
-          <td>{{ item.Category }}</td>
-          <td>{{ item.Author }}</td>
-          <td>{{ formatDate(item.PublishDate) }}</td>
-          <td>{{ item.Status }}</td>
-          <td>{{ item.ImageURL }}</td>
-        </tr>
-      </template>
-    </v-data-table>
+          <v-data-table
+          :headers="headers"
+          :items="Articles"
+          :sort-by="[{ key: 'PublishDate', order: 'asc' }]"
+          style="max-width: 100%; height: 90vh; margin: auto;"
+        >
+    <template v-slot:top>
+      <v-toolbar
+        flat
+      >
+        <v-toolbar-title>Manage News</v-toolbar-title>
+        <v-dialog
+          v-model="dialog"
+          max-width="1000px"
+        >
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">{{ formTitle }}</span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.Title"
+                      label="Title"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.Author"
+                      label="Author"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                  <v-select
+                    v-model="editedItem.Category"
+                    :items="categoryOptions"
+                    label="Category"
+                    placeholder="Select a category"
+                  ></v-select>
+
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                  <!-- <v-file-input
+                    v-model="editedItem.ImageURL"
+                    label="Image"
+                    placeholder="Select an image"
+                    accept="image/*"
+                    @change="handleImageUpload"
+                  ></v-file-input> -->
+
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+
+                  <v-textarea
+                    v-model="editedItem.Content"
+                    label="Content"
+                    auto-grow
+                  ></v-textarea>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+
+                  <v-text-field
+                    v-model="editedItem.PublishDate"
+                    label="Publish Date"
+                    type="date" class="mt-5"
+                  ></v-text-field>
+
+                  <v-text-field
+                    v-model="editedItem.Status"
+                    label="Status"
+                  ></v-text-field>
+
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="blue-darken-1"
+                variant="text"
+                @click="close"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                color="blue-darken-1"
+                variant="text"
+                @click="save"
+              >
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
+              <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">OK</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-toolbar>
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-icon
+        size="small"
+        class="me-2"
+        @click="editItem(item)"
+      >
+        mdi-pencil
+      </v-icon>
+      <v-icon
+        size="small"
+        @click="deleteItem(item)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
+    <template v-slot:no-data>
+      <v-btn
+        color="primary"
+        @click="initialize"
+      >
+        Reset
+      </v-btn>
+    </template>
+  </v-data-table>
+
   </v-container>
       </v-main>
   
@@ -180,32 +320,91 @@
   <!-- ... (your existing script and style sections) -->
   
   <script>
+  import axios from 'axios'
   export default {
     data() {
       return {
         drawer: true,
-        rail: true,
-        selectedItem: null,
-        showMessage: false,
+      rail: true,
+      selectedItem: null,
+      selectedSubItem: null,
+      showMessage: false,
 
-        headers: [
-        { text: 'ID', value: 'ArticleID' },
-        { text: 'Title', value: 'Title' },
-        { text: 'Content', value: 'Content' },
-        { text: 'Journalist ID', value: 'JournalistID' },
-        { text: 'Editor ID', value: 'EditorID' },
-        { text: 'Category', value: 'Category' },
-        { text: 'Author', value: 'Author' },
-        { text: 'Publish Date', value: 'PublishDate' },
-        { text: 'Status', value: 'Status' },
-        { text: 'Image URL', value: 'ImageURL' },
+      dialog: false,
+      dialogDelete: false,
+      headers: [
+        {
+          title: 'Title',
+          align: 'start',
+          sortable: false,
+          key: 'Title',
+        },
+        { title: 'Author', key: 'Author' },
+        { title: 'Category', key: 'Category' },
+        { title: 'Image', key: 'ImageURL' },
+        { title: 'Content', key: 'Content' },
+        { title: 'Publish Date', key: 'PublishDate' },
+        { title: 'Status', key: 'Status' },
+        { title: 'Actions', key: 'actions', sortable: false },
       ],
-      articles: [
-        // Populate this array with your article data
+      Articles: [],
+      editedIndex: -1,
+      editedItem: {
+        Title: '',
+        Author: '' ,
+        Category: '',
+        ImageURL: '',
+        Content: '',
+        PublishDate: new Date().toISOString().substr(0,10),
+        Status: '',
+      },
+      defaultItem: {
+        Title: '',
+        Author: '' ,
+        Category: '',
+        ImageURL: '',
+        Content: '',
+        PublishDate: new Date().toISOString().substr(0,10),
+        Status: '',
+      },
+
+      categoryOptions: [
+        'Government',
+        'Politics',
+        'Education',
+        'Health',
+        'Environment',
+        'Economy',
+        'Business',
+        'Fashion',
+        'Entertainment',
+        'Sport',
       ],
       };
     },
+    computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
+    },
+  },
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+    dialogDelete(val) {
+      val || this.closeDelete();
+    },
+  },
+  created() {
+    this.initialize();
+  },
     methods: {
+      async initialize() {
+      const response = await axios.get('/displayNews');
+
+      this.Articles = response.data;
+    },
+      
       toggleItem(item) {
         if (this.selectedItem === item) {
           // If the same item is clicked again, close the section
@@ -218,8 +417,50 @@
       selectItem(item) {
         this.selectedItem = item;
       },
+
+      editItem(item) {
+      this.editedIndex = this.Articles.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
     },
-  };
+
+    deleteItem(item) {
+      this.editedIndex = this.Articles.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialogDelete = true;
+    },
+
+    deleteItemConfirm() {
+      this.Articles.splice(this.editedIndex, 1);
+      this.closeDelete();
+    },
+
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.Articles[this.editedIndex], this.editedItem);
+      } else {
+        this.Articles.push(this.editedItem);
+      }
+      this.close();
+    },
+ },
+};
   </script>
   
   <style>

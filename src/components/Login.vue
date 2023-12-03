@@ -85,7 +85,7 @@ export default {
           case 'Admin':
             this.$router.push({ name: 'Admin' });
             break;
-          case 'Journalist':
+          case 'Staff':
             this.$router.push({ name: 'Staff' });
             break;
           default:
