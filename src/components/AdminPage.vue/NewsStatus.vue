@@ -280,8 +280,18 @@
         </v-dialog>
       </v-toolbar>
     </template>
+    <template v-slot:item.ImageURL="{ item }">
+        <v-row>
+          <v-img
+          :src="item.ImageURL"
+          aspect-ratio="1"
+          cover
+          class="ma-5"
+          ></v-img>
+        </v-row>
+    </template>
     <template v-slot:item.actions="{ item }">
-      <v-icon
+      <!-- <v-icon
         size="small"
         class="me-2"
         @click="editItem(item)"
@@ -293,7 +303,24 @@
         @click="deleteItem(item)"
       >
         mdi-delete
-      </v-icon>
+      </v-icon> -->
+      <v-menu>
+            <template v-slot:activator="{ props }">
+              <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item>
+                <v-btn @click="handleAction( item, 'Approved')" color="success">Approved</v-btn>
+              </v-list-item>
+              <v-list-item>
+                <v-btn @click="handleAction( item, 'Revise')" color="warning">Revise</v-btn>
+              </v-list-item>
+              <v-list-item>
+                <v-btn @click="handleAction( item, 'Reject')" color="error">Reject</v-btn>
+              </v-list-item>
+            </v-list>
+          </v-menu>
     </template>
     <template v-slot:no-data>
       <v-btn
@@ -341,7 +368,7 @@
         },
         { title: 'Author', key: 'Author' },
         { title: 'Category', key: 'Category' },
-        { title: 'Image', key: 'ImageURL' },
+        { title: 'Image', key: 'ImageURL', src: 'ImageURL' },
         { title: 'Content', key: 'Content' },
         { title: 'Publish Date', key: 'PublishDate' },
         { title: 'Status', key: 'Status' },
@@ -350,6 +377,7 @@
       Articles: [],
       editedIndex: -1,
       editedItem: {
+        ArticleID: '',
         Title: '',
         Author: '' ,
         Category: '',
@@ -359,6 +387,7 @@
         Status: '',
       },
       defaultItem: {
+        ArticleID: '',
         Title: '',
         Author: '' ,
         Category: '',
@@ -399,6 +428,22 @@
     this.initialize();
   },
     methods: {
+      async handleAction(item, action) {
+        try {
+          this.editedIndex = this.Articles.indexOf(item);
+          this.editedItem = Object.assign({}, item);
+          
+          const formData = new FormData();
+          formData.append('ArticleID', this.editedItem.ArticleID)
+          formData.append('Status', action)
+          
+          const response = await axios.post('changeNewsStatus', formData)
+          console.log(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+        this.initialize()
+      },
       async initialize() {
       const response = await axios.get('/displayNews');
 
