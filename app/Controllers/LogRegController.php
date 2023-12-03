@@ -72,7 +72,7 @@ class LogRegController extends BaseController
                 'LastName' => ['rules' => 'required|min_length[2]|max_length[255]'],
                 'Username' => ['rules' => 'required|min_length[4]|max_length[255]|is_unique[users.username]'],
                 'Email' => ['rules' => 'required|min_length[4]|max_length[255]|valid_email|is_unique[users.email]'],
-                'Role' => ['rules' => 'required|in_list[Admin,User,Guest]'],
+                'Role' => ['rules' => 'required|in_list[Admin,User,Staff]'],
                 'Password' => ['rules' => 'required|min_length[8]|max_length[255]'],
                 'confirm_password' => ['label' => 'Confirm Password', 'rules' => 'matches[Password]'],
             ];

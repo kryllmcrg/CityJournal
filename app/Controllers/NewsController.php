@@ -10,19 +10,22 @@ class NewsController extends BaseController
 {
     use ResponseTrait;
 
+    private $Articles;
+
     public function add()
     {
         try {
             $newsModel = new NewsModel();
             $image = $this->request->getFile('ImageURL');
+            $newName = $image->getRandomName();
             // Retrieve data from the request
             $data = [
 
                 'Title' => $this->request->getVar('Title'),
                 'Author' => $this->request->getVar('Author'),
                 'Category' => $this->request->getVar('Category'),
-                'ImageURL' => $image->getName(),
-                'Content' => $this->request->getVar('Content'),
+                'ImageURL' => $newName,
+                'Content' => strip_tags ($this->request->getVar('Content')),
                 'PublishDate' => $this->request->getVar('PublishDate'),
                 // Add other fields as needed
             ];
@@ -45,11 +48,15 @@ class NewsController extends BaseController
     
             // Set validation rules
             $newsModel->setValidationRules($validationRules);
-    
-            // Insert data into the database
-            if (!$newsModel->insert($data)) {
-                // Handle insertion failure, log the error, return an error response, etc.
-                return $this->respond(["error" => "Error: Unable to insert data."]);
+
+            if($image->isValid() && !$image->hasMoved()){
+                $image->move('./uploads',$newName);
+                // Insert data into the database
+
+                if (!$newsModel->insert($data)) {
+                    // Handle insertion failure, log the error, return an error response, etc.
+                    return $this->respond(["error" => "Error: Unable to insert data."]);
+                }
             }
 
             // $newsModel->insert($data);
@@ -63,6 +70,22 @@ class NewsController extends BaseController
         } catch (\Throwable $th) {
             return $this->respond(["error" => "Error: " . $th->getMessage()]);
         }
+    }
+
+    public function __construct(){
+        $this->Articles = new NewsModel();
+    }
+    public function displayNews()
+    {
+        $Articles = $this->Articles->findAll();
+
+        $baseUrl = 'http://cityjournal.test/'; // This assumes you have configured the base URL in CodeIgniter.
+    
+            foreach ($Articles as &$Article) {
+                $Article['ImageURL'] = $baseUrl . 'uploads/' . $Article['ImageURL'];
+            }
+
+        return $this->respond($Articles);
     }
     
 

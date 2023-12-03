@@ -4,15 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class NewsModel extends Model
+class CommentModel extends Model
 {
-    protected $table            = 'articles';
-    protected $primaryKey       = 'ArticleID';
+    protected $table            = 'comments';
+    protected $primaryKey       = 'comment_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['JournalID', 'Title', 'Content', 'Category', 'Author','ImageURL', 'PublishDate', 'Status'];
+    protected $allowedFields    = ['name', 'email','comment'];
+
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
