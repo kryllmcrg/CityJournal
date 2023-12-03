@@ -97,4 +97,20 @@ class NewsController extends BaseController
 
         return $this->respond($news);
     }
+
+    public function changeNewsStatus(){
+        try {
+            $articleID = $this->request->getVar('ArticleID');
+            $status = $this->request->getVar('Status');
+
+            $data['Status'] = $status;
+
+            $model = new NewsModel();
+            $model->where('ArticleID', $articleID)->set($data)->update();
+
+            return $this->respond([$data,$articleID]);
+        } catch (\Throwable $th) {
+            return $this->respond(['message' => 'Error: '.$th->getMessage()]);
+        }
+    }
 }

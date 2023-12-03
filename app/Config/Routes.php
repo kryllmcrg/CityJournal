@@ -15,3 +15,5 @@ $routes->get('/getUserAccounts', 'LogRegController::getUserAccounts');
 $routes->get('/getAdd', 'NewsController::getAdd');
 $routes->get('/displayNews', 'NewsController::displayNews');
 $routes->post('/comment', 'NewsController::comment');
+
+$routes->post('/changeNewsStatus', 'NewsController::changeNewsStatus');
