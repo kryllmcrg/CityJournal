@@ -10,10 +10,12 @@ $routes->get('/LogReg', 'MainController::LogReg');
 $routes->post('/login', 'LogRegController::login');
 $routes->post('/register', 'LogRegController::register');
 $routes->post('/add', 'NewsController::add');
-
 $routes->get('/getUserAccounts', 'LogRegController::getUserAccounts');
+
 $routes->get('/getAdd', 'NewsController::getAdd');
 $routes->get('/displayNews', 'NewsController::displayNews');
-$routes->post('/comment', 'NewsController::comment');
-
 $routes->post('/changeNewsStatus', 'NewsController::changeNewsStatus');
+$routes->post('/changeNewsStatus', 'NewsController::changeNewsStatus');
+$routes->post('/updateNews', 'NewsController::updateNews');
+
+$routes->post('/comment', 'NewsController::comment');

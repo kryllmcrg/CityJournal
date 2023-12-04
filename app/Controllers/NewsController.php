@@ -71,7 +71,6 @@ class NewsController extends BaseController
             return $this->respond(["error" => "Error: " . $th->getMessage()]);
         }
     }
-
     public function __construct(){
         $this->Articles = new NewsModel();
     }
@@ -88,7 +87,6 @@ class NewsController extends BaseController
         return $this->respond($Articles);
     }
     
-
     public function getAdd()
     {
         $model = new NewsModel();
@@ -106,11 +104,34 @@ class NewsController extends BaseController
             $data['Status'] = $status;
 
             $model = new NewsModel();
-            $model->where('Articlep-ID', $articleID)->set($data)->update();
+            $model->where('ArticleID', $articleID)->set($data)->update();
 
             return $this->respond([$data,$articleID]);
         } catch (\Throwable $th) {
             return $this->respond(['message' => 'Error: '.$th->getMessage()]);
+        }
+    }
+
+    public function updateNews(){
+        $this->Articles = new NewsModel();
+        
+        try{
+            $ArticleID = $this->request->getVar('ArticleID');
+            $image = $this->request->getFile('ImageURL');
+            $newName = $image->getRandomName();
+
+            $data =[
+                'Title' => $this->request->getVar('Title'),
+                'Author' => $this->request->getVar('Author'),
+                'Category' => $this->request->getVar('Category'),
+                'ImageURL' => $newName,
+                'Content' => strip_tags ($this->request->getVar('Content')),
+                'PublishDate' => $this->request->getVar('PublishDate'),
+            ];
+            $this->Articles->where('ArticleID',$ArticleID)->set($data)->update();
+            return $this->respond(['message'=>'Record Update Successfully']);
+        }catch (\Throwable $th){
+            return $this->respond(["error" => "Error: " . $th->getMessage()]);
         }
     }
 }
