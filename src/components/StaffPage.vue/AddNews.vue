@@ -230,7 +230,7 @@
     <v-footer app class="footer">
       <v-spacer></v-spacer>
       <div class="text-center">
-        <span>&copy; 2023 Your Company</span>
+        <span>&copy; CIO 2023</span>
       </div>
     </v-footer>
   </v-card>
