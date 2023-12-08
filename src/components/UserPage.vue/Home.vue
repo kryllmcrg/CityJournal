@@ -35,7 +35,15 @@
           <v-row justify="center">
             <v-col cols="12" md="12">
               <v-card class="pa-5">
-                <v-typography class="headline"><strong>CALAPAN CITY OFFICIAL WEBSITE</strong></v-typography>
+                <div class="container">
+                  <v-typography class="headline violet-text">
+                    <strong>CALAPAN CITY OFFICIAL WEBSITE</strong>
+                  </v-typography>
+                  <v-typography class="violet-text">
+                    <strong>TAUMABAYAN AND MASUSUNOD
+                      SA TAPAT AT MAPAGKALINGANG PAGLILINGKOD</strong>
+                  </v-typography>
+                </div>
                 <v-col cols="12">
                   <v-img
                     src="@/assets/calapan.jpg"
@@ -43,11 +51,20 @@
                     alt="Hospital Image"
                   ></v-img>
                 </v-col>
-                <v-divider class="my-3"></v-divider>
-                <v-typography>
-                  TAUMABAYAN AND MASUSUNOD
-                  SA TAPAT AT MAPAGKALINGANG PAGLILINGKOD
+                <v-typography class="violet-text">
+                  Calapan, officially the City of Calapan (Filipino: Lungsod ng Calapan), is a 3rd class component city in the province of Oriental Mindoro, Philippines. According to the 2020 census, it has a population of 145,786 people. The city is the capital of the province of Oriental Mindoro.
+                  </v-typography>
+                  <br>
+                  <br>
+                  <v-typography class="violet-text">
+                    The city serves as the gateway to the Oriental Mindoro province with the implementation of the Strong Republic Nautical Highway (SRNH) an integrated ferry project of then President Gloria Macapagal Arroyo that extends further to the southern part of the Philippines. The Calapan City Seaport is the largest and busiest seaport on Mindoro Island, which is just 45 minutes away by ferry boats and roll-on/roll-off (RORO) ships to-and-fro Batangas City International Seaport.
+                  </v-typography>
+                  <br>
+                  <br>
+                  <v-typography class="violet-text">
+                  Calapan is one of two cities in the Mimaropa region, the other being Puerto Princesa in Palawan. Calapan serves as the region's administrative center.[5] It is also the center of commerce, industry, transport, communication, religious activities and education in the entire province of Oriental Mindoro.
                 </v-typography>
+              <v-divider class="my-3"></v-divider>
               </v-card>
             </v-col>
           </v-row>
@@ -64,19 +81,30 @@
             :src="item.src"
           ></v-carousel-item>
         </v-carousel>
-
           </v-row>
 
           <v-row>
-            <v-col cols="12" md="8">
-              <v-card>
-                <v-card-title class="panel-heading">What We Do</v-card-title>
-                <v-card-text>
-                  Founded in 1892 and headquartered in Fairfield, CT, LexisNexis Corporate Affiliations is a technology and financial services company. The company offers products and services ranging from aircraft engines, power generation, water processing, and household appliances, among others. It operates in business segments including Energy Infrastructure, Aviation, Healthcare, Transportation, Home & Business Solutions, and GE Capital. The company also provides medical imaging, business and consumer financing, and industrial products. It has a presence in North America, Europe, Asia, South America, and Africa. According to the company's current 10K government filing, it had FYE 12/31/2011 revenue of $147.3 billion and has 301,000 employees.
-                </v-card-text>
+            <v-col class="text-center">
+              <v-heading>Sample Image Gallery</v-heading>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col v-for="(image, index) in imageList" :key="index" cols="12" sm="6" md="4">
+              <v-card class="mb-4">
+                <v-img :src="image.src" class="thumbnail" @mouseover="onMouseOver(index)" @mouseout="onMouseOut(index)">
+                  <v-hover v-if="hoveredIndex === index">
+                    <template v-slot="{ hover }">
+                      <v-card color="transparent" :style="{ filter: hover ? 'none' : 'grayscale(1)' }">
+                        <v-card-title class="white--text">Image Title</v-card-title>
+                      </v-card>
+                    </template>
+                  </v-hover>
+                </v-img>
               </v-card>
             </v-col>
-            
+          </v-row>
+
+          <v-row>
             <v-col cols="12" md="4">
               <v-card>
                 <v-card-title class="panel-heading">Contact Information</v-card-title>
@@ -218,7 +246,19 @@ export default {
           {
             src: carousel3,
           },
-        ]
+        ],
+      hoveredIndex: null,
+      imageList: [
+        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h9.jpg" },
+        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h8.jpg" },
+        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h4.jpg" },
+        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h7.jpg" },
+        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h3.jpg" },
+        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h6.jpg" },
+        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h1.jpg" },
+        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h2.jpg" },
+        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h5.jpg" },
+      ],
     };
   },
   created() {
@@ -252,6 +292,12 @@ export default {
     checkMobile() {
       this.isMobile = window.innerWidth <= 768; // Adjust the width as needed
     },
+    onMouseOver(index) {
+      this.hoveredIndex = index;
+    },
+    onMouseOut() {
+      this.hoveredIndex = null;
+    },
   },
   beforeDestroy() {
     // Remove the resize event listener when the component is destroyed
@@ -262,6 +308,20 @@ export default {
 
 
 <style scoped>
+.thumbnail {
+  width: 100%;
+  height: auto;
+}
+ .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .violet-text {
+    color: rgb(81, 13, 171);
+    font-style: italic; /* You can change this to your desired font style */
+  }
  .fixed-sidebar {
     position: fixed;
     top: 0;

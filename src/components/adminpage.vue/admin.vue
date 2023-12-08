@@ -47,7 +47,6 @@
           </v-list-item>
         </v-list-item-group>
 
-
         <!-- News Section -->
           <v-list-item-group v-model="selectedItem">
               <v-list-item @click="selectItem('news')" prepend-icon="mdi-newspaper-variant" title="News" value="news"></v-list-item>
@@ -61,7 +60,6 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
-
 
         <!-- Pages Section -->
           <v-divider></v-divider>
@@ -81,7 +79,6 @@
             </v-list-item>
           </v-list-item-group>
 
-
         <!-- Comments Section -->
           <v-divider></v-divider>
           <v-list-item-group v-model="selectedItem">
@@ -98,7 +95,6 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
-
 
         <!-- Other Admin-related Sections -->
         <v-divider></v-divider>
@@ -142,10 +138,11 @@
     </v-app-bar>
 
     <!-- Main Content -->
-    <v-main style="height: 750px; background-color: #f9f6f2">
-    <!-- Dashboard Content -->
-
-    
+    <v-main class="main-content">
+      <v-container fluid>
+        
+      </v-container>
+    </v-main>
 
     <v-container fluid>
       <v-row>
@@ -173,7 +170,6 @@
       </v-row>
 
     </v-container>
-  </v-main>
 
     <v-footer app class="footer">
       <v-spacer></v-spacer>

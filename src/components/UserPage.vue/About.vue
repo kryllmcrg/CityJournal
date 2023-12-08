@@ -46,29 +46,27 @@
                 <v-col cols="12">
                   <v-container>
                     <v-row>
-                      <v-col cols="12">
-                        <v-heading>About Us</v-heading>
+                      <v-col cols="12" class="bold-violet-text">
+                        <v-heading>Calapan City Journal</v-heading>
                       </v-col>
-                      <v-col cols="12">
-                        <v-subheader>Welcome to [Your Hospital Name], a place where your well-being is our top priority.</v-subheader>
+                      <v-col cols="12" class="bold-violet-text">
+                        <v-subheader>CITY INFORMATION OFFICE-CITY HALL, CALAPAN CITY</v-subheader>
                       </v-col>
                       <v-col cols="12">
                         <v-paragraph>
-                          At [Your Hospital Name], we are dedicated to providing compassionate and high-quality healthcare services.
-                          Our experienced team of medical professionals is committed to ensuring your health and satisfaction.
+                          Calapan was formerly a small village before the establishment of the first Religious District in Baco. The District convent was transferred to Calapan in 1733 and began its jurisdiction over the Northern Mindoro Ecclesiastical Area.
                         </v-paragraph>
                       </v-col>
                       <v-col cols="12">
                         <v-paragraph>
-                          With state-of-the-art facilities and advanced medical technologies, we offer a comprehensive range of services,
-                          from routine check-ups to specialized treatments. Our mission is to create a healing environment that prioritizes
-                          your comfort and safety.
+                          In the early 18th century, the town only occupied a strip of land stretching from Ibaba to Ilaya in a cross-shape facing the present Santo Niño Cathedral and cut off by the river. Later on, succeeding barrios were founded.
+                          In 1837, the capital of the province was moved from Puerto Galera to Calapan. When Mindoro became a part of Marinduque on June 13, 1902, the provincial capital was once again moved to Puerto Galera. On November 10, 1902, Mindoro was detached from Marinduque. In 1903, Calapan once again became the provincial capital.
                         </v-paragraph>
                       </v-col>
                       <v-col cols="12">
                         <v-paragraph>
-                          Explore our website to learn more about our services, our dedicated staff, and the community initiatives we participate in.
-                          If you have any questions or need assistance, please don't hesitate to reach out. Your health is our mission!
+                          When Mindoro was detached from Marinduque on November 10, 1902, Baco, Puerto Galera and San Teodoro were annexed to Calapan in 1905 under Act No. 1280, adding a total area of 843 square kilometres (325 sq mi) of land.  In 1902, under Act No. 2824, the three municipalities gained their independence.
+                          In 1919, the boundary dispute between Calapan and Naujan was adjudicated by Presidentes (Mayors) Agustin Quijano of Calapan and Agustin Garong of Naujan over a portion of the territory of what is now known as the present boundary. The portion of agricultural area was awarded to Naujan, thus, making the area of Calapan much smaller as compared to that of Naujan which is now considered as the biggest municipality of the province.
                         </v-paragraph>
                       </v-col>
                     </v-row>
@@ -230,6 +228,10 @@ export default {
 
 
 <style scoped>
+  .bold-violet-text {
+    font-weight: bold;
+    color: rgb(81, 13, 171);
+  }
  .fixed-sidebar {
     position: fixed;
     top: 0;
