@@ -1,91 +1,333 @@
 <template>
-    <v-app>
-      <v-container fluid fill-height class="purple-bg">
-        <v-row align="center" justify="center">
-          <v-col cols="12" sm="8" md="6">
-            <v-card elevation="2" class="forgot-password-card">
-              <v-card-title class="headline text-center white--text">Forgot Password</v-card-title>
-              <v-card-text>
-                <v-form @submit.prevent="sendResetLink">
+  <v-app>
+    <v-app-bar app dark>
+      <v-app-bar-nav-icon v-if="isMobile" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+  <v-img src="@/assets/logocalapan.png" alt="Logo" max-height="40" max-width="160"></v-img>
+  <v-toolbar-title>{{ capitalize() }}</v-toolbar-title>
   
-                  <v-text-field v-model="email" label="Email" outlined class="mb-3"></v-text-field>
-  
-                  <v-btn type="submit" color="primary" block class="mt-4">Send Reset Link</v-btn>
-                </v-form>
-  
-                <v-row class="mt-2">
-                  <v-col>
-                    <p class="text-body-2">Remembered your password? <router-link to="/login" class="link">Sign In</router-link></p>
-                  </v-col>
-                </v-row>
-              </v-card-text>
-            </v-card>
+  <!-- Buttons for Home, About, Contact, and News -->
+  <v-btn to="/" text>Home</v-btn>
+  <v-btn to="/about" text>About</v-btn>
+  <v-btn to="/contact" text>Contact</v-btn>
+  <v-btn to="/news" text>News</v-btn>
+
+  <!-- Add a Login button -->
+  <v-btn v-if="!isLoggedIn" to="/login" text>Login</v-btn>
+
+  <!-- You can also add a Logout button if user is logged in -->
+  <v-btn v-if="isLoggedIn" @click="logout" text>Logout</v-btn>
+
+  <!-- Subscribe Notification Button -->
+  <v-btn icon @click="subscribe">
+    <v-icon>mdi-bell</v-icon>
+    <v-badge content="subscribed" color="red" overlap>
+      <template v-slot:badge>
+        <v-icon>mdi-check</v-icon>
+      </template>
+    </v-badge>
+    <span class="hidden-md-and-up"></span>
+  </v-btn>
+    </v-app-bar>
+
+      <!-- Main Content -->
+      <v-main class="main-content">
+      <v-container fluid>
+        <v-card
+    class="mx-auto"
+    max-width="500"
+  >
+    <v-card-title class="title font-weight-regular justify-space-between">
+      <span>{{ currentTitle }}</span>
+      <v-avatar
+        color="primary lighten-2"
+        class="subheading white--text"
+        size="24"
+        v-text="step"
+      ></v-avatar>
+    </v-card-title>
+
+    <v-window v-model="step">
+      <v-window-item :value="1">
+        <v-card-text>
+          <v-text-field
+            label="Email"
+            value="john@vuetifyjs.com"
+          ></v-text-field>
+          <span class="caption grey--text text--darken-1">
+            This is the email you will use to login to your Vuetify account
+          </span>
+        </v-card-text>
+      </v-window-item>
+
+      <v-window-item :value="2">
+        <v-card-text>
+          <v-text-field
+            label="Password"
+            type="password"
+          ></v-text-field>
+          <v-text-field
+            label="Confirm Password"
+            type="password"
+          ></v-text-field>
+          <span class="caption grey--text text--darken-1">
+            Please enter a password for your account
+          </span>
+        </v-card-text>
+      </v-window-item>
+
+      <v-window-item :value="3">
+        <div class="pa-3 text-xs-center">
+          <v-img
+            class="mb-3"
+            contain
+            height="128"
+            src="https://cdn.vuetifyjs.com/images/logos/v.svg"
+          ></v-img>
+          <h3 class="title font-weight-light mb-2">Welcome to Vuetify</h3>
+          <span class="caption grey--text">Thanks for signing up!</span>
+        </div>
+      </v-window-item>
+    </v-window>
+
+    <v-divider></v-divider>
+
+    <v-card-actions>
+      <v-btn
+        :disabled="step === 1"
+        flat
+        @click="step--"
+      >
+        Back
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn
+        :disabled="step === 3"
+        color="primary"
+        depressed
+        @click="step++"
+      >
+        Next
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+      </v-container>
+    </v-main>
+
+    <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
+        <!-- Logo Section -->
+        <v-row justify="center" align="center" class="my-3 text-center">
+          <v-img src="@/assets/loggo.png" alt="Logo" max-height="100"></v-img>
+        </v-row>
+
+        <!-- Navigation List -->
+        <v-list>
+          <v-list-item v-for="item in navItems" :key="item.text" :to="item.to" link>
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.text }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+    <!-- Footer Section -->
+      <v-footer app dark height="200">
+        <v-row justify="center">
+
+          <!-- Vision Column -->
+          <v-col>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">Vision:</v-typography>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">“A premier Green City with God-loving, economically-empowered, and culture-rich citizens actively participating in good governance and co-existing harmoniously with the environment.”</v-typography>
+              </v-col>
+            </v-row>
+          </v-col>
+
+          <!-- Mission Column -->
+          <v-col>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">Mission:</v-typography>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">“The Green City of Calapan shall initiate and sustain programs to create an environment conducive to development and responsive to people’s needs through transparent, accountable and participatory governance.”</v-typography>
+              </v-col>
+            </v-row>
+          </v-col>
+
+          <!-- Get In Touch Column -->
+          <v-col>
+            <v-typography class="white--text font-weight-bold">
+              Get In Touch
+            </v-typography>
+            
+            <!-- Email Row -->
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">
+                  <v-icon>mdi-email</v-icon> lgu.calapancity@gmail.com
+                </v-typography>
+              </v-col>
+            </v-row>
+
+            <!-- Phone Row -->
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">
+                  <v-icon>mdi-phone</v-icon> +63-000-0000-000
+                </v-typography>
+              </v-col>
+            </v-row>
+
           </v-col>
         </v-row>
-      </v-container>
-    </v-app>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    name: 'ForgotPassword',
-    data() {
-      return {
+      </v-footer>
+
+  </v-app>
+</template>
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      value: 'home',
+      color: 'deep-purple darken-4',
+      drawer: false,
+      navItems: [
+        { text: 'Home', to: '/', icon: 'mdi-home' },
+        { text: 'About', to: '/about', icon: 'mdi-information' },
+        { text: 'Contact', to: '/contact', icon: 'mdi-email' },
+        { text: 'News', to: '/news', icon: 'mdi-newspaper' },
+      ],
+      isLoggedIn: false,
+      products: [
+        // Your product data here
+      ],
+      commentForm: {
+        name: '',
         email: '',
-      };
-    },
-    methods: {
-      async sendResetLink() {
-        try {
-          const response = await axios.post('/forgot-password', {
-            email: this.email,
-          }, {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-  
-          console.log('Response:', response.data);
-          // You may want to provide feedback to the user, such as displaying a success message or redirecting to another page.
-        } catch (error) {
-          console.error('Error:', error);
-          // Handle the error, e.g., display an error message to the user.
-        }
+        comment: '',
       },
+      isMobile: false,
+      step: 1,
+    };
+  },
+  computed: {
+    currentTitle() {
+      switch (this.step) {
+        case 1: return 'Sign-up';
+        case 2: return 'Create a password';
+        default: return 'Account created';
+      }
     },
-  };
-  </script>
-  
-  <style scoped>
-  
+  },
+  created() {
+    this.checkMobile();
+    window.addEventListener('resize', this.checkMobile);
+  },
+  methods: {
+    capitalize(str) {
+      if (str === undefined || str === null) {
+        return '';
+      }
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    },
+    login() {
+      // Your login logic
+    },
+    logout() {
+      // Your logout logic
+    },
+    subscribe() {
+      // Your subscribe logic
+    },
+    submitComment() {
+      console.log('Comment submitted:', this.commentForm);
+      // You can implement an API call or other actions here
+    },
+    checkMobile() {
+      this.isMobile = window.innerWidth <= 768;
+    },
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.checkMobile);
+  },
+};
+</script>
+
+
+<style scoped>
+ .fixed-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 50%;
+  }
+
+ .drawer-background .logo-section {
+    background-color: transparent !important;
+  }
+  .v-app-bar {
+    background: url("@/assets/head.png") center center no-repeat;
+    background-size: cover;
+  }
+  .main-container {
+    padding-top: 80px; /* Adjust as needed based on your design */
+  }
+  .main-content {
+    margin-top: 50px;
+    padding-top: 60px
+  }
+
+  .v-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .heading {
+    border-radius: 6px;
+    padding: 48px;
+    background-color: #eee;
+    margin-bottom: 20px;
+  }
+
+  .style_featured {
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .featured-card {
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: 0.5s;
+  }
+
+  .featured-card:hover {
+    margin-top: 19px;
+    border: 1px solid rgb(153, 200, 250);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 9px 9px 9px;
+    background: rgba(153, 200, 250, 0.1);
+    transition: 0.99s;
+  }
+
+  /* Footer Styles */
+  .v-footer {
+    background: url("@/assets/footer.png");
+    background-size: cover;
+  }
+
+  /* Adjust the text color and other styles as needed */
   .white--text {
-    color: #ffffff; /* White color */
+    color: white;
   }
-  
-  .forgot-password-card {
-    margin-top: 2rem;
-  }
-  
-  .headline {
-    color: #2196F3; /* Vuetify primary color */
-    font-size: 24px;
-  }
-  
-  .text-body-2 {
-    font-size: 14px;
-  }
-  
-  /* Style the router link */
-  .link {
-    color: #2196F3;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  .link:hover {
-    text-decoration: underline;
-  }
-  </style>
-  
+</style>

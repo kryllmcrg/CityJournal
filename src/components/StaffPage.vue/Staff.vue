@@ -30,8 +30,6 @@
       <!-- Navigation Section -->
       <v-list dense nav>
         <v-divider></v-divider>
-        <!-- Dashboard -->
-        <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
 
          <!-- Team -->
          <v-list-item-group v-model="selectedItem">

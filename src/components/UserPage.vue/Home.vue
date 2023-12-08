@@ -1,142 +1,190 @@
 <template>
   <v-app>
-    <v-app-bar app dark color="white">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-img src="@/assets/logocalapan.png" alt="Logo" max-height="40" max-width="160"></v-img>
-      <v-toolbar-title>{{ capitalize(value) }}</v-toolbar-title>
+    <v-app-bar app dark>
+      <v-app-bar-nav-icon v-if="isMobile" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+  <v-img src="@/assets/logocalapan.png" alt="Logo" max-height="40" max-width="160"></v-img>
+  <v-toolbar-title>{{ capitalize() }}</v-toolbar-title>
+  
+  <!-- Buttons for Home, About, Contact, and News -->
+  <v-btn to="/" text>Home</v-btn>
+  <v-btn to="/about" text>About</v-btn>
+  <v-btn to="/contact" text>Contact</v-btn>
+  <v-btn to="/news" text>News</v-btn>
 
-      <!-- Subscribe Notification Button -->
-      <v-btn icon @click="subscribe">
-        <v-icon>mdi-bell</v-icon>
-        <v-badge content="subscribed" color="red" overlap>
-          <template v-slot:badge>
-            <v-icon>mdi-check</v-icon>
-          </template>
-        </v-badge>
-        <span class="hidden-md-and-up">Subscribe</span>
-      </v-btn>
+  <!-- Add a Login button -->
+  <v-btn v-if="!isLoggedIn" to="/login" text>Login</v-btn>
+
+  <!-- You can also add a Logout button if user is logged in -->
+  <v-btn v-if="isLoggedIn" @click="logout" text>Logout</v-btn>
+
+  <!-- Subscribe Notification Button -->
+  <v-btn icon @click="subscribe">
+    <v-icon>mdi-bell</v-icon>
+    <v-badge content="subscribed" color="red" overlap>
+      <template v-slot:badge>
+        <v-icon>mdi-check</v-icon>
+      </template>
+    </v-badge>
+    <span class="hidden-md-and-up"></span>
+  </v-btn>
     </v-app-bar>
 
     <!-- Main Content -->
-    <v-main class="main-content">
-      <v-container fluid>
+      <v-main class="main-content">
+        <v-container fluid>
+          <v-row justify="center">
+            <v-col cols="12" md="12">
+              <v-card class="pa-5">
+                <v-typography class="headline"><strong>CALAPAN CITY OFFICIAL WEBSITE</strong></v-typography>
+                <v-col cols="12">
+                  <v-img
+                    src="@/assets/calapan.jpg"
+                    class="img-fluid rounded"
+                    alt="Hospital Image"
+                  ></v-img>
+                </v-col>
+                <v-divider class="my-3"></v-divider>
+                <v-typography>
+                  TAUMABAYAN AND MASUSUNOD
+                  SA TAPAT AT MAPAGKALINGANG PAGLILINGKOD
+                </v-typography>
+              </v-card>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-carousel
+          delimiter-icon="stop"
+          prev-icon="mdi-arrow-left"
+          next-icon="mdi-arrow-right"
+        >
+          <v-carousel-item
+            v-for="(item,i) in items"
+            :key="i"
+            :src="item.src"
+          ></v-carousel-item>
+        </v-carousel>
+
+          </v-row>
+
+          <v-row>
+            <v-col cols="12" md="8">
+              <v-card>
+                <v-card-title class="panel-heading">What We Do</v-card-title>
+                <v-card-text>
+                  Founded in 1892 and headquartered in Fairfield, CT, LexisNexis Corporate Affiliations is a technology and financial services company. The company offers products and services ranging from aircraft engines, power generation, water processing, and household appliances, among others. It operates in business segments including Energy Infrastructure, Aviation, Healthcare, Transportation, Home & Business Solutions, and GE Capital. The company also provides medical imaging, business and consumer financing, and industrial products. It has a presence in North America, Europe, Asia, South America, and Africa. According to the company's current 10K government filing, it had FYE 12/31/2011 revenue of $147.3 billion and has 301,000 employees.
+                </v-card-text>
+              </v-card>
+            </v-col>
+            
+            <v-col cols="12" md="4">
+              <v-card>
+                <v-card-title class="panel-heading">Contact Information</v-card-title>
+                <v-card-text>
+                  <div>LexisNexis Corporate Affiliations</div>
+                  <div>121 Chanlon Road,</div>
+                  <div>South Building – First Floor,</div>
+                  <div>New Providence, NJ 07974</div>
+                  <div>phone: 800.340.3244</div>
+                </v-card-text>
+                <v-card-actions class="text-center">
+                  <v-btn icon href="contact">
+                    <v-icon>mdi-phone</v-icon>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-main>
+
+    <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
+        <!-- Logo Section -->
+        <v-row justify="center" align="center" class="my-3 text-center">
+          <v-img src="@/assets/loggo.png" alt="Logo" max-height="100"></v-img>
+        </v-row>
+
+        <!-- Navigation List -->
+        <v-list>
+          <v-list-item v-for="item in navItems" :key="item.text" :to="item.to" link>
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.text }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+    <!-- Footer Section -->
+      <v-footer app dark height="200">
         <v-row justify="center">
-          <v-col cols="12" md="12">
-            <v-card class="pa-5">
-              <v-typography class="headline">Welcome to my site!</v-typography>
-              <v-divider class="my-3"></v-divider>
-              <v-typography>
-                Give a brief introduction as to what this site is about and what sections it has.
-              </v-typography>
-            </v-card>
+
+          <!-- Vision Column -->
+          <v-col>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">Vision:</v-typography>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">“A premier Green City with God-loving, economically-empowered, and culture-rich citizens actively participating in good governance and co-existing harmoniously with the environment.”</v-typography>
+              </v-col>
+            </v-row>
+          </v-col>
+
+          <!-- Mission Column -->
+          <v-col>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">Mission:</v-typography>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">“The Green City of Calapan shall initiate and sustain programs to create an environment conducive to development and responsive to people’s needs through transparent, accountable and participatory governance.”</v-typography>
+              </v-col>
+            </v-row>
+          </v-col>
+
+          <!-- Get In Touch Column -->
+          <v-col>
+            <v-typography class="white--text font-weight-bold">
+              Get In Touch
+            </v-typography>
+            
+            <!-- Email Row -->
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">
+                  <v-icon>mdi-email</v-icon> lgu.calapancity@gmail.com
+                </v-typography>
+              </v-col>
+            </v-row>
+
+            <!-- Phone Row -->
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">
+                  <v-icon>mdi-phone</v-icon> +63-000-0000-000
+                </v-typography>
+              </v-col>
+            </v-row>
+
           </v-col>
         </v-row>
+      </v-footer>
 
-        <v-row>
-          <v-col cols="12" md="8">
-            <v-card>
-              <v-card-title class="panel-heading">What We Do</v-card-title>
-              <v-card-text>
-                Founded in 1892 and headquartered in Fairfield, CT, LexisNexis Corporate Affiliations is a technology and financial services company. The company offers products and services ranging from aircraft engines, power generation, water processing, and household appliances, among others. It operates in business segments including Energy Infrastructure, Aviation, Healthcare, Transportation, Home & Business Solutions, and GE Capital. The company also provides medical imaging, business and consumer financing, and industrial products. It has a presence in North America, Europe, Asia, South America, and Africa. According to the company's current 10K government filing, it had FYE 12/31/2011 revenue of $147.3 billion and has 301,000 employees.
-              </v-card-text>
-            </v-card>
-          </v-col>
-          <v-col cols="12" md="4">
-            <v-card>
-              <v-card-title class="panel-heading">Contact Information</v-card-title>
-              <v-card-text>
-                <div>LexisNexis Corporate Affiliations</div>
-                <div>121 Chanlon Road,</div>
-                <div>South Building – First Floor,</div>
-                <div>New Providence, NJ 07974</div>
-                <div>phone: 800.340.3244</div>
-              </v-card-text>
-              <v-card-actions class="text-center">
-                <v-btn icon href="#">
-                  <v-icon>mdi-phone</v-icon>
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-
-        <!-- Comment Form Section -->
-        <v-row justify="center">
-          <v-col cols="12" md="12">
-            <v-card>
-              <v-card-title class="panel-heading">Leave a Comment</v-card-title>
-              <v-card-text>
-                <v-form @submit.prevent="submitComment">
-                  <v-row>
-                    <v-col cols="12" md="6">
-                      <v-text-field v-model="commentForm.name" label="Your Name" required></v-text-field>
-                    </v-col>
-                    <v-col cols="12" md="6">
-                      <v-text-field v-model="commentForm.email" label="Your Email" required></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-textarea v-model="commentForm.comment" label="Your Comment" required></v-textarea>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-btn type="submit" color="primary">Submit Comment</v-btn>
-                    </v-col>
-                  </v-row>
-                </v-form>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-
-        <!-- Product Section -->
-        <v-row>
-          <v-col cols="12" md="4" v-for="(product, index) in products" :key="index">
-            <v-card>
-              <v-img :src="product.image" alt="Product Image" style="max-width: 100%;"></v-img>
-              <v-card-title>{{ product.title }}</v-card-title>
-              <v-card-text>{{ product.description }}</v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
-
-    <!-- Bottom Navigation -->
-    <v-bottom-navigation v-model="value" app color="purple darken-3" dark>
-      <v-btn v-for="item in navItems" :key="item.text" :to="item.to" value="Home" height="100%" :color="color">
-        <span>{{ item.text }}</span>
-        <v-icon style="margin: 0 4px;">{{ item.icon }}</v-icon>
-      </v-btn>
-
-      <v-btn v-if="!isLoggedIn" value="Login" height="100%" :color="color" @click="login">
-        <span>Login</span>
-        <v-icon style="margin: 0 4px;">mdi-login</v-icon>
-      </v-btn>
-
-      <v-btn v-if="isLoggedIn" value="Logout" height="100%" :color="color" @click="logout">
-        <span>Logout</span>
-        <v-icon style="margin: 0 4px;">mdi-logout</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
-
-    <!-- Navigation Drawer -->
-    <v-navigation-drawer app v-model="drawer" color="white" dark>
-      <v-list>
-        <v-list-item v-for="item in navItems" :key="item.text" :to="item.to" link>
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
   </v-app>
 </template>
 
 <script>
+import carousel1 from '@/assets/carousel1.jpg';
+import carousel2 from '@/assets/carousel2.jpg';
+import carousel3 from '@/assets/carousel3.jpg';
+
 export default {
   name: 'App',
   data() {
@@ -145,7 +193,7 @@ export default {
       color: 'deep-purple darken-4',
       drawer: false,
       navItems: [
-        { text: 'Home', to: '/home', icon: 'mdi-home' },
+        { text: 'Home', to: '/', icon: 'mdi-home' },
         { text: 'About', to: '/about', icon: 'mdi-information' },
         { text: 'Contact', to: '/contact', icon: 'mdi-email' },
         { text: 'News', to: '/news', icon: 'mdi-newspaper' },
@@ -159,7 +207,25 @@ export default {
         email: '',
         comment: '',
       },
+      isMobile: false,
+      items: [
+          {
+            src: carousel1,
+          },
+          {
+            src: carousel2,
+          },
+          {
+            src: carousel3,
+          },
+        ]
     };
+  },
+  created() {
+    // Check the window width on component creation
+    this.checkMobile();
+    // Add an event listener to check the window width on resize
+    window.addEventListener('resize', this.checkMobile);
   },
   methods: {
     capitalize(str) {
@@ -182,13 +248,44 @@ export default {
       console.log('Comment submitted:', this.commentForm);
       // You can implement an API call or other actions here
     },
+    // Method to check if the device is mobile based on window width
+    checkMobile() {
+      this.isMobile = window.innerWidth <= 768; // Adjust the width as needed
+    },
+  },
+  beforeDestroy() {
+    // Remove the resize event listener when the component is destroyed
+    window.removeEventListener('resize', this.checkMobile);
   },
 };
 </script>
 
-<style>
+
+<style scoped>
+ .fixed-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 50%;
+  }
+
+ .drawer-background .logo-section {
+    background-color: transparent !important;
+  }
+  .v-app-bar {
+    background: url("@/assets/head.png") center center no-repeat;
+    background-size: cover;
+  }
+  .main-container {
+    padding-top: 20px; /* Adjust as needed based on your design */
+  }
   .main-content {
     padding-top: 60px;
+  }
+
+  .v-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   .heading {
@@ -197,6 +294,7 @@ export default {
     background-color: #eee;
     margin-bottom: 20px;
   }
+
   .style_featured {
     padding: 20px 0;
     text-align: center;
@@ -215,5 +313,16 @@ export default {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 9px 9px 9px;
     background: rgba(153, 200, 250, 0.1);
     transition: 0.99s;
+  }
+
+  /* Footer Styles */
+  .v-footer {
+    background: url("@/assets/footer.png");
+    background-size: cover;
+  }
+
+  /* Adjust the text color and other styles as needed */
+  .white--text {
+    color: white;
   }
 </style>

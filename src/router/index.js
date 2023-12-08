@@ -67,7 +67,7 @@ const routes = [
     component:News
   },
   {
-    path: '/home',
+    path: '/',
     component:Home
   },
   {

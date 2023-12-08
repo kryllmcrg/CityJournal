@@ -1,9 +1,40 @@
 <template>
   <v-app>
-    <v-container fluid fill-height>
+    <v-app-bar app dark>
+      <v-app-bar-nav-icon v-if="isMobile" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+  <v-img src="@/assets/logocalapan.png" alt="Logo" max-height="40" max-width="160"></v-img>
+  <v-toolbar-title>{{ capitalize() }}</v-toolbar-title>
+  
+  <!-- Buttons for Home, About, Contact, and News -->
+  <v-btn to="/" text>Home</v-btn>
+  <v-btn to="/about" text>About</v-btn>
+  <v-btn to="/contact" text>Contact</v-btn>
+  <v-btn to="/news" text>News</v-btn>
+
+  <!-- Add a Login button -->
+  <v-btn v-if="!isLoggedIn" to="/login" text>Login</v-btn>
+
+  <!-- You can also add a Logout button if user is logged in -->
+  <v-btn v-if="isLoggedIn" @click="logout" text>Logout</v-btn>
+
+  <!-- Subscribe Notification Button -->
+  <v-btn icon @click="subscribe">
+    <v-icon>mdi-bell</v-icon>
+    <v-badge content="subscribed" color="red" overlap>
+      <template v-slot:badge>
+        <v-icon>mdi-check</v-icon>
+      </template>
+    </v-badge>
+    <span class="hidden-md-and-up"></span>
+  </v-btn>
+    </v-app-bar>
+
+    <!-- Main Content -->
+    <v-main class="main-content">
+    <v-container fluid>
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="6">
-          <v-card elevation="2">
+          <v-card class="elevation-12" outlined>
             <v-card-title class="headline text-center">Login</v-card-title>
             <v-card-text>
               <v-form @submit.prevent="login">
@@ -12,7 +43,7 @@
                 <v-text-field
                   v-model="Password"
                   :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                  :type="passwordVisible ? 'text' : 'Password'"
+                  :type="passwordVisible ? 'text' : 'password'"
                   label="Password"
                   outlined
                   @click:append="togglePasswordVisibility"
@@ -23,10 +54,10 @@
 
               <v-row class="mt-3">
                 <v-col>
-                  <a href="#" class="link" @click.prevent="forgotPassword">Forgot Password?</a>
+                  <a href="forgot" class="link" @click.prevent="forgotPassword">Forgot Password?</a>
                 </v-col>
                 <v-col class="text-right">
-                  <p class="text-body-2">Don't have an account? <a href="/register">Sign Up</a></p>
+                  <p class="text-body-2">Don't have an account? <router-link to="/register">Sign Up</router-link></p>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -34,6 +65,87 @@
         </v-col>
       </v-row>
     </v-container>
+  </v-main>
+
+    <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
+        <!-- Logo Section -->
+        <v-row justify="center" align="center" class="my-3 text-center">
+          <v-img src="@/assets/loggo.png" alt="Logo" max-height="100"></v-img>
+        </v-row>
+
+        <!-- Navigation List -->
+        <v-list>
+          <v-list-item v-for="item in navItems" :key="item.text" :to="item.to" link>
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.text }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+    <!-- Footer Section -->
+      <v-footer app dark height="200">
+        <v-row justify="center">
+
+          <!-- Vision Column -->
+          <v-col>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">Vision:</v-typography>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">“A premier Green City with God-loving, economically-empowered, and culture-rich citizens actively participating in good governance and co-existing harmoniously with the environment.”</v-typography>
+              </v-col>
+            </v-row>
+          </v-col>
+
+          <!-- Mission Column -->
+          <v-col>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">Mission:</v-typography>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">“The Green City of Calapan shall initiate and sustain programs to create an environment conducive to development and responsive to people’s needs through transparent, accountable and participatory governance.”</v-typography>
+              </v-col>
+            </v-row>
+          </v-col>
+
+          <!-- Get In Touch Column -->
+          <v-col>
+            <v-typography class="white--text font-weight-bold">
+              Get In Touch
+            </v-typography>
+            
+            <!-- Email Row -->
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">
+                  <v-icon>mdi-email</v-icon> lgu.calapancity@gmail.com
+                </v-typography>
+              </v-col>
+            </v-row>
+
+            <!-- Phone Row -->
+            <v-row>
+              <v-col>
+                <v-typography class="white--text font-weight-bold">
+                  <v-icon>mdi-phone</v-icon> +63-000-0000-000
+                </v-typography>
+              </v-col>
+            </v-row>
+
+          </v-col>
+        </v-row>
+      </v-footer>
+
   </v-app>
 </template>
 
@@ -43,15 +155,65 @@ import axios from 'axios';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
 
 export default {
-  name: 'Login',
+  name: 'App',
   data() {
     return {
+      value: 'home',
+      color: 'deep-purple darken-4',
+      drawer: false,
+      navItems: [
+        { text: 'Home', to: '/', icon: 'mdi-home' },
+        { text: 'About', to: '/about', icon: 'mdi-information' },
+        { text: 'Contact', to: '/contact', icon: 'mdi-email' },
+        { text: 'News', to: '/news', icon: 'mdi-newspaper' },
+      ],
+      isLoggedIn: false,
+      products: [
+        // Your product data here
+      ],
+      commentForm: {
+        name: '',
+        email: '',
+        comment: '',
+      },
+      isMobile: false, // Add a variable to track if the device is mobile
       Email: '',
       Password: '',
       passwordVisible: false,
     };
   },
+  created() {
+    // Check the window width on component creation
+    this.checkMobile();
+    // Add an event listener to check the window width on resize
+    window.addEventListener('resize', this.checkMobile);
+  },
   methods: {
+    capitalize(str) {
+      if (str === undefined || str === null) {
+        return '';  // Return an empty string or handle it as appropriate for your use case
+      }
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    },
+    login() {
+      // Your login logic
+    },
+    logout() {
+      // Your logout logic
+    },
+    subscribe() {
+      // Your subscribe logic
+    },
+    submitComment() {
+      // Handle comment submission logic here
+      console.log('Comment submitted:', this.commentForm);
+      // You can implement an API call or other actions here
+    },
+    // Method to check if the device is mobile based on window width
+    checkMobile() {
+      this.isMobile = window.innerWidth <= 768; // Adjust the width as needed
+    },
+    // Add your login method here
     async login() {
       try {
         console.log('Email:', this.Email);
@@ -102,32 +264,85 @@ export default {
     },
 
     forgotPassword() {
-      // Handle the logic for forgot password
-      console.log('Forgot Password clicked');
+      // Implement your logic to navigate to the "forgot" route
+      this.$router.push('/forgot'); // Assuming you're using Vue Router
     },
+  },
+  beforeDestroy() {
+    // Remove the resize event listener when the component is destroyed
+    window.removeEventListener('resize', this.checkMobile);
   },
 };
 </script>
 
 <style scoped>
-.headline {
-  color: #2196F3; /* Vuetify primary color */
-  font-size: 24px;
-}
+ .fixed-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 50%;
+  }
 
-.link {
-  color: #2196F3; /* Vuetify primary color */
-  text-decoration: none;
-  cursor: pointer;
-}
+ .drawer-background .logo-section {
+    background-color: transparent !important;
+  }
+  .v-app-bar {
+    background: url("@/assets/head.png") center center no-repeat;
+    background-size: cover;
+  }
+  .main-container {
+    padding-top: 20px; /* Adjust as needed based on your design */
+  }
+  .main-content {
+    margin-top: 50px;
+    padding-top: 60px;
+  }
+  .headline.text-center {
+      font-size: 1.5rem;
+    }
+    .v-text-field {
+      width: 100%;
+    }
+  .v-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-.text-body-2 {
-  font-size: 14px;
-}
+  .heading {
+    border-radius: 6px;
+    padding: 48px;
+    background-color: #eee;
+    margin-bottom: 20px;
+  }
 
-.card {
-  max-width: 400px;
-  margin: auto;
-}
+  .style_featured {
+    padding: 20px 0;
+    text-align: center;
+  }
 
+  .featured-card {
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: 0.5s;
+  }
+
+  .featured-card:hover {
+    margin-top: 19px;
+    border: 1px solid rgb(153, 200, 250);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 9px 9px 9px;
+    background: rgba(153, 200, 250, 0.1);
+    transition: 0.99s;
+  }
+
+  /* Footer Styles */
+  .v-footer {
+    background: url("@/assets/footer.png");
+    background-size: cover;
+  }
+
+  /* Adjust the text color and other styles as needed */
+  .white--text {
+    color: white;
+  }
 </style>
