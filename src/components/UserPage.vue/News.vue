@@ -31,117 +31,23 @@
 
      <!-- Main Content -->
      <v-main class="main-content">
-        <v-container fluid>
-
-          <!-- News Cards -->
-          <v-row>
-            <!-- Existing News Card -->
-            <v-col xs="12" sm="8" md="8" lg="8">
-              <v-card class="news-card" @click="navigateToFullStory('Latest News')">
-                <v-card-title class="headline">Latest News</v-card-title>
-                <v-card-text class="article-text">
-                  Lorem ipsum dolor sit amet, adipiscing elit. Proin ac justo nec urna porttitor vestibulum.
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn class="news-btn" @click="navigateToFullStory('Latest News')">Read More</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-  
-            <!-- New News Card -->
-            <v-col xs="12" sm="4" md="4" lg="4">
-              <v-card class="news-card" @click="navigateToFullStory('New News')">
-                <v-card-title class="headline">New News</v-card-title>
-                <v-card-text class="article-text">
-                  New content goes here.
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn class="news-btn" @click="navigateToFullStory('New News')">Read More</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-            
-          <!-- Featured Articles -->
-          <v-row> 
-            <v-col md="4" lg="4">
-              <v-list class="all-blogs">
-                <v-list-item-group>
-                  <v-list-item v-for="blog in blogs" :key="blog.title">
-                    <v-list-item-avatar>
-                      <v-img src="http://placehold.it/200x100"></v-img>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title>{{ blog.title }}</v-list-item-title>
-                      <v-list-item-subtitle class="author">{{ blog.author }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
-            </v-col>
-            <v-col md="4" lg="4">
-              <v-list class="all-blogs">
-                <v-list-item-group>
-                  <v-list-item v-for="blog in blogs" :key="blog.title">
-                    <v-list-item-avatar>
-                      <v-img src="http://placehold.it/200x100"></v-img>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title>{{ blog.title }}</v-list-item-title>
-                      <v-list-item-subtitle class="author">{{ blog.author }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
-            </v-col>
-            <v-col md="4" lg="4">
-              <v-list class="all-blogs">
-                <v-list-item-group>
-                  <v-list-item v-for="blog in blogs" :key="blog.title">
-                    <v-list-item-avatar>
-                      <v-img src="http://placehold.it/200x100"></v-img>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title>{{ blog.title }}</v-list-item-title>
-                      <v-list-item-subtitle class="author">{{ blog.author }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
-            </v-col>
-          </v-row>
-  
-          <!-- News Cards -->
-          <v-row>
-            <!-- Existing News Card -->
-            <v-col xs="12" sm="8" md="8" lg="8">
-              <v-card class="news-card" @click="navigateToFullStory('Latest News')">
-                <v-card-title class="headline">Latest News</v-card-title>
-                <v-card-text class="article-text">
-                  Lorem ipsum dolor sit amet, adipiscing elit. Proin ac justo nec urna porttitor vestibulum.
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn class="news-btn" @click="navigateToFullStory('Latest News')">Read More</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-  
-            <!-- New News Card -->
-            <v-col xs="12" sm="4" md="4" lg="4">
-              <v-card class="news-card" @click="navigateToFullStory('New News')">
-                <v-card-title class="headline">New News</v-card-title>
-                <v-card-text class="article-text">
-                  New content goes here.
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn class="news-btn" @click="navigateToFullStory('New News')">Read More</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-  
-        </v-container>
-      </v-main>
+      <v-container fluid>
+        <!-- Display Blog Posts -->
+        <v-row>
+          <v-col v-for="post in ArticleNews" :key="post._id" cols="12" md="6" lg="4">
+            <v-card class="featured-card">
+              <v-img :src="post.ImageURL" alt="Post Image"></v-img>
+              <v-card-title>{{ post.Title }}</v-card-title>
+              <v-card-subtitle>{{ post.Author }}</v-card-subtitle>
+              <v-card-text>{{ post.Content }}</v-card-text>
+              <v-card-text>{{ post.Category }}</v-card-text>
+              <v-card-text>{{ post.PublishDate }}</v-card-text>
+              <!-- Add more details as needed -->
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
 
 
     <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
@@ -227,8 +133,8 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  name: 'App',
   data() {
     return {
       value: 'home',
@@ -241,24 +147,12 @@ export default {
         { text: 'News', to: '/news', icon: 'mdi-newspaper' },
       ],
       isLoggedIn: false,
-      products: [
-        // Your product data here
-      ],
       commentForm: {
         name: '',
         email: '',
         comment: '',
       },
       isMobile: false, // Add a variable to track if the device is mobile
-      fname: '',
-        lname: '',
-        email: '',
-        phone: '',
-        message: '',
-        blogs: [
-          { title: 'Latest Google Updates', author: 'Mike Smith' },
-          { title: 'Newest bootstrap version', author: 'Dave Hesler' },
-        ],
     };
   },
   created() {
@@ -283,11 +177,14 @@ export default {
     subscribe() {
       // Your subscribe logic
     },
-    submitComment() {
-      // Handle comment submission logic here
-      console.log('Comment submitted:', this.commentForm);
-      // You can implement an API call or other actions here
-    },
+    async fetchNewsArticle() {
+    try {
+      const response = await axios.get('/post');
+      this.ArticleNews = response.data;
+    } catch (error) {
+      console.error('Error fetching news posts:', error);
+    }
+  },
     // Method to check if the device is mobile based on window width
     checkMobile() {
       this.isMobile = window.innerWidth <= 768; // Adjust the width as needed

@@ -283,11 +283,6 @@ export default {
     subscribe() {
       // Your subscribe logic
     },
-    submitComment() {
-      // Handle comment submission logic here
-      console.log('Comment submitted:', this.commentForm);
-      // You can implement an API call or other actions here
-    },
     // Method to check if the device is mobile based on window width
     checkMobile() {
       this.isMobile = window.innerWidth <= 768; // Adjust the width as needed
