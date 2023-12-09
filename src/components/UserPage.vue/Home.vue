@@ -104,62 +104,69 @@
             </v-col>
           </v-row>
 
-          <v-row align="center" justify="center">
-          <!-- First Column -->
-          <v-col cols="6" md="4">
-            <v-card>
-              <v-card-title class="panel-heading">Contact Information</v-card-title>
-              <v-card-text>
-                <div>LexisNexis Corporate Affiliations</div>
-                <div>121 Chanlon Road,</div>
-                <div>South Building – First Floor,</div>
-                <div>New Providence, NJ 07974</div>
-                <div>phone: 800.340.3244</div>
-              </v-card-text>
-              <v-card-actions class="text-center">
-                <v-btn icon href="contact">
-                  <v-icon>mdi-phone</v-icon>
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-
-          <!-- Second Column - Same Size as First Column -->
-          <v-col cols="6" md="4">
-            <v-card>
-              <v-card-title class="panel-heading">Contact Information</v-card-title>
-              <v-card-text>
-                <div>LexisNexis Corporate Affiliations</div>
-                <div>121 Chanlon Road,</div>
-                <div>South Building – First Floor,</div>
-                <div>New Providence, NJ 07974</div>
-                <div>phone: 800.340.3244</div>
-              </v-card-text>
-              <v-card-actions class="text-center">
-                <v-btn icon href="contact">
-                  <v-icon>mdi-phone</v-icon>
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-
-          <!-- Third Column - Same Size as First and Second Columns -->
-          <v-col cols="6" md="4">
-            <v-card>
-              <v-card-title class="panel-heading">Comment and Suggestion</v-card-title>
-              <v-card-text>
-                <!-- Your form elements go here -->
-                <v-form>
-                  <v-text-field label="Name" required></v-text-field>
-                  <v-text-field label="Email" required></v-text-field>
-                  <v-textarea label="Comment/Suggestion" required></v-textarea>
+          <v-row>
+      <!-- Comment Section -->
+      <v-col cols="12" md="8">
+        <v-card class="comment-card">
+          <v-card-title class="panel-heading">Comment and Suggestion</v-card-title>
+          <!-- Your form elements go here -->
+          <v-form @submit.prevent="submitComment">
+            <v-container>
+              <v-row>
+                <v-col cols="12" sm="6">
+                  <v-text-field v-model="commentForm.name" label="Name" required></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6">
+                  <v-text-field v-model="commentForm.email" label="Email" required></v-text-field>
+                </v-col>
+              </v-row>
+              <v-textarea v-model="commentForm.comment" label="Comment/Suggestion" required></v-textarea>
+              <v-row>
+                <v-col>
                   <v-btn color="primary" type="submit">Submit</v-btn>
-                </v-form>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
+        </v-card>
+      </v-col>
 
+      <!-- Display Section -->
+      <v-col cols="12" md="4">
+        <v-card class="comment-card">
+          <v-divider></v-divider>
+          <v-container>
+            <v-row>
+              <v-col v-for="comment in comments" :key="comment.id" cols="12">
+                <v-card class="mt-4 comment-item">
+                  <v-card-title>{{ comment.name }}</v-card-title>
+                  <v-card-text>{{ comment.comment }}</v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
+      </v-col>
+    </v-row>
+
+            <!-- Display Section -->
+            <v-row>
+              <v-col cols="10" md="4">
+                <v-card class="comment-card">
+                  <v-divider></v-divider>
+                  <v-container>
+                    <v-row>
+                      <v-col v-for="comment in comments" :key="comment.id" cols="12">
+                        <v-card class="mt-4 comment-item">
+                          <v-card-title>{{ comment.name }}</v-card-title>
+                          <v-card-text>{{ comment.comment }}</v-card-text>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card>
+              </v-col>
+            </v-row>
 
         </v-container>
       </v-main>
@@ -242,7 +249,6 @@
           </v-col>
         </v-row>
       </v-footer>
-
   </v-app>
 </template>
 
@@ -260,7 +266,7 @@ import pic7 from '@/assets/pic7.png';
 import pic8 from '@/assets/pic8.png';
 import pic9 from '@/assets/pic9.png';
 import pic0 from '@/assets/pic0.png';
-
+import axios from 'axios';
 
 export default {
   name: 'App',
@@ -276,26 +282,24 @@ export default {
         { text: 'News', to: '/news', icon: 'mdi-newspaper' },
       ],
       isLoggedIn: false,
-      products: [
-        // Your product data here
-      ],
       commentForm: {
         name: '',
         email: '',
         comment: '',
       },
+      comments: [],
       isMobile: false,
       items: [
-          {
-            src: carousel1,
-          },
-          {
-            src: carousel2,
-          },
-          {
-            src: carousel3,
-          },
-        ],
+        {
+          src: carousel1,
+        },
+        {
+          src: carousel2,
+        },
+        {
+          src: carousel3,
+        },
+      ],
       hoveredIndex: null,
       imageList: [
         { src: pic1 },
@@ -322,7 +326,7 @@ export default {
   methods: {
     capitalize(str) {
       if (str === undefined || str === null) {
-        return '';  // Return an empty string or handle it as appropriate for your use case
+        return ''; // Return an empty string or handle it as appropriate for your use case
       }
       return str.charAt(0).toUpperCase() + str.slice(1);
     },
@@ -345,16 +349,59 @@ export default {
     onMouseOut() {
       this.hoveredIndex = null;
     },
+    async submitComment() {
+      try {
+        // Send the comment to the server
+        await axios.post('/submitComment', this.commentForm);
+        console.log(this.commentForm)
+
+        // Clear the form fields
+        this.commentForm.name = '';
+        this.commentForm.email = '';
+        this.commentForm.comment = '';
+
+        // Fetch and update the comments after submitting
+        await this.getComments();
+      } catch (error) {
+        console.error('Error submitting comment:', error);
+      }
+    },
+
+    async getComments() {
+      try {
+        // Fetch comments from the server
+        const response = await axios.get('/getComments');
+        this.comments = response.data;
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    },
   },
   beforeDestroy() {
     // Remove the resize event listener when the component is destroyed
     window.removeEventListener('resize', this.checkMobile);
   },
+  mounted() {
+    // Fetch initial comments when the component is mounted
+    this.getComments();
+  },
 };
 </script>
 
+<style>
+.comment-card {
+  background-color: #f8f9fa; /* Light gray background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
 
-<style scoped>
+.comment-item {
+  background-color: #ffffff; /* White background for each comment */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
 .thumbnail {
   width: 100%;
   height: auto;

@@ -29,8 +29,8 @@
   </v-btn>
     </v-app-bar>
 
-     <!-- Main Content -->
-     <v-main class="main-content">
+    <!-- Main Content -->
+    <v-main class="main-content">
       <v-container fluid>
         <!-- Display Blog Posts -->
         <v-row>
@@ -38,15 +38,16 @@
             <v-card class="featured-card">
               <v-card-title>{{ post.Title }}</v-card-title>
               <v-card-text>{{ post.Content }}</v-card-text>
-              <v-card-text>{{ post.Category }}</v-card-text>
-              <v-card-subtitle>{{ post.Author }}</v-card-subtitle>
+              <v-card-text><b>Category:</b> {{ post.Category }}</v-card-text>
+              <v-card-text><b>Author:</b> {{ post.Author }}</v-card-text>
               <v-img :src="post.ImageURL" alt="Post Image"></v-img>
-              <v-card-text>{{ post.PublishDate }}</v-card-text>
+              <v-card-text><b>Publish Date:</b> {{ post.PublishDate }}</v-card-text>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
     </v-main>
+
     
     <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
         <!-- Logo Section -->
@@ -150,6 +151,7 @@ export default {
         comment: '',
       },
       isMobile: false, // Add a variable to track if the device is mobile
+      articleNews: [],
     };
   },
   created() {
