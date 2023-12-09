@@ -142,4 +142,18 @@ class NewsController extends BaseController
             return $this->respond(["error" => "Error:" . $th->getMessage()]);
         }
     }
+
+    public function displayPost()
+    {
+        try {
+            // Fetch all news articles from the database
+            $model = new NewsModel();
+            $articleNews = $model->findAll();
+            
+            return $this->respond($articleNews);
+        } catch (\Throwable $th) {
+            return $this->respond(["error" => "Error:" . $th->getMessage()]);
+        }
+    }
+    
 }

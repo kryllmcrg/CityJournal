@@ -10,45 +10,37 @@ class CommentController extends BaseController
 {
     use ResponseTrait;
 
-    public function comment()
+    public function submitComment()
     {
         try {
+            // Validate and store the comment in the database
             $commentModel = new CommentModel();
+    
             $data = [
-                'name' => $this->request->getVar('name'),
-                'email' => $this->request->getVar('email'),
+                'name'    => $this->request->getVar('name'),
+                'email'   => $this->request->getVar('email'),
                 'comment' => $this->request->getVar('comment'),
             ];
-
-            // Validate data
-            $validationRules = [
-                'name' => 'required',
-                'email' => 'required|valid_email',
-                'comment' => 'required',
-            ];
-
-            // Set validation rules
-            $commentModel->setValidationRules($validationRules);
-
-            // Validate the data
-            if (!$commentModel->validate($data)) {
-                return $this->fail($commentModel->errors(), 400);
-            }
-
-            // Insert data into the database
-            if (!$commentModel->insert($data)) {
-                // Handle insertion failure, log the error, return an error response, etc.
-                return $this->fail("Error: Unable to insert data.", 500);
-            }
-
-            $response = [
-                'message' => 'Comment created successfully',
-                'data' => $data,
-            ];
-
-            return $this->respond($response, 200);
+    
+            $commentModel->insert($data);
+    
+            return $this->respond(['message' => 'Comment submitted successfully']);
         } catch (\Throwable $th) {
-            return $this->fail("Error: " . $th->getMessage(), 500);
+            return $this->respond(["error" => "Error:" . $th->getMessage()]);
         }
     }
+    
+    public function getComments()
+    {
+        try {
+            // Retrieve all comments from the database
+            $commentModel = new CommentModel();
+            $comments = $commentModel->findAll();
+    
+            return $this->respond($comments);
+        } catch (\Throwable $th) {
+            return $this->respond(["error" => "Error:" . $th->getMessage()]);
+        }
+    }
+    
 }
