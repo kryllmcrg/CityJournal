@@ -34,7 +34,7 @@
       <v-container fluid>
         <!-- Display Blog Posts -->
         <v-row>
-          <v-col v-for="post in ArticleNews" :key="post._id" cols="12" md="6" lg="4">
+          <v-col v-for="post in articleNews" :key="post._id" cols="12" md="6" lg="4">
             <v-card class="featured-card">
               <v-card-title>{{ post.Title }}</v-card-title>
               <v-card-text>{{ post.Content }}</v-card-text>
@@ -42,14 +42,12 @@
               <v-card-subtitle>{{ post.Author }}</v-card-subtitle>
               <v-img :src="post.ImageURL" alt="Post Image"></v-img>
               <v-card-text>{{ post.PublishDate }}</v-card-text>
-              <!-- Add more details as needed -->
             </v-card>
           </v-col>
         </v-row>
       </v-container>
     </v-main>
-
-
+    
     <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
         <!-- Logo Section -->
         <v-row justify="center" align="center" class="my-3 text-center">
@@ -180,14 +178,13 @@ export default {
     },
     async fetchNewsArticle() {
     try {
-      const response = await axios.get('/post');
+      const response = await axios.get('/displayPost');
       console.log('API Response:', response.data); // Log the API response
-      this.ArticleNews = response.data;
+      this.articleNews = response.data;
     } catch (error) {
       console.error('Error fetching news posts:', error);
     }
   },
-
     // Method to check if the device is mobile based on window width
     checkMobile() {
       this.isMobile = window.innerWidth <= 768; // Adjust the width as needed

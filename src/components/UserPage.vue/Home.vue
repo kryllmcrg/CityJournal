@@ -104,25 +104,63 @@
             </v-col>
           </v-row>
 
-          <v-row>
-            <v-col cols="12" md="4">
-              <v-card>
-                <v-card-title class="panel-heading">Contact Information</v-card-title>
-                <v-card-text>
-                  <div>LexisNexis Corporate Affiliations</div>
-                  <div>121 Chanlon Road,</div>
-                  <div>South Building – First Floor,</div>
-                  <div>New Providence, NJ 07974</div>
-                  <div>phone: 800.340.3244</div>
-                </v-card-text>
-                <v-card-actions class="text-center">
-                  <v-btn icon href="contact">
-                    <v-icon>mdi-phone</v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
+          <v-row align="center" justify="center">
+          <!-- First Column -->
+          <v-col cols="6" md="4">
+            <v-card>
+              <v-card-title class="panel-heading">Contact Information</v-card-title>
+              <v-card-text>
+                <div>LexisNexis Corporate Affiliations</div>
+                <div>121 Chanlon Road,</div>
+                <div>South Building – First Floor,</div>
+                <div>New Providence, NJ 07974</div>
+                <div>phone: 800.340.3244</div>
+              </v-card-text>
+              <v-card-actions class="text-center">
+                <v-btn icon href="contact">
+                  <v-icon>mdi-phone</v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+
+          <!-- Second Column - Same Size as First Column -->
+          <v-col cols="6" md="4">
+            <v-card>
+              <v-card-title class="panel-heading">Contact Information</v-card-title>
+              <v-card-text>
+                <div>LexisNexis Corporate Affiliations</div>
+                <div>121 Chanlon Road,</div>
+                <div>South Building – First Floor,</div>
+                <div>New Providence, NJ 07974</div>
+                <div>phone: 800.340.3244</div>
+              </v-card-text>
+              <v-card-actions class="text-center">
+                <v-btn icon href="contact">
+                  <v-icon>mdi-phone</v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+
+          <!-- Third Column - Same Size as First and Second Columns -->
+          <v-col cols="6" md="4">
+            <v-card>
+              <v-card-title class="panel-heading">Comment and Suggestion</v-card-title>
+              <v-card-text>
+                <!-- Your form elements go here -->
+                <v-form>
+                  <v-text-field label="Name" required></v-text-field>
+                  <v-text-field label="Email" required></v-text-field>
+                  <v-textarea label="Comment/Suggestion" required></v-textarea>
+                  <v-btn color="primary" type="submit">Submit</v-btn>
+                </v-form>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+
+
         </v-container>
       </v-main>
 
@@ -212,6 +250,17 @@
 import carousel1 from '@/assets/carousel1.jpg';
 import carousel2 from '@/assets/carousel2.jpg';
 import carousel3 from '@/assets/carousel3.jpg';
+import pic1 from '@/assets/pic1.png';
+import pic2 from '@/assets/pic2.png';
+import pic3 from '@/assets/pic3.png';
+import pic4 from '@/assets/pic4.png';
+import pic5 from '@/assets/pic5.png';
+import pic6 from '@/assets/pic6.png';
+import pic7 from '@/assets/pic7.png';
+import pic8 from '@/assets/pic8.png';
+import pic9 from '@/assets/pic9.png';
+import pic0 from '@/assets/pic0.png';
+
 
 export default {
   name: 'App',
@@ -249,15 +298,18 @@ export default {
         ],
       hoveredIndex: null,
       imageList: [
-        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h9.jpg" },
-        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h8.jpg" },
-        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h4.jpg" },
-        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h7.jpg" },
-        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h3.jpg" },
-        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h6.jpg" },
-        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h1.jpg" },
-        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h2.jpg" },
-        { src: "http://www.prepbootstrap.com/Content/images/shared/houses/h5.jpg" },
+        { src: pic1 },
+        { src: pic2 },
+        { src: pic3 },
+        { src: pic4 },
+        { src: pic5 },
+        { src: pic6 },
+        { src: pic7 },
+        { src: pic8 },
+        { src: pic9 },
+        { src: pic0 },
+        { src: pic4 },
+        { src: pic5 },
       ],
     };
   },
