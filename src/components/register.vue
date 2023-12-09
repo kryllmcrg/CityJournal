@@ -30,65 +30,87 @@
     </v-app-bar>
 
     <!-- Main Content -->
-<v-main class="main-content">
-  <v-container fluid>
-    <v-row align="center" justify="center">
+    <v-main class="main-content">
+      <v-container fluid>
+        <v-row align="center" justify="center">
+          <!-- Registration Form Column -->
+          <v-col cols="12" sm="5" md="4">
+            <v-card elevation="2">
+              <v-card-title class="headline text-center">Register Form</v-card-title>
+              <v-card-text>
+                <v-form @submit.prevent="register">
+                  <!-- First Name -->
+                  <v-text-field
+                    v-model="FirstName"
+                    label="First Name"
+                    outlined
+                  ></v-text-field>
 
-      <!-- First Column -->
-      <v-col cols="12" sm="10" md="8"> <!-- Adjusted the width for sm and md -->
-        <v-card elevation="2">
-          <v-card-title class="headline text-center">Register</v-card-title>
-          <v-card-text>
-            <v-form @submit.prevent="register">
+                  <!-- Last Name -->
+                  <v-text-field
+                    v-model="LastName"
+                    label="Last Name"
+                    outlined
+                  ></v-text-field>
 
-              <v-text-field v-model="FirstName" label="First Name" outlined></v-text-field>
+                  <!-- Username -->
+                  <v-text-field
+                    v-model="Username"
+                    label="Username"
+                    outlined
+                  ></v-text-field>
 
-              <v-text-field v-model="LastName" label="Last Name" outlined></v-text-field>
+                  <!-- Email -->
+                  <v-text-field
+                    v-model="Email"
+                    label="Email"
+                    outlined
+                  ></v-text-field>
 
-              <v-text-field v-model="Username" label="Username" outlined></v-text-field>
+                  <!-- Role Dropdown -->
+                  <v-select
+                    v-model="Role"
+                    :items="['Admin', 'User', 'Staff']"
+                    label="Role"
+                    outlined
+                  ></v-select>
 
-              <v-text-field v-model="Email" label="Email" outlined></v-text-field>
+                  <!-- Password -->
+                  <v-text-field
+                    v-model="Password"
+                    :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="passwordVisible ? 'text' : 'password'"
+                    label="Password"
+                    outlined
+                    @click:append="togglePasswordVisibility"
+                  ></v-text-field>
 
-              <!-- Role Dropdown -->
-              <v-select
-                v-model="Role"
-                :items="['Admin', 'User', 'Staff']"
-                label="Role"
-                outlined
-              ></v-select>
+                  <!-- Confirm Password -->
+                  <v-text-field
+                    v-model="confirm_password"
+                    :append-icon="confirmPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="confirmPasswordVisible ? 'text' : 'password'"
+                    label="Confirm Password"
+                    outlined
+                    @click:append="toggleConfirmPasswordVisibility"
+                  ></v-text-field>
 
-              <v-text-field
-                v-model="Password"
-                :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="passwordVisible ? 'text' : 'password'"
-                label="Password"
-                outlined
-                @click:append="togglePasswordVisibility"
-              ></v-text-field>
+                  <!-- Register Button -->
+                  <v-btn type="submit" color="primary" block class="mt-4">Register</v-btn>
+                </v-form>
 
-              <v-text-field
-                v-model="confirm_password"
-                :append-icon="confirmPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="confirmPasswordVisible ? 'text' : 'password'"
-                label="Confirm Password"
-                outlined
-                @click:append="toggleConfirmPasswordVisibility"
-              ></v-text-field>
-
-              <v-btn type="submit" color="primary" block class="mt-4">Register</v-btn>
-            </v-form>
-
-            <v-row class="mt-2">
-              <v-col>
-                <p class="text-body-2">Already have an account? <router-link to="/login">Sign In</router-link></p>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
-</v-main>
+                <!-- Sign In Link -->
+                <v-row class="mt-2">
+                  <v-col>
+                    <p class="text-body-2">Already have an account? <router-link to="/login">Sign In</router-link></p>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
 
 
     <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">

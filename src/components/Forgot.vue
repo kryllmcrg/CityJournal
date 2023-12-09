@@ -31,87 +31,103 @@
 
       <!-- Main Content -->
       <v-main class="main-content">
-      <v-container fluid>
-        <v-card
-    class="mx-auto"
-    max-width="500"
-  >
-    <v-card-title class="title font-weight-regular justify-space-between">
-      <span>{{ currentTitle }}</span>
-      <v-avatar
-        color="primary lighten-2"
-        class="subheading white--text"
-        size="24"
-        v-text="step"
-      ></v-avatar>
-    </v-card-title>
+    <v-container fluid>
+      <v-card class="mx-auto" max-width="500">
+        <v-card-title class="title font-weight-regular justify-space-between">
+          <span>{{ currentTitle }}</span>
+          <v-avatar
+            color="primary lighten-2"
+            class="subheading white--text"
+            size="24"
+            v-text="step"
+          ></v-avatar>
+        </v-card-title>
 
-    <v-window v-model="step">
-      <v-window-item :value="1">
-        <v-card-text>
-          <v-text-field
-            label="Email"
-            value="john@vuetifyjs.com"
-          ></v-text-field>
-          <span class="caption grey--text text--darken-1">
-            This is the email you will use to login to your Vuetify account
-          </span>
-        </v-card-text>
-      </v-window-item>
+        <v-sheet
+          class="py-8 px-6 mx-auto ma-4 text-center"
+          elevation="4"
+          rounded="lg"
+          max-width="500"
+          width="100%"
+        >
+        <v-window v-model="step">
+            <v-window-item :value="1">
+              <!-- Step 2: Email Input -->
+              <v-card-text>
+                <v-text-field ref="emailField" label="Email" v-model="email"></v-text-field>
+              </v-card-text>
+            </v-window-item>
 
-      <v-window-item :value="2">
-        <v-card-text>
-          <v-text-field
-            label="Password"
-            type="password"
-          ></v-text-field>
-          <v-text-field
-            label="Confirm Password"
-            type="password"
-          ></v-text-field>
-          <span class="caption grey--text text--darken-1">
-            Please enter a password for your account
-          </span>
-        </v-card-text>
-      </v-window-item>
+            <h3 class="text-h5">Verification Code</h3>
+            <div class="text-subtitle-2 font-weight-light mb-3">
+              Please enter the verification code sent to your mobile
+            </div>
+            <v-window-item :value="2">
+            <!-- Step 1: Verification Code Input -->
+            <v-otp-input
+              class="mb-8"
+              divider="•"
+              length="4"
+              variant="outlined"
+            ></v-otp-input>
+          </v-window-item>
 
-      <v-window-item :value="3">
-        <div class="pa-3 text-xs-center">
-          <v-img
-            class="mb-3"
-            contain
-            height="128"
-            src="https://cdn.vuetifyjs.com/images/logos/v.svg"
-          ></v-img>
-          <h3 class="title font-weight-light mb-2">Welcome to Vuetify</h3>
-          <span class="caption grey--text">Thanks for signing up!</span>
-        </div>
-      </v-window-item>
-    </v-window>
+            <v-window-item :value="3">
+              <!-- Step 3: Password Input -->
+              <v-card-text>
+                <v-text-field
+                  label="Password"
+                  type="password"
+                ></v-text-field>
+                <v-text-field
+                  label="Confirm Password"
+                  type="password"
+                ></v-text-field>
+                <span class="caption grey--text text--darken-1">
+                  Please enter a password for your account
+                </span>
+              </v-card-text>
+            </v-window-item>
 
-    <v-divider></v-divider>
+            <v-window-item :value="4">
+              <!-- Step 4: Verification Success -->
+              <div class="pa-3 text-xs-center">
+                <v-img
+                  class="mb-3"
+                  contain
+                  height="128"
+                  src="@/assets/verified.png"
+                ></v-img>
+                <h3 class="title font-weight-light mb-2">You are Verified</h3>
+                <span class="caption grey--text">Thanks for signing up!</span>
+              </div>
+            </v-window-item>
+          </v-window>
 
-    <v-card-actions>
-      <v-btn
-        :disabled="step === 1"
-        flat
-        @click="step--"
-      >
-        Back
-      </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn
-        :disabled="step === 3"
-        color="primary"
-        depressed
-        @click="step++"
-      >
-        Next
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-      </v-container>
-    </v-main>
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-btn
+              :disabled="step === 1"
+              flat
+              @click="step--"
+            >
+              Back
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
+              :disabled="step === 4"
+              color="primary"
+              depressed
+              @click="step++"
+            >
+              Next
+            </v-btn>
+          </v-card-actions>
+        </v-sheet>
+      </v-card>
+    </v-container>
+  </v-main>
 
     <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
         <!-- Logo Section -->
@@ -199,6 +215,7 @@ export default {
   name: 'App',
   data() {
     return {
+      otp: '',
       value: 'home',
       color: 'deep-purple darken-4',
       drawer: false,
@@ -209,9 +226,6 @@ export default {
         { text: 'News', to: '/news', icon: 'mdi-newspaper' },
       ],
       isLoggedIn: false,
-      products: [
-        // Your product data here
-      ],
       commentForm: {
         name: '',
         email: '',
@@ -225,7 +239,8 @@ export default {
     currentTitle() {
       switch (this.step) {
         case 1: return 'Sign-up';
-        case 2: return 'Create a password';
+        case 2: return 'Verify Account';
+        case 3: return 'Create a password';
         default: return 'Account created';
       }
     },

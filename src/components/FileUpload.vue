@@ -1,12 +1,9 @@
 <template>
-    <v-file-input
-        class=""
-        label="File input"
-        variant="outlined"
-        prepend-icon="fa-solid fa-camera"
-        v-model="selectedFile"
-        @change="handleFileChange"
-    ></v-file-input>
+  <v-file-input
+    label="File input"
+    variant="filled"
+    prepend-icon="mdi-camera"
+  ></v-file-input>
 </template>
 <script>
 export default {

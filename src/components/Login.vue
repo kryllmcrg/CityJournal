@@ -33,9 +33,9 @@
     <v-main class="main-content">
     <v-container fluid>
       <v-row align="center" justify="center">
-        <v-col cols="12" sm="8" md="6">
+        <v-col cols="12" sm="8" md="4">
           <v-card class="elevation-12" outlined>
-            <v-card-title class="headline text-center">Login</v-card-title>
+            <v-card-title class="headline text-center">Login Form</v-card-title>
             <v-card-text>
               <v-form @submit.prevent="login">
                 <v-text-field v-model="Email" label="Email" outlined></v-text-field>
