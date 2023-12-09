@@ -36,11 +36,11 @@
         <v-row>
           <v-col v-for="post in ArticleNews" :key="post._id" cols="12" md="6" lg="4">
             <v-card class="featured-card">
-              <v-img :src="post.ImageURL" alt="Post Image"></v-img>
               <v-card-title>{{ post.Title }}</v-card-title>
-              <v-card-subtitle>{{ post.Author }}</v-card-subtitle>
               <v-card-text>{{ post.Content }}</v-card-text>
               <v-card-text>{{ post.Category }}</v-card-text>
+              <v-card-subtitle>{{ post.Author }}</v-card-subtitle>
+              <v-img :src="post.ImageURL" alt="Post Image"></v-img>
               <v-card-text>{{ post.PublishDate }}</v-card-text>
               <!-- Add more details as needed -->
             </v-card>
@@ -156,6 +156,7 @@ export default {
     };
   },
   created() {
+    this.fetchNewsArticle();
     // Check the window width on component creation
     this.checkMobile();
     // Add an event listener to check the window width on resize
@@ -180,11 +181,13 @@ export default {
     async fetchNewsArticle() {
     try {
       const response = await axios.get('/post');
+      console.log('API Response:', response.data); // Log the API response
       this.ArticleNews = response.data;
     } catch (error) {
       console.error('Error fetching news posts:', error);
     }
   },
+
     // Method to check if the device is mobile based on window width
     checkMobile() {
       this.isMobile = window.innerWidth <= 768; // Adjust the width as needed
