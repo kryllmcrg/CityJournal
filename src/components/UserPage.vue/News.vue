@@ -126,7 +126,6 @@
           </v-col>
         </v-row>
       </v-footer>
-
   </v-app>
 </template>
 
@@ -177,14 +176,14 @@ export default {
       // Your subscribe logic
     },
     async fetchNewsArticle() {
-    try {
-      const response = await axios.get('/displayPost');
-      console.log('API Response:', response.data); // Log the API response
-      this.articleNews = response.data;
-    } catch (error) {
-      console.error('Error fetching news posts:', error);
-    }
-  },
+      try {
+        const response = await axios.get('/displayPost');
+        console.log('API Response:', response.data); // Log the API response
+        this.articleNews = response.data;
+      } catch (error) {
+        console.error('Error fetching news posts:', error);
+      }
+    },
     // Method to check if the device is mobile based on window width
     checkMobile() {
       this.isMobile = window.innerWidth <= 768; // Adjust the width as needed
