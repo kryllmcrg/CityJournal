@@ -446,8 +446,12 @@ export default {
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
-      this.Articles.splice(this.editedIndex, 1);
+    async deleteItemConfirm() {
+      const response = await axios.post('deleteNews',this.editedItem);
+      console.log(response);
+
+      this.initialize();
+
       this.closeDelete();
     },
 
@@ -467,13 +471,18 @@ export default {
       });
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.Articles[this.editedIndex], this.editedItem);
-      } else {
-        this.Articles.push(this.editedItem);
+   async save() {
+      if (this.editedIndex > -1)
+      {
+       const response = await axios.post('updateNews',this.editedItem);
+       console.log(response.data);
+      }else{
+        const response = await axios.post('addNews',this.editedItem);
+        console.log(response.data);
       }
-      this.close();
+
+      this.initialize()
+      this.close()
     },
   },
 };

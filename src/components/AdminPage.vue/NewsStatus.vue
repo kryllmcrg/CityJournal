@@ -98,29 +98,28 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
-  
-  
+
           <!-- Other Admin-related Sections -->
           <v-divider></v-divider>
           <v-list-item-group>
             <!-- Reviews -->
-            <v-list-item prepend-icon="mdi-star-outline" title="Reviews" value="reviews"></v-list-item>
-  
-            <!-- Settings -->
-            <v-list-item prepend-icon="mdi-cog-outline" title="Settings" value="settings"></v-list-item>
-  
-            <!-- Archives -->
-            <v-list-item prepend-icon="mdi-archive-outline" title="Archives" value="archives"></v-list-item>
-  
-            <!-- Reports -->
-            <v-list-item prepend-icon="mdi-file-chart-outline" title="Reports" value="reports"></v-list-item>
-  
-            <!-- Collaboration -->
-            <v-list-item prepend-icon="mdi-account-multiple-outline" title="Collaboration" value="collaboration"></v-list-item>
-  
-            <!-- Log Out -->
-            <v-list-item prepend-icon="mdi-logout" title="Log Out" value="logOut"></v-list-item>
-  
+          <v-list-item href="/reviews" prepend-icon="mdi-star-outline" title="Reviews" value="reviews"></v-list-item>
+
+          <!-- Settings -->
+          <v-list-item href="/settings" prepend-icon="mdi-cog-outline" title="Settings" value="settings"></v-list-item>
+
+          <!-- Archives -->
+          <v-list-item href="/status" prepend-icon="mdi-archive-outline" title="Archives" value="archives"></v-list-item>
+
+          <!-- Reports -->
+          <v-list-item href="/reports" prepend-icon="mdi-file-chart-outline" title="Reports" value="reports"></v-list-item>
+
+          <!-- Collaboration -->
+          <v-list-item href="/collab" prepend-icon="mdi-account-multiple-outline" title="Collaboration" value="collaboration"></v-list-item>
+
+          <!-- Log Out -->
+          <v-list-item href="/logout" prepend-icon="mdi-logout" title="Log Out" value="logOut"></v-list-item>
+            
             <!-- Add more sections/items as needed -->
           </v-list-item-group>
         </v-list>
