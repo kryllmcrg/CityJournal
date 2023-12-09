@@ -2,8 +2,8 @@
   <v-app>
     <v-app-bar app dark>
       <v-app-bar-nav-icon v-if="isMobile" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-  <v-img src="@/assets/logocalapan.png" alt="Logo" max-height="40" max-width="160"></v-img>
-  <v-toolbar-title>{{ capitalize() }}</v-toolbar-title>
+      <v-img src="@/assets/logocalapan.png" alt="Logo" max-height="40" max-width="160"></v-img>
+      <v-toolbar-title>{{ capitalize() }}</v-toolbar-title>
   
   <!-- Buttons for Home, About, Contact, and News -->
   <v-btn to="/" text>Home</v-btn>
@@ -105,68 +105,52 @@
           </v-row>
 
           <v-row>
-      <!-- Comment Section -->
-      <v-col cols="12" md="8">
-        <v-card class="comment-card">
-          <v-card-title class="panel-heading">Comment and Suggestion</v-card-title>
-          <!-- Your form elements go here -->
-          <v-form @submit.prevent="submitComment">
-            <v-container>
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-text-field v-model="commentForm.name" label="Name" required></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field v-model="commentForm.email" label="Email" required></v-text-field>
-                </v-col>
-              </v-row>
-              <v-textarea v-model="commentForm.comment" label="Comment/Suggestion" required></v-textarea>
-              <v-row>
-                <v-col>
-                  <v-btn color="primary" type="submit">Submit</v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </v-card>
-      </v-col>
-
-      <!-- Display Section -->
-      <v-col cols="12" md="4">
-        <v-card class="comment-card">
-          <v-divider></v-divider>
-          <v-container>
-            <v-row>
-              <v-col v-for="comment in comments" :key="comment.id" cols="12">
-                <v-card class="mt-4 comment-item">
-                  <v-card-title>{{ comment.name }}</v-card-title>
-                  <v-card-text>{{ comment.comment }}</v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card>
-      </v-col>
-    </v-row>
-
-            <!-- Display Section -->
-            <v-row>
-              <v-col cols="10" md="4">
-                <v-card class="comment-card">
-                  <v-divider></v-divider>
+            <!-- Comment Section -->
+            <v-col cols="12" md="6">
+              <v-card class="comment-card">
+                <v-card-title class="panel-heading">Comment and Suggestion</v-card-title>
+                <!-- Your form elements go here -->
+                <v-form @submit.prevent="submitComment">
                   <v-container>
                     <v-row>
-                      <v-col v-for="comment in comments" :key="comment.id" cols="12">
-                        <v-card class="mt-4 comment-item">
-                          <v-card-title>{{ comment.name }}</v-card-title>
-                          <v-card-text>{{ comment.comment }}</v-card-text>
-                        </v-card>
+                      <v-col cols="12" sm="12">
+                        <v-text-field v-model="commentForm.name" label="Name" required></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="12">
+                        <v-text-field v-model="commentForm.email" label="Email" required></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-textarea v-model="commentForm.comment" label="Comment/Suggestion" required></v-textarea>
+                    <v-row>
+                      <v-col>
+                        <v-btn color="primary" type="submit">Submit</v-btn>
                       </v-col>
                     </v-row>
                   </v-container>
+                </v-form>
+              </v-card>
+            </v-col>
+
+           <!-- Display Section -->
+              <v-col cols="12" md="6">
+                <v-card class="comment-card">
+                  <v-container>
+                    <v-list dense>
+                      <v-list-item-group>
+                        <v-list-item v-for="comment in comments" :key="comment.id">
+                          <v-list-item-content>
+                            <v-list-item-title>{{ comment.name }}</v-list-item-title>
+                            <v-list-item-subtitle>{{ comment.comment }}</v-list-item-subtitle>
+                            <v-divider></v-divider>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list-item-group>
+                    </v-list>
+                  </v-container>
                 </v-card>
               </v-col>
-            </v-row>
+
+          </v-row>
 
         </v-container>
       </v-main>
@@ -388,7 +372,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .comment-card {
   background-color: #f8f9fa; /* Light gray background */
   padding: 20px;

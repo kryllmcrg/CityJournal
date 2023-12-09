@@ -29,26 +29,35 @@
   </v-btn>
     </v-app-bar>
 
-    <!-- Main Content -->
-    <v-main class="main-content">
-      <v-container fluid>
-        <!-- Display Blog Posts -->
-        <v-row>
-          <v-col v-for="post in articleNews" :key="post._id" cols="12" md="6" lg="4">
-            <v-card class="featured-card">
-              <v-card-title>{{ post.Title }}</v-card-title>
-              <v-card-text>{{ post.Content }}</v-card-text>
-              <v-card-text><b>Category:</b> {{ post.Category }}</v-card-text>
-              <v-card-text><b>Author:</b> {{ post.Author }}</v-card-text>
-              <v-img :src="post.ImageURL" alt="Post Image"></v-img>
-              <v-card-text><b>Publish Date:</b> {{ post.PublishDate }}</v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
+     <!-- Main Content -->
+      <v-main class="main-content">
+        <v-container fluid>
+          <!-- Display Blog Posts -->
+          <v-row>
+            <v-col v-for="post in articleNews" :key="post._id" cols="12" md="6" lg="4">
+              <v-card class="featured-card">
+                <v-card-title>{{ post.Title }}</v-card-title>
+                <v-card-text>{{ post.Content }}</v-card-text>
+                <v-card-text><b>Category:</b> {{ post.Category }}</v-card-text>
+                <v-card-text><b>Author:</b> {{ post.Author }}</v-card-text>
+                <v-img :src="post.ImageURL" alt="Post Image"></v-img>
+                <v-card-text><b>Publish Date:</b> {{ post.PublishDate }}</v-card-text>
 
-    
+                <!-- Flex container for buttons with space in between -->
+                <v-row class="d-flex justify-space-between">
+                  <!-- Read More Button with margin right -->
+                  <v-btn color="primary" dark class="transparent mr-2" @click="readMore(post._id)">Read More</v-btn>
+
+                  <!-- Comment Button -->
+                  <v-btn color="secondary" dark class="transparent" @click="comment(post._id)">Comment</v-btn>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-main>
+
+
     <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
         <!-- Logo Section -->
         <v-row justify="center" align="center" class="my-3 text-center">
