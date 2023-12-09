@@ -112,26 +112,34 @@ class NewsController extends BaseController
         }
     }
 
-    public function updateNews(){
-        $this->Articles = new NewsModel();
-        
-        try{
-            $ArticleID = $this->request->getVar('ArticleID');
-            $image = $this->request->getFile('ImageURL');
-            $newName = $image->getRandomName();
+    public function updateNews()
+    {
+     try{
+        $ArticleID = $this->request->getVar('ArticleID');
 
-            $data =[
-                'Title' => $this->request->getVar('Title'),
-                'Author' => $this->request->getVar('Author'),
-                'Category' => $this->request->getVar('Category'),
-                'ImageURL' => $newName,
-                'Content' => strip_tags ($this->request->getVar('Content')),
-                'PublishDate' => $this->request->getVar('PublishDate'),
+        $data =[
+            'Title' => $this->request->getVar('Title'),
+            'Author' => $this->request->getVar('Author'),
+            'Category' => $this->request->getVar('Category'),
+            'Content' => strip_tags ($this->request->getVar('Content')),
+            'PublishDate' => $this->request->getVar('PublishDate'),
             ];
-            $this->Articles->where('ArticleID',$ArticleID)->set($data)->update();
-            return $this->respond(['message'=>'Record Update Successfully']);
+         $this->Articles->where('ArticleID',$ArticleID)->set($data)->update();
+        return $this->respond(['message'=>'Record Update Successfully']);
         }catch (\Throwable $th){
             return $this->respond(["error" => "Error: " . $th->getMessage()]);
+        }
+    }
+
+    public function deleteNews(){
+        try{
+            $ArticleID = $this->request->getVar('ArticleID');
+
+            $this->Articles->delete(['ArticleID'=> $ArticleID]);
+
+            return $this->respond(['message'=>'Record Delete Successfully']);
+        }catch(\Throwable $th){
+            return $this->respond(["error" => "Error:" . $th->getMessage()]);
         }
     }
 }

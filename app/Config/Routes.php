@@ -17,5 +17,6 @@ $routes->get('/displayNews', 'NewsController::displayNews');
 $routes->post('/changeNewsStatus', 'NewsController::changeNewsStatus');
 $routes->post('/changeNewsStatus', 'NewsController::changeNewsStatus');
 $routes->post('/updateNews', 'NewsController::updateNews');
+$routes->post('/deleteNews', 'NewsController::deleteNews');
 
 $routes->post('/comment', 'NewsController::comment');
