@@ -142,7 +142,6 @@
     <v-main class="main-content">
       <v-container fluid>
         <canvas id="myChart1" width="100" height="50"></canvas>
-        <canvas id="myChart2" width="100" height="50"></canvas>
       </v-container>
     </v-main>
 
@@ -169,94 +168,63 @@ export default {
   },
   methods: {
     toggleItem(item) {
-      // ... (unchanged) ...
+      if (this.selectedItem === item) {
+        // If the same item is clicked again, close the section
+        this.selectedItem = null;
+      } else {
+        // If a different item is clicked, switch to that item
+        this.selectedItem = item;
+      }
     },
     selectItem(item) {
       this.selectedItem = item;
     },
     logout() {
-      // ... (unchanged) ...
+      // Clear the token in session storage
+      sessionStorage.removeItem('token'); // Replace 'your_token_key' with the actual key you are using
+
+      // Redirect or perform any other actions after logout
+      this.$router.push('/login'); // Redirect to the login page, adjust the route as needed
     },
     renderChart() {
-  // Sample data for the first chart (replace it with your actual data)
-  const data1 = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [{
-      label: 'Monthly Sales',
-      backgroundColor: '#673ab7',
-      borderColor: '#673ab7',
-      data: [65, 59, 80, 81, 56, 55, 40],
-    }],
-  };
+      // Sample data for the chart (replace it with your actual data)
+      const data = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          label: 'Monthly Sales',
+          backgroundColor: '#673ab7',
+          borderColor: '#673ab7',
+          data: [65, 59, 80, 81, 56, 55, 40],
+        }],
+      };
+            // Chart configuration
+      const config = {
+        type: 'bar',
+        data: data,
+        options: {
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Month',
+              },
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Sales',
+              },
+            },
+          },
+        },
+      };
 
-  // Chart configuration for the first chart
-  const config1 = {
-    type: 'bar',
-    data: data1,
-    options: {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Month',
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'Sales',
-          },
-        },
-      },
+      // Get the canvas element
+      const ctx = document.getElementById('myChart1').getContext('2d');
+
+      // Create and render the chart
+      new Chart(ctx, config);
     },
-  };
-
-  // Get the canvas element for the first chart
-  const ctx1 = document.getElementById('myChart1').getContext('2d');
-
-  // Create and render the first chart
-  new Chart(ctx1, config1);
-
-  // Sample data for the second chart (replace it with your actual data)
-  const data2 = {
-    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    datasets: [{
-      label: 'Weekly Activity',
-      backgroundColor: '#4caf50',
-      borderColor: '#4caf50',
-      data: [30, 45, 60, 20, 80, 35, 55],
-    }],
-  };
-
-  // Chart configuration for the second chart
-  const config2 = {
-    type: 'line',
-    data: data2,
-    options: {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Day',
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'Activity',
-          },
-        },
-      },
-    },
-  };
-
-  // Get the canvas element for the second chart
-  const ctx2 = document.getElementById('myChart2').getContext('2d');
-
-  // Create and render the second chart
-  new Chart(ctx2, config2);
-},
-
   },
   mounted() {
     // Call the renderChart method when the component is mounted
@@ -264,6 +232,7 @@ export default {
   },
 };
 </script>
+
 
 <style>
 .background-container {
