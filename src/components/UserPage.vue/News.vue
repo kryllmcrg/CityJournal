@@ -1,141 +1,153 @@
 <template>
   <v-app>
+    <!-- App Bar -->
     <v-app-bar app dark>
       <v-app-bar-nav-icon v-if="isMobile" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-  <v-img src="@/assets/logocalapan.png" alt="Logo" max-height="40" max-width="160"></v-img>
-  <v-toolbar-title>{{ capitalize() }}</v-toolbar-title>
-  
-  <!-- Buttons for Home, About, Contact, and News -->
-  <v-btn to="/" text>Home</v-btn>
-  <v-btn to="/about" text>About</v-btn>
-  <v-btn to="/contact" text>Contact</v-btn>
-  <v-btn to="/news" text>News</v-btn>
-
-  <!-- Add a Login button -->
-  <v-btn v-if="!isLoggedIn" to="/login" text>Login</v-btn>
-
-  <!-- You can also add a Logout button if user is logged in -->
-  <v-btn v-if="isLoggedIn" @click="logout" text>Logout</v-btn>
-
-  <!-- Subscribe Notification Button -->
-  <v-btn icon @click="subscribe">
-    <v-icon>mdi-bell</v-icon>
-    <v-badge content="subscribed" color="red" overlap>
-      <template v-slot:badge>
-        <v-icon>mdi-check</v-icon>
-      </template>
-    </v-badge>
-    <span class="hidden-md-and-up"></span>
-  </v-btn>
+      <v-img src="@/assets/logocalapan.png" alt="Logo" max-height="40" max-width="160"></v-img>
+      <v-toolbar-title>{{ capitalize() }}</v-toolbar-title>
+      <!-- Buttons for Home, About, Contact, and News -->
+      <v-btn to="/" text>Home</v-btn>
+      <v-btn to="/about" text>About</v-btn>
+      <v-btn to="/contact" text>Contact</v-btn>
+      <v-btn to="/news" text>News</v-btn>
+      <!-- Add a Login button -->
+      <v-btn v-if="!isLoggedIn" to="/login" text>Login</v-btn>
+      <!-- You can also add a Logout button if the user is logged in -->
+      <v-btn v-if="isLoggedIn" @click="logout" text>Logout</v-btn>
+      <!-- Subscribe Notification Button -->
+      <v-btn icon @click="subscribe">
+        <v-icon>mdi-bell</v-icon>
+        <v-badge content="subscribed" color="red" overlap>
+          <template v-slot:badge>
+            <v-icon>mdi-check</v-icon>
+          </template>
+        </v-badge>
+        <span class="hidden-md-and-up"></span>
+      </v-btn>
     </v-app-bar>
 
-     <!-- Main Content -->
-      <v-main class="main-content">
-        <v-container fluid>
-          <!-- Display Blog Posts -->
-          <v-row>
-            <v-col v-for="post in articleNews" :key="post._id" cols="12" md="6" lg="4">
-              <v-card class="featured-card">
-                <v-card-title>{{ post.Title }}</v-card-title>
-                <v-card-text>{{ post.Content }}</v-card-text>
-                <v-card-text><b>Category:</b> {{ post.Category }}</v-card-text>
-                <v-card-text><b>Author:</b> {{ post.Author }}</v-card-text>
-                <v-img :src="post.ImageURL" alt="Post Image"></v-img>
-                <v-card-text><b>Publish Date:</b> {{ post.PublishDate }}</v-card-text>
+    <!-- Main Content -->
+    <v-main class="main-content">
+      <v-container fluid class="main-container">
+        <!-- Display Blog Posts -->
+        <v-row>
+          <v-col v-for="post in articleNews" :key="post._id" cols="12" sm="6" md="4">
+            <v-card class="featured-card pa-4">
+              <v-card-title>{{ post.Title }}</v-card-title>
+              <v-card-text>{{ post.Content }}</v-card-text>
+              <v-card-text><b>Category:</b> {{ post.Category }}</v-card-text>
+              <v-card-text><b>Author:</b> {{ post.Author }}</v-card-text>
+              <v-img :height="500" aspect-ratio="16/9" cover :src="post.ImageURL" alt="Post Image"></v-img>
+              <v-card-text><b>Publish Date:</b> {{ post.PublishDate }}</v-card-text>
 
-                <!-- Flex container for buttons with space in between -->
-                <v-row class="d-flex justify-space-between">
-                  <!-- Read More Button with margin right -->
-                  <v-btn color="primary" dark class="transparent mr-2" @click="readMore(post._id)">Read More</v-btn>
+              <!-- Flex container for buttons with space in between -->
+              <v-row class="d-flex justify-space-between">
+                <!-- Read More Button with margin right -->
+                <v-btn color="primary" dark class="transparent mr-2" @click="openModal(post)">Read More</v-btn>
 
-                  <!-- Comment Button -->
-                  <v-btn color="secondary" dark class="transparent" @click="comment(post._id)">Comment</v-btn>
-                </v-row>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-main>
-
-
-    <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
-        <!-- Logo Section -->
-        <v-row justify="center" align="center" class="my-3 text-center">
-          <v-img src="@/assets/loggo.png" alt="Logo" max-height="100"></v-img>
+                <!-- Comment Button -->
+                <v-btn color="secondary" dark class="transparent" @click="comment(post._id)">Comment</v-btn>
+              </v-row>
+            </v-card>
+          </v-col>
         </v-row>
+      </v-container>
+    </v-main>
 
-        <!-- Navigation List -->
-        <v-list>
-          <v-list-item v-for="item in navItems" :key="item.text" :to="item.to" link>
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>{{ item.text }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
+    <!-- Modal for Read More -->
+      <v-dialog v-model="modal" max-width="800">
+        <v-card>
+          <v-card-title>{{ selectedPost.Title }}</v-card-title>
+          <v-card-text>{{ selectedPost.Content }}</v-card-text>
+          <v-card-text><b>Category:</b> {{ selectedPost.Category }}</v-card-text>
+          <v-card-text><b>Author:</b> {{ selectedPost.Author }}</v-card-text>
+          <v-img :src="selectedPost.ImageURL" alt="Post Image"></v-img>
+          <v-card-text><b>Publish Date:</b> {{ selectedPost.PublishDate }}</v-card-text>
+          <!-- Add more details as needed -->
+          <v-card-actions>
+            <v-btn color="primary" @click="closeModal">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+
+    <!-- Navigation Drawer -->
+    <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
+      <!-- Logo Section -->
+      <v-row justify="center" align="center" class="my-3 text-center">
+        <v-img src="@/assets/loggo.png" alt="Logo" max-height="100"></v-img>
+      </v-row>
+
+      <!-- Navigation List -->
+      <v-list>
+        <v-list-item v-for="item in navItems" :key="item.text" :to="item.to" link>
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.text }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
     <!-- Footer Section -->
-      <v-footer app dark height="200">
-        <v-row justify="center">
+    <v-footer app dark >
+      <v-row justify="center">
+        <!-- Vision Column -->
+        <v-col>
+          <v-row>
+            <v-col>
+              <v-typography class="white--text font-weight-bold">Vision:</v-typography>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-typography class="white--text font-weight-bold">“A premier Green City with God-loving, economically-empowered, and culture-rich citizens actively participating in good governance and co-existing harmoniously with the environment.”</v-typography>
+            </v-col>
+          </v-row>
+        </v-col>
 
-          <!-- Vision Column -->
-          <v-col>
-            <v-row>
-              <v-col>
-                <v-typography class="white--text font-weight-bold">Vision:</v-typography>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
-                <v-typography class="white--text font-weight-bold">“A premier Green City with God-loving, economically-empowered, and culture-rich citizens actively participating in good governance and co-existing harmoniously with the environment.”</v-typography>
-              </v-col>
-            </v-row>
-          </v-col>
+        <!-- Mission Column -->
+        <v-col>
+          <v-row>
+            <v-col>
+              <v-typography class="white--text font-weight-bold">Mission:</v-typography>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-typography class="white--text font-weight-bold">“The Green City of Calapan shall initiate and sustain programs to create an environment conducive to development and responsive to people’s needs through transparent, accountable and participatory governance.”</v-typography>
+            </v-col>
+          </v-row>
+        </v-col>
 
-          <!-- Mission Column -->
-          <v-col>
-            <v-row>
-              <v-col>
-                <v-typography class="white--text font-weight-bold">Mission:</v-typography>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
-                <v-typography class="white--text font-weight-bold">“The Green City of Calapan shall initiate and sustain programs to create an environment conducive to development and responsive to people’s needs through transparent, accountable and participatory governance.”</v-typography>
-              </v-col>
-            </v-row>
-          </v-col>
+        <!-- Get In Touch Column -->
+        <v-col>
+          <v-typography class="white--text font-weight-bold">
+            Get In Touch
+          </v-typography>
 
-          <!-- Get In Touch Column -->
-          <v-col>
-            <v-typography class="white--text font-weight-bold">
-              Get In Touch
-            </v-typography>
-            
-            <!-- Email Row -->
-            <v-row>
-              <v-col>
-                <v-typography class="white--text font-weight-bold">
-                  <v-icon>mdi-email</v-icon> lgu.calapancity@gmail.com
-                </v-typography>
-              </v-col>
-            </v-row>
+          <!-- Email Row -->
+          <v-row>
+            <v-col>
+              <v-typography class="white--text font-weight-bold">
+                <v-icon>mdi-email</v-icon> lgu.calapancity@gmail.com
+              </v-typography>
+            </v-col>
+          </v-row>
 
-            <!-- Phone Row -->
-            <v-row>
-              <v-col>
-                <v-typography class="white--text font-weight-bold">
-                  <v-icon>mdi-phone</v-icon> +63-000-0000-000
-                </v-typography>
-              </v-col>
-            </v-row>
-
-          </v-col>
-        </v-row>
-      </v-footer>
+          <!-- Phone Row -->
+          <v-row>
+            <v-col>
+              <v-typography class="white--text font-weight-bold">
+                <v-icon>mdi-phone</v-icon> +63-000-0000-000
+              </v-typography>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-footer>
   </v-app>
 </template>
 
@@ -161,6 +173,8 @@ export default {
       },
       isMobile: false, // Add a variable to track if the device is mobile
       articleNews: [],
+      modal: false,
+      selectedPost: {},
     };
   },
   created() {
@@ -180,9 +194,6 @@ export default {
     login() {
       // Your login logic
     },
-    logout() {
-      // Your logout logic
-    },
     subscribe() {
       // Your subscribe logic
     },
@@ -199,6 +210,14 @@ export default {
     checkMobile() {
       this.isMobile = window.innerWidth <= 768; // Adjust the width as needed
     },
+    openModal(post) {
+      this.selectedPost = post;
+      this.modal = true;
+    },
+    closeModal() {
+      this.modal = false;
+      this.selectedPost = {};
+    },
   },
   beforeDestroy() {
     // Remove the resize event listener when the component is destroyed
@@ -207,25 +226,27 @@ export default {
 };
 </script>
 
-
 <style scoped>
- .fixed-sidebar {
+  .fixed-sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 50%;
   }
 
- .drawer-background .logo-section {
+  .drawer-background .logo-section {
     background-color: transparent !important;
   }
+
   .v-app-bar {
     background: url("@/assets/head.png") center center no-repeat;
     background-size: cover;
   }
+
   .main-container {
     padding-top: 80px; /* Adjust as needed based on your design */
   }
+
   .main-content {
     padding-top: 60px;
   }

@@ -115,7 +115,7 @@
           <v-list-item href="/collab" prepend-icon="mdi-account-multiple-outline" title="Collaboration" value="collaboration"></v-list-item>
 
          <!-- Log Out -->
-          <v-list-item href="/logout" prepend-icon="mdi-logout" title="Log Out" value="logOut"></v-list-item>
+          <v-list-item @click="logout" prepend-icon="mdi-logout" title="Log Out" value="logOut"></v-list-item>
 
 
           <!-- Add more sections/items as needed -->
@@ -205,6 +205,15 @@ export default {
     },
     selectItem(item) {
       this.selectedItem = item;
+    },
+    logout() {
+      // Clear the token in session storage
+      sessionStorage.removeItem('token'); // Replace 'your_token_key' with the actual key you are using
+
+      // Add any additional logout logic if needed
+
+      // Redirect or perform any other actions after logout
+      this.$router.push('/login'); // Redirect to the login page, adjust the route as needed
     },
   },
 };
