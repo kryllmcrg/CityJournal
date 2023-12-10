@@ -129,7 +129,7 @@
     </v-main>
 
 
-    <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
+    <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar" style="">
         <!-- Logo Section -->
         <v-row justify="center" align="center" class="my-3 text-center">
           <v-img src="@/assets/loggo.png" alt="Logo" max-height="100"></v-img>
@@ -367,28 +367,19 @@ export default {
 };
 </script>
 
-
 <style scoped>
- .fixed-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 50%;
-  }
-
- .drawer-background .logo-section {
+  .drawer-background .logo-section {
     background-color: transparent !important;
   }
+
   .v-app-bar {
     background: url("@/assets/head.png") center center no-repeat;
     background-size: cover;
   }
-  .main-container {
-    padding-top: 20px; /* Adjust as needed based on your design */
-  }
-  .main-content {
 
+  .main-content {
     padding-top: 60px;
+    padding-left: 300px; /* Adjust as needed based on your design */
   }
 
   .v-card {
