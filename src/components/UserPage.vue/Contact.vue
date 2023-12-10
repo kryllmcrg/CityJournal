@@ -147,7 +147,7 @@
       </v-navigation-drawer>
 
     <!-- Footer Section -->
-      <v-footer app dark height="200">
+      <v-footer app dark>
         <v-row justify="center">
 
           <!-- Vision Column -->

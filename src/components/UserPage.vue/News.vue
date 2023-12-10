@@ -32,21 +32,22 @@
         <!-- Display Blog Posts -->
         <v-row>
           <v-col v-for="post in articleNews" :key="post._id" cols="12" sm="6" md="4">
-            <v-card class="featured-card pa-4">
+            <v-card class="featured-card pa-6">
               <v-card-title>{{ post.Title }}</v-card-title>
               <v-card-text>{{ post.Content }}</v-card-text>
               <v-card-text><b>Category:</b> {{ post.Category }}</v-card-text>
               <v-card-text><b>Author:</b> {{ post.Author }}</v-card-text>
-              <v-img :height="500" aspect-ratio="16/9" cover :src="post.ImageURL" alt="Post Image"></v-img>
+              <v-img :height="200" aspect-ratio="16/9" cover :src="post.ImageURL" alt="Post Image"></v-img>
               <v-card-text><b>Publish Date:</b> {{ post.PublishDate }}</v-card-text>
 
               <!-- Flex container for buttons with space in between -->
               <v-row class="d-flex justify-space-between">
                 <!-- Read More Button with margin right -->
+                <v-card-actions>
+                  <v-btn color="secondary" @click="openCommentModal(post)">Comment</v-btn>
+                </v-card-actions>
                 <v-btn color="primary" dark class="transparent mr-2" @click="openModal(post)">Read More</v-btn>
 
-                <!-- Comment Button -->
-                <v-btn color="secondary" dark class="transparent" @click="comment(post._id)">Comment</v-btn>
               </v-row>
             </v-card>
           </v-col>
@@ -70,6 +71,47 @@
         </v-card>
       </v-dialog>
 
+      <!-- Comment Modal -->
+        <v-dialog v-model="commentModal" persistent max-width="600">
+          <v-card v-if="selectedPost">
+            <v-card-title>
+              Comment on "{{ selectedPost.Title }}"
+            </v-card-title>
+            <v-card-text>
+              <!-- Add your comment form or input fields here -->
+              <v-textarea v-model="commentText" label="Your Comment"></v-textarea>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn color="primary" @click="submitComment">Submit</v-btn>
+               <!-- Add this button inside the existing v-card-actions in the post card -->
+               <v-btn color="success" dark class="transparent" @click="viewComments(post)">View Comments</v-btn>
+              <v-btn @click="closeCommentModal">Cancel</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <!-- View Comments Modal -->
+        <v-dialog v-model="viewCommentsModal" persistent max-width="600">
+          <v-card v-if="selectedPostComments.length">
+            <v-card-title>
+              Comments on "{{ selectedPost.Title }}"
+              <v-btn icon @click="closeViewCommentsModal">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-card-title>
+            <v-card-text>
+              <!-- Display comments in a list -->
+              <v-list>
+                <v-list-item v-for="comment in selectedPostComments" :key="comment.id">
+                  <v-list-item-content>
+                    <v-list-item-title>{{ comment.user }}</v-list-item-title>
+                    <v-list-item-subtitle>{{ comment.text }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
 
     <!-- Navigation Drawer -->
     <v-navigation-drawer app v-model="drawer" class="drawer-background fixed-sidebar">
@@ -175,6 +217,10 @@ export default {
       articleNews: [],
       modal: false,
       selectedPost: {},
+      commentModal: false,
+      selectedPost: null,
+      viewCommentsModal: false,
+      selectedPostComments: [],
     };
   },
   created() {
@@ -217,6 +263,40 @@ export default {
     closeModal() {
       this.modal = false;
       this.selectedPost = {};
+    },
+    openCommentModal(post) {
+      this.selectedPost = post;
+      this.commentModal = true;
+    },
+    closeCommentModal() {
+      this.selectedPost = null;
+      this.commentText = "";
+      this.commentModal = false;
+    },
+    submitComment() {
+      // Implement your logic to handle the comment submission
+      // You can access the selected post using this.selectedPost
+      // and the comment text using this.commentText
+      // Close the modal after processing the comment
+      this.closeCommentModal();
+    },
+    closeViewCommentsModal() {
+    // Reset the selected post comments and close the modal
+    this.selectedPostComments = [];
+    this.viewCommentsModal = false;
+  },
+    viewComments(post) {
+      // Implement logic to fetch comments for the selected post
+      // For example, you might have an API call to fetch comments
+      // For now, let's assume you have comments data available
+      this.selectedPostComments = [
+        { id: 1, text: 'Great post!', user: 'User1' },
+        { id: 2, text: 'Thanks for sharing!', user: 'User2' },
+        // Add more comments as needed
+      ];
+
+      // Open the "View Comments" modal
+      this.viewCommentsModal = true;
     },
   },
   beforeDestroy() {
