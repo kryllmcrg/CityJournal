@@ -100,36 +100,18 @@
               </v-list-item-group>
             </v-list-item>
 
-        <!-- Post Section -->
-        <v-divider></v-divider>
-          <v-list-item-group v-model="selectedItem">
-              <v-list-item @click="selectItem('post')" prepend-icon="mdi-file-document-outline" title="Post" value="post"></v-list-item>
-
-            <!-- Manage Posts -->
-            <v-list-item v-if="selectedItem === 'post'">
-              <v-list-item-content>
-                <router-link to="/viewposts">
-                  <v-list-item @click="selectItem('viewPosts')" prepend-icon="mdi-plus-circle" title="View Posts" value="viewPosts"></v-list-item>
-                </router-link>
-                <router-link to="/manageposts">
-                  <v-list-item @click="selectItem('managePosts')" prepend-icon="mdi-pencil" title="Manage Posts" value="managePosts"></v-list-item>
-                </router-link>
-                <router-link to="/trashposts">
-                  <v-list-item @click="selectItem('trashPosts')" prepend-icon="mdi-delete" title="Trash Posts" value="trashPosts"></v-list-item>
-                </router-link>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-
-
         <!-- Other Admin-related Sections -->
         <v-divider></v-divider>
         <v-list-item-group>
           <!-- Reviews -->
-          <v-list-item prepend-icon="mdi-star-outline" title="Reviews" value="reviews"></v-list-item>
+          <v-list-item href="/reviewStaff"  prepend-icon="mdi-star-outline" title="Reviews" value="reviews"></v-list-item>
 
           <!-- Collaboration -->
-          <v-list-item prepend-icon="mdi-account-multiple-outline" title="Collaboration" value="collaboration"></v-list-item>
+          <v-list-item href="/collabStaff" prepend-icon="mdi-account-multiple-outline" title="Collaboration" value="collaboration"></v-list-item>
+
+          <!-- Log Out -->
+          <v-list-item href="/logoutStaff" prepend-icon="mdi-logout" title="Log Out" value="logOut"></v-list-item>
+
 
           <!-- Add more sections/items as needed -->
         </v-list-item-group>

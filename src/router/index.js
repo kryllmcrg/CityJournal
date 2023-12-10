@@ -9,8 +9,9 @@ import News from '../components/UserPage.vue/News.vue'
 import Home from '../components/UserPage.vue/Home.vue'
 import Contact from '../components/UserPage.vue/Contact.vue'
 import About from '../components/UserPage.vue/About.vue'
-import AddNews from '../components/StaffPage.vue/AddNews.vue'
 import Staff from '../components/StaffPage.vue/Staff.vue'
+import ViewTeam from '../components/StaffPage.vue/ViewTeam.vue'
+import AddNews from '../components/StaffPage.vue/AddNews.vue'
 import ManageNews from '../components/StaffPage.vue/ManageNews.vue'
 import Category from '../components/StaffPage.vue/Category.vue'
 
@@ -72,6 +73,10 @@ const routes = [
   {
     path: '/about',
     component:About
+  },
+  {
+    path: '/viewRole',
+    component:ViewTeam
   }
 ]
 
