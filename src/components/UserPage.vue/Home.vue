@@ -131,24 +131,24 @@
               </v-card>
             </v-col>
 
-           <!-- Display Section -->
-              <v-col cols="12" md="6">
-                <v-card class="comment-card">
-                  <v-container>
-                    <v-list dense>
-                      <v-list-item-group>
-                        <v-list-item v-for="comment in comments" :key="comment.id">
-                          <v-list-item-content>
-                            <v-list-item-title>{{ comment.name }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ comment.comment }}</v-list-item-subtitle>
-                            <v-divider></v-divider>
-                          </v-list-item-content>
-                        </v-list-item>
-                      </v-list-item-group>
-                    </v-list>
-                  </v-container>
-                </v-card>
-              </v-col>
+          <!-- Display Section -->
+            <v-col cols="12" md="6">
+              <v-card class="comment-card">
+                <v-container>
+                  <v-list dense>
+                    <v-list-item-group>
+                      <v-list-item v-for="comment in comments" :key="comment.id">
+                        <v-list-item-content>
+                          <v-list-item-title>{{ comment.name }}</v-list-item-title>
+                          <v-list-item-subtitle>{{ comment.comment }}</v-list-item-subtitle>
+                          <v-divider></v-divider>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list-item-group>
+                  </v-list>
+                </v-container>
+              </v-card>
+            </v-col>
 
           </v-row>
 
@@ -378,6 +378,9 @@ export default {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  overflow-y: auto; /* Add a vertical scroll bar */
+  max-height: 300px; /* Adjust the max height as needed */
+
 }
 
 .comment-item {

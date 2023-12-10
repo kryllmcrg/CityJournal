@@ -188,7 +188,7 @@ export default {
     },
     async fetchNewsArticle() {
       try {
-        const response = await axios.get('/displayPost');
+        const response = await axios.get('/displayNews');
         console.log('API Response:', response.data); // Log the API response
         this.articleNews = response.data;
       } catch (error) {
