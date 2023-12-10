@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import ForgotPage from '../components/Forgot.vue'
-import RichTextEditor from '../components/RichTextEditor.vue'
 import Admin from '../components/AdminPage.vue/Admin.vue'
 import NewsStatus from '../components/AdminPage.vue/NewsStatus.vue'
 import Collaboration from '../components/AdminPage.vue/Collaboration.vue'
@@ -32,10 +31,6 @@ const routes = [
   {
     path: '/addnews',
     component:AddNews
-  },
-  {
-    path: '/rich',
-    component:RichTextEditor
   },
   {
     path: '/staff',

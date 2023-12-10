@@ -167,34 +167,48 @@
           <v-card>
             <v-card-title class="headline">Create News</v-card-title>
             <v-card-text>
-              <!-- Title -->
-              <v-text-field v-model="Title" label="Title" required></v-text-field>
+              <v-row>
+                <!-- Left Side (Title and Category) -->
+                <v-col cols="12" md="6">
+                  <!-- Title -->
+                  <v-text-field v-model="Title" label="Title" required></v-text-field>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <!-- Category -->
+                  <v-select v-model="Category" :items="categories" label="Category" required></v-select>
+                </v-col>
 
-              <!-- Category -->
-              <v-select v-model="Category" :items="categories" label="Category" required></v-select>
+                <!-- Right Side (Author and Image Upload) -->
+                <v-col cols="12" md="6">
+                  <!-- Author -->
+                  <v-text-field v-model="Author" label="Author" required></v-text-field>
 
-              <!-- Author -->
-              <v-text-field v-model="Author" label="Author" required></v-text-field>
-              
-              <div>
-                <v-img
-                    class="mb-3"
-                    :aspect-ratio="1"
-                    :src="
+                  <!-- Image Upload -->
+                  <div>
+                    <v-img
+                      class="mb-3"
+                      :aspect-ratio="1"
+                      :src="
                         ($refs.FileInput &&
-                        $refs.FileInput.getObjectURL(
-                            selectedFile[0]
-                        )) ||
-                        require('@/assets/images/default_images.webp')
-                    "
-                    height="150"
+                          $refs.FileInput.getObjectURL(selectedFile[0])) ||
+                        require('@/assets/default_images.jpg')
+                      "
+                      height="150"
                     ></v-img>
                     <FileUpload
-                        v-model="selectedFile"
-                        @update:value="selectedFile = $event"
-                        ref="FileInput"
+                      v-model="selectedFile"
+                      @update:value="selectedFile = $event"
+                      ref="FileInput"
                     />
-                </div>
+                  </div>
+                </v-col>
+              </v-row>
                 <editor
                   api-key="no-api-key"
                   :init="{
@@ -214,7 +228,17 @@
                   v-model="Content"
                 />
 
-                <v-text-field v-model="PublishDate" label="PublishDate" type="date" class="mt-5"></v-text-field>
+                <v-row>
+                  <!-- Left Side (PublishDate) -->
+                  <v-col cols="12" md="6">
+                    <v-text-field v-model="PublishDate" label="Publish Date" type="date" class="mt-5"></v-text-field>
+                  </v-col>
+
+                  <!-- Right Side (UpdatedDate) -->
+                  <v-col cols="12" md="6">
+                    <v-text-field v-model="UpdatedDate" label="Updated Date" type="date" class="mt-5"></v-text-field>
+                  </v-col>
+                </v-row>
 
             </v-card-text>
             <v-card-actions>
