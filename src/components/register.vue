@@ -34,7 +34,7 @@
       <v-container fluid>
         <v-row align="center" justify="center">
           <!-- Registration Form Column -->
-          <v-col cols="12" sm="5" md="4">
+          <v-col cols="12" sm="8" md="4">
             <v-card elevation="2">
                <!-- Success Message -->
             <v-alert v-if="registrationSuccess" type="success" class="mt-2">
@@ -378,8 +378,8 @@ export default {
   }
 
   .main-content {
-    padding-top: 60px;
-    padding-left: 300px; /* Adjust as needed based on your design */
+    padding-top: 50px;
+    padding-left: 200px; /* Adjust as needed based on your design */
   }
 
   .v-card {
