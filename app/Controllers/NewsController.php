@@ -76,15 +76,22 @@ class NewsController extends BaseController
     }
     public function displayNews()
     {
-        $Articles = $this->Articles->findAll();
-
-        $baseUrl = 'http://cityjournal.test/'; // This assumes you have configured the base URL in CodeIgniter.
-    
-            foreach ($Articles as &$Article) {
-                $Article['ImageURL'] = $baseUrl . 'uploads/' . $Article['ImageURL'];
+        try {
+            // Fetch all news articles from the database
+            $model = new NewsModel();
+            $articleNews = $model->findAll();
+        
+            $baseUrl = 'http://cityjournal.test/'; 
+        
+            foreach ($articleNews as &$article) {
+                $article['ImageURL'] = $baseUrl . 'uploads/' . $article['ImageURL'];
             }
-
-        return $this->respond($Articles);
+        
+            return $this->respond($articleNews);
+        } catch (\Throwable $th) {
+            return $this->respond(["error" => "Error:" . $th->getMessage()]);
+        }
+        
     }
     
     public function getAdd()
@@ -143,17 +150,17 @@ class NewsController extends BaseController
         }
     }
 
-    public function displayPost()
-    {
-        try {
-            // Fetch all news articles from the database
-            $model = new NewsModel();
-            $articleNews = $model->findAll();
+    // public function displayPost()
+    // {
+    //     try {
+    //         // Fetch all news articles from the database
+    //         $model = new NewsModel();
+    //         $articleNews = $model->findAll();
             
-            return $this->respond($articleNews);
-        } catch (\Throwable $th) {
-            return $this->respond(["error" => "Error:" . $th->getMessage()]);
-        }
-    }
+    //         return $this->respond($articleNews);
+    //     } catch (\Throwable $th) {
+    //         return $this->respond(["error" => "Error:" . $th->getMessage()]);
+    //     }
+    // }
     
 }
