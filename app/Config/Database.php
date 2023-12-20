@@ -27,9 +27,9 @@ class Database extends Config
     public array $default = [
         'DSN'          => '',
         'hostname'     => 'localhost',
-        'username'     => 'root',
-        'password'     => '',
-        'database'     => 'journal',
+        'username'     => 'u262559041_ccnews',
+        'password'     => 'CalapanCity_2324',
+        'database'     => 'u262559041_citynews',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
