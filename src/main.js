@@ -11,6 +11,6 @@ axios.defaults.baseURL = "https://calapancitynews.online/calapancitynews/"
 loadFonts()
 
 createApp(App)
-  .use(router)
+  .use(router) 
   .use(vuetify)
   .mount('#app')
