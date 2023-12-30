@@ -327,17 +327,17 @@ export default {
   }
   
   .footer {
-    background-color: #673ab7; /* Background color of the footer */
-    color: #ffffff; /* Text color in the footer */
-    padding: 10px; /* Adjust padding as needed */
+    background-color: #673ab7;
+    color: #ffffff;
+    padding: 10px;
     position: fixed;
     bottom: 0;
     width: 100%;
   }
   .v-snackbar {
-    right: 16px; /* Adjust the distance from the right side */
-    top: 16px; /* Adjust the distance from the top */
-    max-width: 300px; /* Adjust the maximum width of the message box */
+    right: 16px;
+    top: 16px;
+    max-width: 300px;
   }
   .v-list-item:hover {
     background-color: #9575cd;
@@ -349,7 +349,7 @@ export default {
     color: #ffffff; 
   }
   .quill-editor-container {
-  width: 100%; /* Set the desired width */
-  height: 300px; /* Set the desired height */
+  width: 100%;
+  height: 300px;
 }
   </style>
