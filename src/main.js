@@ -5,8 +5,8 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import axios from 'axios'
 
-axios.defaults.baseURL = "https://calapancitynews.online/calapancitynews/"
-
+// axios.defaults.baseURL = 'https://calapancitynews.online/calapancitynews'
+axios.defaults.baseURL = 'https://CityJournal.test/'
 
 loadFonts()
 
