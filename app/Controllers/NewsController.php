@@ -81,7 +81,8 @@ class NewsController extends BaseController
             $model = new NewsModel();
             $articleNews = $model->findAll();
         
-            $baseUrl = 'https://calapancitynews.online/calapancitynews/'; 
+            // $baseUrl = 'https://calapancitynews.online/calapancitynews/'; 
+            $baseUrl = 'http://CityJournal.test/';
         
             foreach ($articleNews as &$article) {
                 $article['ImageURL'] = $baseUrl . 'uploads/' . $article['ImageURL'];
